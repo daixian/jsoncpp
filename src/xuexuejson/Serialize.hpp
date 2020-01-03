@@ -1172,6 +1172,135 @@ class Serialize
         getObj(value[L"height"], obj.height);
     }
 
+    //------------------------------ cv::point ------------------------------
+    template <typename T>
+    static inline Value&& toValue(const cv::Point_<T>& obj, Value&& jv,
+                                  rapidjson::MemoryPoolAllocator<>& allocator)
+    {
+        using namespace rapidjson;
+        jv.SetObject();
+        jv.AddMember("x", obj.x, allocator);
+        jv.AddMember("y", obj.y, allocator);
+        return std::move(jv);
+    }
+
+    template <typename T>
+    static inline void getObj(const Value& value, cv::Point_<T>& obj)
+    {
+        using namespace rapidjson;
+        getObj(value["x"], obj.x);
+        getObj(value["y"], obj.y);
+    }
+
+    template <typename T>
+    static inline ValueW&& toValue(const cv::Point_<T>& obj, ValueW&& jv,
+                                   rapidjson::MemoryPoolAllocator<>& allocator)
+    {
+        using namespace rapidjson;
+        jv.SetObject();
+        jv.AddMember(L"x", obj.x, allocator);
+        jv.AddMember(L"y", obj.y, allocator);
+        return std::move(jv);
+    }
+
+    template <typename T>
+    static inline void getObj(const ValueW& value, cv::Point_<T>& obj)
+    {
+        using namespace rapidjson;
+        getObj(value[L"x"], obj.x);
+        getObj(value[L"y"], obj.y);
+    }
+
+    //------------------------------ cv::point3 ------------------------------
+    template <typename T>
+    static inline Value&& toValue(const cv::Point3_<T>& obj, Value&& jv,
+                                  rapidjson::MemoryPoolAllocator<>& allocator)
+    {
+        using namespace rapidjson;
+        jv.SetObject();
+        jv.AddMember("x", obj.x, allocator);
+        jv.AddMember("y", obj.y, allocator);
+        jv.AddMember("z", obj.z, allocator);
+        return std::move(jv);
+    }
+
+    template <typename T>
+    static inline void getObj(const Value& value, cv::Point3_<T>& obj)
+    {
+        using namespace rapidjson;
+        getObj(value["x"], obj.x);
+        getObj(value["y"], obj.y);
+        getObj(value["z"], obj.z);
+    }
+
+    template <typename T>
+    static inline ValueW&& toValue(const cv::Point3_<T>& obj, ValueW&& jv,
+                                   rapidjson::MemoryPoolAllocator<>& allocator)
+    {
+        using namespace rapidjson;
+        jv.SetObject();
+        jv.AddMember(L"x", obj.x, allocator);
+        jv.AddMember(L"y", obj.y, allocator);
+        jv.AddMember(L"z", obj.z, allocator);
+        return std::move(jv);
+    }
+
+    template <typename T>
+    static inline void getObj(const ValueW& value, cv::Point3_<T>& obj)
+    {
+        using namespace rapidjson;
+        getObj(value[L"x"], obj.x);
+        getObj(value[L"y"], obj.y);
+        getObj(value[L"z"], obj.z);
+    }
+
+    //------------------------------ cv::Rect ------------------------------
+    template <typename T>
+    static inline Value&& toValue(const cv::Rect_<T>& obj, Value&& jv,
+                                  rapidjson::MemoryPoolAllocator<>& allocator)
+    {
+        using namespace rapidjson;
+        jv.SetObject();
+        jv.AddMember("x", obj.x, allocator);
+        jv.AddMember("y", obj.y, allocator);
+        jv.AddMember("width", obj.width, allocator);
+        jv.AddMember("height", obj.height, allocator);
+        return std::move(jv);
+    }
+
+    template <typename T>
+    static inline void getObj(const Value& value, cv::Rect_<T>& obj)
+    {
+        using namespace rapidjson;
+        getObj(value["x"], obj.x);
+        getObj(value["y"], obj.y);
+        getObj(value["width"], obj.width);
+        getObj(value["height"], obj.height);
+    }
+
+    template <typename T>
+    static inline ValueW&& toValue(const cv::Rect_<T>& obj, ValueW&& jv,
+                                   rapidjson::MemoryPoolAllocator<>& allocator)
+    {
+        using namespace rapidjson;
+        jv.SetObject();
+        jv.AddMember(L"x", obj.x, allocator);
+        jv.AddMember(L"y", obj.y, allocator);
+        jv.AddMember(L"width", obj.width, allocator);
+        jv.AddMember(L"height", obj.height, allocator);
+        return std::move(jv);
+    }
+
+    template <typename T>
+    static inline void getObj(const ValueW& value, cv::Rect_<T>& obj)
+    {
+        using namespace rapidjson;
+        getObj(value[L"x"], obj.x);
+        getObj(value[L"y"], obj.y);
+        getObj(value[L"width"], obj.width);
+        getObj(value[L"height"], obj.height);
+    }
+
     //------------------------------ cv::Mat ------------------------------
     static inline Value&& toValue(const cv::Mat& m, Value&& jv,
                                   rapidjson::MemoryPoolAllocator<>& allocator)

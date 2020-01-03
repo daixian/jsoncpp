@@ -582,4 +582,29 @@ TEST(Json, classNest)
     ASSERT_TRUE(ob.oa.v0 == ob2.oa.v0);
     ASSERT_TRUE(ob.oa.v1 == ob2.oa.v1);
 }
+
+TEST(Json, cvPoint)
+{
+    cv::Point o(123, 321);
+    string text = JsonMapper::toJson(o);
+    cv::Point o2 = JsonMapper::toObject<cv::Point>(text);
+    ASSERT_TRUE(o.x == o2.x);
+    ASSERT_TRUE(o.y == o2.y);
+}
+
+TEST(Json, cvPoint3)
+{
+    cv::Point3i o(123, 321, 312413);
+    string text = JsonMapper::toJson(o);
+    cv::Point3i o2 = JsonMapper::toObject<cv::Point3i>(text);
+    ASSERT_TRUE(o == o2);
+}
+
+TEST(Json, cvRect)
+{
+    cv::Rect o(123, 321, 252, 54353);
+    string text = JsonMapper::toJson(o);
+    cv::Rect o2 = JsonMapper::toObject<cv::Rect>(text);
+    ASSERT_TRUE(o == o2);
+}
 } // namespace dxtest
