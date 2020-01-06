@@ -63,4 +63,5 @@ class xuexuejsonConan(ConanFile):
         # self.copy("*.a", dst="lib", keep_path=False)
 
     def package_info(self):
-        self.cpp_info.libs = ["jsoncpp"]
+        self.info.header_only()
+        # self.cpp_info.libs = ["jsoncpp"]
