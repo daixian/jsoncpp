@@ -680,6 +680,70 @@ class JsonHelper
 #endif
     }
 
+    static inline void ValueTypeAdapte(const Value& value, char& obj)
+    {
+        if (value.IsInt()) {
+            obj = static_cast<char>(value.GetInt());
+        }
+#ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
+        else if (value.IsString()) {
+            try {
+                obj = static_cast<short>(std::stoi(value.GetString()));
+            }
+            catch (const std::exception&) {
+            }
+        }
+#endif
+    }
+
+    static inline void ValueTypeAdapte(const ValueW& value, char& obj)
+    {
+        if (value.IsInt()) {
+            obj = static_cast<char>(value.GetInt());
+        }
+#ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
+        else if (value.IsString()) {
+            try {
+                obj = static_cast<short>(std::stoi(value.GetString()));
+            }
+            catch (const std::exception&) {
+            }
+        }
+#endif
+    }
+
+    static inline void ValueTypeAdapte(const Value& value, short& obj)
+    {
+        if (value.IsInt()) {
+            obj = static_cast<short>(value.GetInt());
+        }
+#ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
+        else if (value.IsString()) {
+            try {
+                obj = static_cast<short>(std::stoi(value.GetString()));
+            }
+            catch (const std::exception&) {
+            }
+        }
+#endif
+    }
+
+    static inline void ValueTypeAdapte(const ValueW& value, short& obj)
+    {
+        if (value.IsInt()) {
+            obj = static_cast<short>(value.GetInt());
+        }
+#ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
+        else if (value.IsString()) {
+            try {
+                obj = static_cast<short>(std::stoi(value.GetString()));
+            }
+            catch (const std::exception&) {
+            }
+        }
+#endif
+    }
+
     static inline void ValueTypeAdapte(const Value& value, int64_t& obj)
     {
         if (value.IsInt()) {
@@ -705,6 +769,70 @@ class JsonHelper
         else if (value.IsString()) {
             try {
                 obj = std::stoll(value.GetString());
+            }
+            catch (const std::exception&) {
+            }
+        }
+#endif
+    }
+
+    static inline void ValueTypeAdapte(const Value& value, uint8_t& obj)
+    {
+        if (value.IsInt()) {
+            obj = static_cast<uint8_t>(value.GetInt());
+        }
+#ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
+        else if (value.IsString()) {
+            try {
+                obj = static_cast<uint8_t>(std::stoi(value.GetString()));
+            }
+            catch (const std::exception&) {
+            }
+        }
+#endif
+    }
+
+    static inline void ValueTypeAdapte(const ValueW& value, uint8_t& obj)
+    {
+        if (value.IsInt()) {
+            obj = static_cast<uint8_t>(value.GetInt());
+        }
+#ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
+        else if (value.IsString()) {
+            try {
+                obj = static_cast<uint8_t>(std::stoi(value.GetString()));
+            }
+            catch (const std::exception&) {
+            }
+        }
+#endif
+    }
+
+    static inline void ValueTypeAdapte(const Value& value, uint16_t& obj)
+    {
+        if (value.IsInt()) {
+            obj = static_cast<uint16_t>(value.GetInt());
+        }
+#ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
+        else if (value.IsString()) {
+            try {
+                obj = static_cast<uint16_t>(std::stoi(value.GetString()));
+            }
+            catch (const std::exception&) {
+            }
+        }
+#endif
+    }
+
+    static inline void ValueTypeAdapte(const ValueW& value, uint16_t& obj)
+    {
+        if (value.IsInt()) {
+            obj = static_cast<uint16_t>(value.GetInt());
+        }
+#ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
+        else if (value.IsString()) {
+            try {
+                obj = static_cast<uint16_t>(std::stoi(value.GetString()));
             }
             catch (const std::exception&) {
             }
@@ -948,6 +1076,18 @@ class Serialize
         return std::move(value.Set(obj));
     }
 
+    static inline Value&& toValue(const char& obj, Value&& value,
+                                  rapidjson::MemoryPoolAllocator<>& allocator)
+    {
+        return std::move((value.Set(static_cast<int>(obj))));
+    }
+
+    static inline Value&& toValue(const short& obj, Value&& value,
+                                  rapidjson::MemoryPoolAllocator<>& allocator)
+    {
+        return std::move((value.Set(static_cast<int>(obj))));
+    }
+
     static inline Value&& toValue(const int& obj, Value&& value,
                                   rapidjson::MemoryPoolAllocator<>& allocator)
     {
@@ -958,6 +1098,18 @@ class Serialize
                                   rapidjson::MemoryPoolAllocator<>& allocator)
     {
         return std::move(value.Set(obj));
+    }
+
+    static inline Value&& toValue(const unsigned char& obj, Value&& value,
+                                  rapidjson::MemoryPoolAllocator<>& allocator)
+    {
+        return std::move((value.Set(static_cast<unsigned int>(obj))));
+    }
+
+    static inline Value&& toValue(const unsigned short& obj, Value&& value,
+                                  rapidjson::MemoryPoolAllocator<>& allocator)
+    {
+        return std::move((value.Set(static_cast<unsigned int>(obj))));
     }
 
     static inline Value&& toValue(const unsigned int& obj, Value&& value,
@@ -987,12 +1139,32 @@ class Serialize
         JsonHelper::ValueTypeAdapte(value, obj);
     }
 
+    static inline void getObj(const Value& value, char& obj)
+    {
+        JsonHelper::ValueTypeAdapte(value, obj);
+    }
+
+    static inline void getObj(const Value& value, short& obj)
+    {
+        JsonHelper::ValueTypeAdapte(value, obj);
+    }
+
     static inline void getObj(const Value& value, int& obj)
     {
         JsonHelper::ValueTypeAdapte(value, obj);
     }
 
     static inline void getObj(const Value& value, int64_t& obj)
+    {
+        JsonHelper::ValueTypeAdapte(value, obj);
+    }
+
+    static inline void getObj(const Value& value, unsigned char& obj)
+    {
+        JsonHelper::ValueTypeAdapte(value, obj);
+    }
+
+    static inline void getObj(const Value& value, unsigned short& obj)
     {
         JsonHelper::ValueTypeAdapte(value, obj);
     }
@@ -2097,6 +2269,35 @@ class JsonMapper
         return obj;
     }
 };
+
+//Unity3D中的类型
+namespace unity3d {
+
+class Color32 : XUEXUE_JSON_OBJECT
+{
+  public:
+    Color32() {}
+    Color32(unsigned char r, unsigned char g, unsigned char b, unsigned char a = 255) : r(r), g(g), b(b), a(a)
+    {
+    }
+
+    bool operator==(const Color32& c)
+    {
+        if (r == c.r && g == c.g && b == c.b && a == c.a) {
+            return true;
+        }
+        return false;
+    }
+
+    unsigned char r{0};
+    unsigned char g{0};
+    unsigned char b{0};
+    unsigned char a{0};
+
+    XUEXUE_JSON_OBJECT_M4(r, g, b, a)
+};
+
+} // namespace unity3d
 
 } // namespace json
 } // namespace xuexue

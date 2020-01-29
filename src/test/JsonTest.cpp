@@ -562,9 +562,17 @@ class ClassB : XUEXUE_JSON_OBJECT
     ~ClassB() {}
 
     string str;
+    unsigned char uc;
+    char c;
+    unsigned short usi;
+    short si;
+    unsigned int ui;
+    int i;
+    uint64_t uli;
+    int64_t li;
     ClassA oa;
 
-    XUEXUE_JSON_OBJECT_M2(str, oa);
+    XUEXUE_JSON_OBJECT_M10(str, uc, c, usi, si, ui, i, uli, li, oa);
 
   private:
 };
@@ -573,12 +581,30 @@ TEST(Json, classNest)
 {
     ClassB ob;
     ob.str = "12312是是";
+    ob.uc = UCHAR_MAX;
+    ob.c = CHAR_MIN;
+    ob.usi = USHRT_MAX;
+    ob.si = SHRT_MIN;
+    ob.ui = UINT_MAX;
+    ob.i = INT_MIN;
+    ob.uli = ULONG_MAX;
+    ob.li = LONG_MIN;
+
     ob.oa.v0 = Eigen::Vector3d(123, 3123543, 53456);
     ob.oa.v1 = cv::Vec3d(345, 321, 76);
 
     string text = JsonMapper::toJson(ob);
     ClassB ob2 = JsonMapper::toObject<ClassB>(text);
     ASSERT_TRUE(ob.str == ob2.str);
+    ASSERT_TRUE(ob.uc == ob2.uc);
+    ASSERT_TRUE(ob.c == ob2.c);
+    ASSERT_TRUE(ob.usi == ob2.usi);
+    ASSERT_TRUE(ob.si == ob2.si);
+    ASSERT_TRUE(ob.ui == ob2.ui);
+    ASSERT_TRUE(ob.i == ob2.i);
+    ASSERT_TRUE(ob.uli == ob2.uli);
+    ASSERT_TRUE(ob.li == ob2.li);
+
     ASSERT_TRUE(ob.oa.v0 == ob2.oa.v0);
     ASSERT_TRUE(ob.oa.v1 == ob2.oa.v1);
 }
@@ -607,4 +633,13 @@ TEST(Json, cvRect)
     cv::Rect o2 = JsonMapper::toObject<cv::Rect>(text);
     ASSERT_TRUE(o == o2);
 }
+
+TEST(Json, unity3dColor32)
+{
+    unity3d::Color32 color(255, 123, 32);
+    string text = JsonMapper::toJson(color);
+    unity3d::Color32 o2 = JsonMapper::toObject<unity3d::Color32>(text);
+    ASSERT_TRUE(color == o2);
+}
+
 } // namespace dxtest
