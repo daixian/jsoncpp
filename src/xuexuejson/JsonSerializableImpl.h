@@ -1,554 +1,554 @@
-#define XUEXUE_JSON_OBJECT_M1(PAR1)                                                                                       \
-    xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const         \
-    {                                                                                                                     \
-        value.SetObject();                                                                                                \
-        value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);      \
-        return std::move(value);                                                                                          \
-    }                                                                                                                     \
-                                                                                                                          \
-    xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const       \
-    {                                                                                                                     \
-        value.SetObject();                                                                                                \
-        value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator); \
-        return std::move(value);                                                                                          \
-    }                                                                                                                     \
-                                                                                                                          \
-    void getObj(const xuexue::json::Value& value)                                                                         \
-    {                                                                                                                     \
-        if (value.HasMember(#PAR1)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                          \
-        }                                                                                                                 \
-    }                                                                                                                     \
-                                                                                                                          \
-    void getObj(const xuexue::json::ValueW& value)                                                                        \
-    {                                                                                                                     \
-        if (value.HasMember(L## #PAR1)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                      \
-        }                                                                                                                 \
+#define XUEXUE_JSON_OBJECT_M1(PAR1)                                                                                         \
+    virtual xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const   \
+    {                                                                                                                       \
+        value.SetObject();                                                                                                  \
+        value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);        \
+        return std::move(value);                                                                                            \
+    }                                                                                                                       \
+                                                                                                                            \
+    virtual xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const \
+    {                                                                                                                       \
+        value.SetObject();                                                                                                  \
+        value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator);   \
+        return std::move(value);                                                                                            \
+    }                                                                                                                       \
+                                                                                                                            \
+    virtual void getObj(const xuexue::json::Value& value)                                                                   \
+    {                                                                                                                       \
+        if (value.HasMember(#PAR1)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                            \
+        }                                                                                                                   \
+    }                                                                                                                       \
+                                                                                                                            \
+    virtual void getObj(const xuexue::json::ValueW& value)                                                                  \
+    {                                                                                                                       \
+        if (value.HasMember(L## #PAR1)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                        \
+        }                                                                                                                   \
     }
 
-#define XUEXUE_JSON_OBJECT_M2(PAR1, PAR2)                                                                                 \
-    xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const         \
-    {                                                                                                                     \
-        value.SetObject();                                                                                                \
-        value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);      \
-        value.AddMember(#PAR2, xuexue::json::Serialize::toValue(PAR2, xuexue::json::Value(), allocator), allocator);      \
-        return std::move(value);                                                                                          \
-    }                                                                                                                     \
-                                                                                                                          \
-    xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const       \
-    {                                                                                                                     \
-        value.SetObject();                                                                                                \
-        value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator); \
-        value.AddMember(L## #PAR2, xuexue::json::Serialize::toValue(PAR2, xuexue::json::ValueW(), allocator), allocator); \
-        return std::move(value);                                                                                          \
-    }                                                                                                                     \
-                                                                                                                          \
-    void getObj(const xuexue::json::Value& value)                                                                         \
-    {                                                                                                                     \
-        if (value.HasMember(#PAR1)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                          \
-        }                                                                                                                 \
-        if (value.HasMember(#PAR2)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR2], PAR2);                                                          \
-        }                                                                                                                 \
-    }                                                                                                                     \
-                                                                                                                          \
-    void getObj(const xuexue::json::ValueW& value)                                                                        \
-    {                                                                                                                     \
-        if (value.HasMember(L## #PAR1)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                      \
-        }                                                                                                                 \
-        if (value.HasMember(L## #PAR2)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR2], PAR2);                                                      \
-        }                                                                                                                 \
+#define XUEXUE_JSON_OBJECT_M2(PAR1, PAR2)                                                                                   \
+    virtual xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const   \
+    {                                                                                                                       \
+        value.SetObject();                                                                                                  \
+        value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);        \
+        value.AddMember(#PAR2, xuexue::json::Serialize::toValue(PAR2, xuexue::json::Value(), allocator), allocator);        \
+        return std::move(value);                                                                                            \
+    }                                                                                                                       \
+                                                                                                                            \
+    virtual xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const \
+    {                                                                                                                       \
+        value.SetObject();                                                                                                  \
+        value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator);   \
+        value.AddMember(L## #PAR2, xuexue::json::Serialize::toValue(PAR2, xuexue::json::ValueW(), allocator), allocator);   \
+        return std::move(value);                                                                                            \
+    }                                                                                                                       \
+                                                                                                                            \
+    virtual void getObj(const xuexue::json::Value& value)                                                                   \
+    {                                                                                                                       \
+        if (value.HasMember(#PAR1)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                            \
+        }                                                                                                                   \
+        if (value.HasMember(#PAR2)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR2], PAR2);                                                            \
+        }                                                                                                                   \
+    }                                                                                                                       \
+                                                                                                                            \
+    virtual void getObj(const xuexue::json::ValueW& value)                                                                  \
+    {                                                                                                                       \
+        if (value.HasMember(L## #PAR1)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                        \
+        }                                                                                                                   \
+        if (value.HasMember(L## #PAR2)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR2], PAR2);                                                        \
+        }                                                                                                                   \
     }
 
-#define XUEXUE_JSON_OBJECT_M3(PAR1, PAR2, PAR3)                                                                           \
-    xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const         \
-    {                                                                                                                     \
-        value.SetObject();                                                                                                \
-        value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);      \
-        value.AddMember(#PAR2, xuexue::json::Serialize::toValue(PAR2, xuexue::json::Value(), allocator), allocator);      \
-        value.AddMember(#PAR3, xuexue::json::Serialize::toValue(PAR3, xuexue::json::Value(), allocator), allocator);      \
-        return std::move(value);                                                                                          \
-    }                                                                                                                     \
-                                                                                                                          \
-    xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const       \
-    {                                                                                                                     \
-        value.SetObject();                                                                                                \
-        value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator); \
-        value.AddMember(L## #PAR2, xuexue::json::Serialize::toValue(PAR2, xuexue::json::ValueW(), allocator), allocator); \
-        value.AddMember(L## #PAR3, xuexue::json::Serialize::toValue(PAR3, xuexue::json::ValueW(), allocator), allocator); \
-        return std::move(value);                                                                                          \
-    }                                                                                                                     \
-                                                                                                                          \
-    void getObj(const xuexue::json::Value& value)                                                                         \
-    {                                                                                                                     \
-        if (value.HasMember(#PAR1)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                          \
-        }                                                                                                                 \
-        if (value.HasMember(#PAR2)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR2], PAR2);                                                          \
-        }                                                                                                                 \
-        if (value.HasMember(#PAR3)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR3], PAR3);                                                          \
-        }                                                                                                                 \
-    }                                                                                                                     \
-                                                                                                                          \
-    void getObj(const xuexue::json::ValueW& value)                                                                        \
-    {                                                                                                                     \
-        if (value.HasMember(L## #PAR1)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                      \
-        }                                                                                                                 \
-        if (value.HasMember(L## #PAR2)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR2], PAR2);                                                      \
-        }                                                                                                                 \
-        if (value.HasMember(L## #PAR3)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR3], PAR3);                                                      \
-        }                                                                                                                 \
+#define XUEXUE_JSON_OBJECT_M3(PAR1, PAR2, PAR3)                                                                             \
+    virtual xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const   \
+    {                                                                                                                       \
+        value.SetObject();                                                                                                  \
+        value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);        \
+        value.AddMember(#PAR2, xuexue::json::Serialize::toValue(PAR2, xuexue::json::Value(), allocator), allocator);        \
+        value.AddMember(#PAR3, xuexue::json::Serialize::toValue(PAR3, xuexue::json::Value(), allocator), allocator);        \
+        return std::move(value);                                                                                            \
+    }                                                                                                                       \
+                                                                                                                            \
+    virtual xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const \
+    {                                                                                                                       \
+        value.SetObject();                                                                                                  \
+        value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator);   \
+        value.AddMember(L## #PAR2, xuexue::json::Serialize::toValue(PAR2, xuexue::json::ValueW(), allocator), allocator);   \
+        value.AddMember(L## #PAR3, xuexue::json::Serialize::toValue(PAR3, xuexue::json::ValueW(), allocator), allocator);   \
+        return std::move(value);                                                                                            \
+    }                                                                                                                       \
+                                                                                                                            \
+    virtual void getObj(const xuexue::json::Value& value)                                                                   \
+    {                                                                                                                       \
+        if (value.HasMember(#PAR1)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                            \
+        }                                                                                                                   \
+        if (value.HasMember(#PAR2)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR2], PAR2);                                                            \
+        }                                                                                                                   \
+        if (value.HasMember(#PAR3)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR3], PAR3);                                                            \
+        }                                                                                                                   \
+    }                                                                                                                       \
+                                                                                                                            \
+    virtual void getObj(const xuexue::json::ValueW& value)                                                                  \
+    {                                                                                                                       \
+        if (value.HasMember(L## #PAR1)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                        \
+        }                                                                                                                   \
+        if (value.HasMember(L## #PAR2)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR2], PAR2);                                                        \
+        }                                                                                                                   \
+        if (value.HasMember(L## #PAR3)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR3], PAR3);                                                        \
+        }                                                                                                                   \
     }
 
-#define XUEXUE_JSON_OBJECT_M4(PAR1, PAR2, PAR3, PAR4)                                                                     \
-    xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const         \
-    {                                                                                                                     \
-        value.SetObject();                                                                                                \
-        value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);      \
-        value.AddMember(#PAR2, xuexue::json::Serialize::toValue(PAR2, xuexue::json::Value(), allocator), allocator);      \
-        value.AddMember(#PAR3, xuexue::json::Serialize::toValue(PAR3, xuexue::json::Value(), allocator), allocator);      \
-        value.AddMember(#PAR4, xuexue::json::Serialize::toValue(PAR4, xuexue::json::Value(), allocator), allocator);      \
-        return std::move(value);                                                                                          \
-    }                                                                                                                     \
-                                                                                                                          \
-    xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const       \
-    {                                                                                                                     \
-        value.SetObject();                                                                                                \
-        value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator); \
-        value.AddMember(L## #PAR2, xuexue::json::Serialize::toValue(PAR2, xuexue::json::ValueW(), allocator), allocator); \
-        value.AddMember(L## #PAR3, xuexue::json::Serialize::toValue(PAR3, xuexue::json::ValueW(), allocator), allocator); \
-        value.AddMember(L## #PAR4, xuexue::json::Serialize::toValue(PAR4, xuexue::json::ValueW(), allocator), allocator); \
-        return std::move(value);                                                                                          \
-    }                                                                                                                     \
-                                                                                                                          \
-    void getObj(const xuexue::json::Value& value)                                                                         \
-    {                                                                                                                     \
-        if (value.HasMember(#PAR1)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                          \
-        }                                                                                                                 \
-        if (value.HasMember(#PAR2)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR2], PAR2);                                                          \
-        }                                                                                                                 \
-        if (value.HasMember(#PAR3)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR3], PAR3);                                                          \
-        }                                                                                                                 \
-        if (value.HasMember(#PAR4)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR4], PAR4);                                                          \
-        }                                                                                                                 \
-    }                                                                                                                     \
-                                                                                                                          \
-    void getObj(const xuexue::json::ValueW& value)                                                                        \
-    {                                                                                                                     \
-        if (value.HasMember(L## #PAR1)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                      \
-        }                                                                                                                 \
-        if (value.HasMember(L## #PAR2)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR2], PAR2);                                                      \
-        }                                                                                                                 \
-        if (value.HasMember(L## #PAR3)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR3], PAR3);                                                      \
-        }                                                                                                                 \
-        if (value.HasMember(L## #PAR4)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR4], PAR4);                                                      \
-        }                                                                                                                 \
+#define XUEXUE_JSON_OBJECT_M4(PAR1, PAR2, PAR3, PAR4)                                                                       \
+    virtual xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const   \
+    {                                                                                                                       \
+        value.SetObject();                                                                                                  \
+        value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);        \
+        value.AddMember(#PAR2, xuexue::json::Serialize::toValue(PAR2, xuexue::json::Value(), allocator), allocator);        \
+        value.AddMember(#PAR3, xuexue::json::Serialize::toValue(PAR3, xuexue::json::Value(), allocator), allocator);        \
+        value.AddMember(#PAR4, xuexue::json::Serialize::toValue(PAR4, xuexue::json::Value(), allocator), allocator);        \
+        return std::move(value);                                                                                            \
+    }                                                                                                                       \
+                                                                                                                            \
+    virtual xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const \
+    {                                                                                                                       \
+        value.SetObject();                                                                                                  \
+        value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator);   \
+        value.AddMember(L## #PAR2, xuexue::json::Serialize::toValue(PAR2, xuexue::json::ValueW(), allocator), allocator);   \
+        value.AddMember(L## #PAR3, xuexue::json::Serialize::toValue(PAR3, xuexue::json::ValueW(), allocator), allocator);   \
+        value.AddMember(L## #PAR4, xuexue::json::Serialize::toValue(PAR4, xuexue::json::ValueW(), allocator), allocator);   \
+        return std::move(value);                                                                                            \
+    }                                                                                                                       \
+                                                                                                                            \
+    virtual void getObj(const xuexue::json::Value& value)                                                                   \
+    {                                                                                                                       \
+        if (value.HasMember(#PAR1)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                            \
+        }                                                                                                                   \
+        if (value.HasMember(#PAR2)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR2], PAR2);                                                            \
+        }                                                                                                                   \
+        if (value.HasMember(#PAR3)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR3], PAR3);                                                            \
+        }                                                                                                                   \
+        if (value.HasMember(#PAR4)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR4], PAR4);                                                            \
+        }                                                                                                                   \
+    }                                                                                                                       \
+                                                                                                                            \
+    virtual void getObj(const xuexue::json::ValueW& value)                                                                  \
+    {                                                                                                                       \
+        if (value.HasMember(L## #PAR1)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                        \
+        }                                                                                                                   \
+        if (value.HasMember(L## #PAR2)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR2], PAR2);                                                        \
+        }                                                                                                                   \
+        if (value.HasMember(L## #PAR3)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR3], PAR3);                                                        \
+        }                                                                                                                   \
+        if (value.HasMember(L## #PAR4)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR4], PAR4);                                                        \
+        }                                                                                                                   \
     }
 
-#define XUEXUE_JSON_OBJECT_M5(PAR1, PAR2, PAR3, PAR4, PAR5)                                                               \
-    xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const         \
-    {                                                                                                                     \
-        value.SetObject();                                                                                                \
-        value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);      \
-        value.AddMember(#PAR2, xuexue::json::Serialize::toValue(PAR2, xuexue::json::Value(), allocator), allocator);      \
-        value.AddMember(#PAR3, xuexue::json::Serialize::toValue(PAR3, xuexue::json::Value(), allocator), allocator);      \
-        value.AddMember(#PAR4, xuexue::json::Serialize::toValue(PAR4, xuexue::json::Value(), allocator), allocator);      \
-        value.AddMember(#PAR5, xuexue::json::Serialize::toValue(PAR5, xuexue::json::Value(), allocator), allocator);      \
-        return std::move(value);                                                                                          \
-    }                                                                                                                     \
-                                                                                                                          \
-    xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const       \
-    {                                                                                                                     \
-        value.SetObject();                                                                                                \
-        value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator); \
-        value.AddMember(L## #PAR2, xuexue::json::Serialize::toValue(PAR2, xuexue::json::ValueW(), allocator), allocator); \
-        value.AddMember(L## #PAR3, xuexue::json::Serialize::toValue(PAR3, xuexue::json::ValueW(), allocator), allocator); \
-        value.AddMember(L## #PAR4, xuexue::json::Serialize::toValue(PAR4, xuexue::json::ValueW(), allocator), allocator); \
-        value.AddMember(L## #PAR5, xuexue::json::Serialize::toValue(PAR5, xuexue::json::ValueW(), allocator), allocator); \
-        return std::move(value);                                                                                          \
-    }                                                                                                                     \
-                                                                                                                          \
-    void getObj(const xuexue::json::Value& value)                                                                         \
-    {                                                                                                                     \
-        if (value.HasMember(#PAR1)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                          \
-        }                                                                                                                 \
-        if (value.HasMember(#PAR2)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR2], PAR2);                                                          \
-        }                                                                                                                 \
-        if (value.HasMember(#PAR3)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR3], PAR3);                                                          \
-        }                                                                                                                 \
-        if (value.HasMember(#PAR4)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR4], PAR4);                                                          \
-        }                                                                                                                 \
-        if (value.HasMember(#PAR5)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR5], PAR5);                                                          \
-        }                                                                                                                 \
-    }                                                                                                                     \
-                                                                                                                          \
-    void getObj(const xuexue::json::ValueW& value)                                                                        \
-    {                                                                                                                     \
-        if (value.HasMember(L## #PAR1)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                      \
-        }                                                                                                                 \
-        if (value.HasMember(L## #PAR2)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR2], PAR2);                                                      \
-        }                                                                                                                 \
-        if (value.HasMember(L## #PAR3)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR3], PAR3);                                                      \
-        }                                                                                                                 \
-        if (value.HasMember(L## #PAR4)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR4], PAR4);                                                      \
-        }                                                                                                                 \
-        if (value.HasMember(L## #PAR5)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR5], PAR5);                                                      \
-        }                                                                                                                 \
+#define XUEXUE_JSON_OBJECT_M5(PAR1, PAR2, PAR3, PAR4, PAR5)                                                                 \
+    virtual xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const   \
+    {                                                                                                                       \
+        value.SetObject();                                                                                                  \
+        value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);        \
+        value.AddMember(#PAR2, xuexue::json::Serialize::toValue(PAR2, xuexue::json::Value(), allocator), allocator);        \
+        value.AddMember(#PAR3, xuexue::json::Serialize::toValue(PAR3, xuexue::json::Value(), allocator), allocator);        \
+        value.AddMember(#PAR4, xuexue::json::Serialize::toValue(PAR4, xuexue::json::Value(), allocator), allocator);        \
+        value.AddMember(#PAR5, xuexue::json::Serialize::toValue(PAR5, xuexue::json::Value(), allocator), allocator);        \
+        return std::move(value);                                                                                            \
+    }                                                                                                                       \
+                                                                                                                            \
+    virtual xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const \
+    {                                                                                                                       \
+        value.SetObject();                                                                                                  \
+        value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator);   \
+        value.AddMember(L## #PAR2, xuexue::json::Serialize::toValue(PAR2, xuexue::json::ValueW(), allocator), allocator);   \
+        value.AddMember(L## #PAR3, xuexue::json::Serialize::toValue(PAR3, xuexue::json::ValueW(), allocator), allocator);   \
+        value.AddMember(L## #PAR4, xuexue::json::Serialize::toValue(PAR4, xuexue::json::ValueW(), allocator), allocator);   \
+        value.AddMember(L## #PAR5, xuexue::json::Serialize::toValue(PAR5, xuexue::json::ValueW(), allocator), allocator);   \
+        return std::move(value);                                                                                            \
+    }                                                                                                                       \
+                                                                                                                            \
+    virtual void getObj(const xuexue::json::Value& value)                                                                   \
+    {                                                                                                                       \
+        if (value.HasMember(#PAR1)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                            \
+        }                                                                                                                   \
+        if (value.HasMember(#PAR2)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR2], PAR2);                                                            \
+        }                                                                                                                   \
+        if (value.HasMember(#PAR3)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR3], PAR3);                                                            \
+        }                                                                                                                   \
+        if (value.HasMember(#PAR4)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR4], PAR4);                                                            \
+        }                                                                                                                   \
+        if (value.HasMember(#PAR5)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR5], PAR5);                                                            \
+        }                                                                                                                   \
+    }                                                                                                                       \
+                                                                                                                            \
+    virtual void getObj(const xuexue::json::ValueW& value)                                                                  \
+    {                                                                                                                       \
+        if (value.HasMember(L## #PAR1)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                        \
+        }                                                                                                                   \
+        if (value.HasMember(L## #PAR2)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR2], PAR2);                                                        \
+        }                                                                                                                   \
+        if (value.HasMember(L## #PAR3)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR3], PAR3);                                                        \
+        }                                                                                                                   \
+        if (value.HasMember(L## #PAR4)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR4], PAR4);                                                        \
+        }                                                                                                                   \
+        if (value.HasMember(L## #PAR5)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR5], PAR5);                                                        \
+        }                                                                                                                   \
     }
 
-#define XUEXUE_JSON_OBJECT_M6(PAR1, PAR2, PAR3, PAR4, PAR5, PAR6)                                                         \
-    xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const         \
-    {                                                                                                                     \
-        value.SetObject();                                                                                                \
-        value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);      \
-        value.AddMember(#PAR2, xuexue::json::Serialize::toValue(PAR2, xuexue::json::Value(), allocator), allocator);      \
-        value.AddMember(#PAR3, xuexue::json::Serialize::toValue(PAR3, xuexue::json::Value(), allocator), allocator);      \
-        value.AddMember(#PAR4, xuexue::json::Serialize::toValue(PAR4, xuexue::json::Value(), allocator), allocator);      \
-        value.AddMember(#PAR5, xuexue::json::Serialize::toValue(PAR5, xuexue::json::Value(), allocator), allocator);      \
-        value.AddMember(#PAR6, xuexue::json::Serialize::toValue(PAR6, xuexue::json::Value(), allocator), allocator);      \
-        return std::move(value);                                                                                          \
-    }                                                                                                                     \
-                                                                                                                          \
-    xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const       \
-    {                                                                                                                     \
-        value.SetObject();                                                                                                \
-        value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator); \
-        value.AddMember(L## #PAR2, xuexue::json::Serialize::toValue(PAR2, xuexue::json::ValueW(), allocator), allocator); \
-        value.AddMember(L## #PAR3, xuexue::json::Serialize::toValue(PAR3, xuexue::json::ValueW(), allocator), allocator); \
-        value.AddMember(L## #PAR4, xuexue::json::Serialize::toValue(PAR4, xuexue::json::ValueW(), allocator), allocator); \
-        value.AddMember(L## #PAR5, xuexue::json::Serialize::toValue(PAR5, xuexue::json::ValueW(), allocator), allocator); \
-        value.AddMember(L## #PAR6, xuexue::json::Serialize::toValue(PAR6, xuexue::json::ValueW(), allocator), allocator); \
-        return std::move(value);                                                                                          \
-    }                                                                                                                     \
-                                                                                                                          \
-    void getObj(const xuexue::json::Value& value)                                                                         \
-    {                                                                                                                     \
-        if (value.HasMember(#PAR1)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                          \
-        }                                                                                                                 \
-        if (value.HasMember(#PAR2)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR2], PAR2);                                                          \
-        }                                                                                                                 \
-        if (value.HasMember(#PAR3)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR3], PAR3);                                                          \
-        }                                                                                                                 \
-        if (value.HasMember(#PAR4)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR4], PAR4);                                                          \
-        }                                                                                                                 \
-        if (value.HasMember(#PAR5)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR5], PAR5);                                                          \
-        }                                                                                                                 \
-        if (value.HasMember(#PAR6)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR6], PAR6);                                                          \
-        }                                                                                                                 \
-    }                                                                                                                     \
-                                                                                                                          \
-    void getObj(const xuexue::json::ValueW& value)                                                                        \
-    {                                                                                                                     \
-        if (value.HasMember(L## #PAR1)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                      \
-        }                                                                                                                 \
-        if (value.HasMember(L## #PAR2)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR2], PAR2);                                                      \
-        }                                                                                                                 \
-        if (value.HasMember(L## #PAR3)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR3], PAR3);                                                      \
-        }                                                                                                                 \
-        if (value.HasMember(L## #PAR4)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR4], PAR4);                                                      \
-        }                                                                                                                 \
-        if (value.HasMember(L## #PAR5)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR5], PAR5);                                                      \
-        }                                                                                                                 \
-        if (value.HasMember(L## #PAR6)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR6], PAR6);                                                      \
-        }                                                                                                                 \
+#define XUEXUE_JSON_OBJECT_M6(PAR1, PAR2, PAR3, PAR4, PAR5, PAR6)                                                           \
+    virtual xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const   \
+    {                                                                                                                       \
+        value.SetObject();                                                                                                  \
+        value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);        \
+        value.AddMember(#PAR2, xuexue::json::Serialize::toValue(PAR2, xuexue::json::Value(), allocator), allocator);        \
+        value.AddMember(#PAR3, xuexue::json::Serialize::toValue(PAR3, xuexue::json::Value(), allocator), allocator);        \
+        value.AddMember(#PAR4, xuexue::json::Serialize::toValue(PAR4, xuexue::json::Value(), allocator), allocator);        \
+        value.AddMember(#PAR5, xuexue::json::Serialize::toValue(PAR5, xuexue::json::Value(), allocator), allocator);        \
+        value.AddMember(#PAR6, xuexue::json::Serialize::toValue(PAR6, xuexue::json::Value(), allocator), allocator);        \
+        return std::move(value);                                                                                            \
+    }                                                                                                                       \
+                                                                                                                            \
+    virtual xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const \
+    {                                                                                                                       \
+        value.SetObject();                                                                                                  \
+        value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator);   \
+        value.AddMember(L## #PAR2, xuexue::json::Serialize::toValue(PAR2, xuexue::json::ValueW(), allocator), allocator);   \
+        value.AddMember(L## #PAR3, xuexue::json::Serialize::toValue(PAR3, xuexue::json::ValueW(), allocator), allocator);   \
+        value.AddMember(L## #PAR4, xuexue::json::Serialize::toValue(PAR4, xuexue::json::ValueW(), allocator), allocator);   \
+        value.AddMember(L## #PAR5, xuexue::json::Serialize::toValue(PAR5, xuexue::json::ValueW(), allocator), allocator);   \
+        value.AddMember(L## #PAR6, xuexue::json::Serialize::toValue(PAR6, xuexue::json::ValueW(), allocator), allocator);   \
+        return std::move(value);                                                                                            \
+    }                                                                                                                       \
+                                                                                                                            \
+    virtual void getObj(const xuexue::json::Value& value)                                                                   \
+    {                                                                                                                       \
+        if (value.HasMember(#PAR1)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                            \
+        }                                                                                                                   \
+        if (value.HasMember(#PAR2)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR2], PAR2);                                                            \
+        }                                                                                                                   \
+        if (value.HasMember(#PAR3)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR3], PAR3);                                                            \
+        }                                                                                                                   \
+        if (value.HasMember(#PAR4)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR4], PAR4);                                                            \
+        }                                                                                                                   \
+        if (value.HasMember(#PAR5)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR5], PAR5);                                                            \
+        }                                                                                                                   \
+        if (value.HasMember(#PAR6)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR6], PAR6);                                                            \
+        }                                                                                                                   \
+    }                                                                                                                       \
+                                                                                                                            \
+    virtual void getObj(const xuexue::json::ValueW& value)                                                                  \
+    {                                                                                                                       \
+        if (value.HasMember(L## #PAR1)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                        \
+        }                                                                                                                   \
+        if (value.HasMember(L## #PAR2)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR2], PAR2);                                                        \
+        }                                                                                                                   \
+        if (value.HasMember(L## #PAR3)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR3], PAR3);                                                        \
+        }                                                                                                                   \
+        if (value.HasMember(L## #PAR4)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR4], PAR4);                                                        \
+        }                                                                                                                   \
+        if (value.HasMember(L## #PAR5)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR5], PAR5);                                                        \
+        }                                                                                                                   \
+        if (value.HasMember(L## #PAR6)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR6], PAR6);                                                        \
+        }                                                                                                                   \
     }
 
-#define XUEXUE_JSON_OBJECT_M7(PAR1, PAR2, PAR3, PAR4, PAR5, PAR6, PAR7)                                                   \
-    xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const         \
-    {                                                                                                                     \
-        value.SetObject();                                                                                                \
-        value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);      \
-        value.AddMember(#PAR2, xuexue::json::Serialize::toValue(PAR2, xuexue::json::Value(), allocator), allocator);      \
-        value.AddMember(#PAR3, xuexue::json::Serialize::toValue(PAR3, xuexue::json::Value(), allocator), allocator);      \
-        value.AddMember(#PAR4, xuexue::json::Serialize::toValue(PAR4, xuexue::json::Value(), allocator), allocator);      \
-        value.AddMember(#PAR5, xuexue::json::Serialize::toValue(PAR5, xuexue::json::Value(), allocator), allocator);      \
-        value.AddMember(#PAR6, xuexue::json::Serialize::toValue(PAR6, xuexue::json::Value(), allocator), allocator);      \
-        value.AddMember(#PAR7, xuexue::json::Serialize::toValue(PAR7, xuexue::json::Value(), allocator), allocator);      \
-        return std::move(value);                                                                                          \
-    }                                                                                                                     \
-                                                                                                                          \
-    xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const       \
-    {                                                                                                                     \
-        value.SetObject();                                                                                                \
-        value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator); \
-        value.AddMember(L## #PAR2, xuexue::json::Serialize::toValue(PAR2, xuexue::json::ValueW(), allocator), allocator); \
-        value.AddMember(L## #PAR3, xuexue::json::Serialize::toValue(PAR3, xuexue::json::ValueW(), allocator), allocator); \
-        value.AddMember(L## #PAR4, xuexue::json::Serialize::toValue(PAR4, xuexue::json::ValueW(), allocator), allocator); \
-        value.AddMember(L## #PAR5, xuexue::json::Serialize::toValue(PAR5, xuexue::json::ValueW(), allocator), allocator); \
-        value.AddMember(L## #PAR6, xuexue::json::Serialize::toValue(PAR6, xuexue::json::ValueW(), allocator), allocator); \
-        value.AddMember(L## #PAR7, xuexue::json::Serialize::toValue(PAR7, xuexue::json::ValueW(), allocator), allocator); \
-        return std::move(value);                                                                                          \
-    }                                                                                                                     \
-                                                                                                                          \
-    void getObj(const xuexue::json::Value& value)                                                                         \
-    {                                                                                                                     \
-        if (value.HasMember(#PAR1)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                          \
-        }                                                                                                                 \
-        if (value.HasMember(#PAR2)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR2], PAR2);                                                          \
-        }                                                                                                                 \
-        if (value.HasMember(#PAR3)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR3], PAR3);                                                          \
-        }                                                                                                                 \
-        if (value.HasMember(#PAR4)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR4], PAR4);                                                          \
-        }                                                                                                                 \
-        if (value.HasMember(#PAR5)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR5], PAR5);                                                          \
-        }                                                                                                                 \
-        if (value.HasMember(#PAR6)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR6], PAR6);                                                          \
-        }                                                                                                                 \
-        if (value.HasMember(#PAR7)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR7], PAR7);                                                          \
-        }                                                                                                                 \
-    }                                                                                                                     \
-                                                                                                                          \
-    void getObj(const xuexue::json::ValueW& value)                                                                        \
-    {                                                                                                                     \
-        if (value.HasMember(L## #PAR1)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                      \
-        }                                                                                                                 \
-        if (value.HasMember(L## #PAR2)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR2], PAR2);                                                      \
-        }                                                                                                                 \
-        if (value.HasMember(L## #PAR3)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR3], PAR3);                                                      \
-        }                                                                                                                 \
-        if (value.HasMember(L## #PAR4)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR4], PAR4);                                                      \
-        }                                                                                                                 \
-        if (value.HasMember(L## #PAR5)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR5], PAR5);                                                      \
-        }                                                                                                                 \
-        if (value.HasMember(L## #PAR6)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR6], PAR6);                                                      \
-        }                                                                                                                 \
-        if (value.HasMember(L## #PAR7)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR7], PAR7);                                                      \
-        }                                                                                                                 \
+#define XUEXUE_JSON_OBJECT_M7(PAR1, PAR2, PAR3, PAR4, PAR5, PAR6, PAR7)                                                     \
+    virtual xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const   \
+    {                                                                                                                       \
+        value.SetObject();                                                                                                  \
+        value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);        \
+        value.AddMember(#PAR2, xuexue::json::Serialize::toValue(PAR2, xuexue::json::Value(), allocator), allocator);        \
+        value.AddMember(#PAR3, xuexue::json::Serialize::toValue(PAR3, xuexue::json::Value(), allocator), allocator);        \
+        value.AddMember(#PAR4, xuexue::json::Serialize::toValue(PAR4, xuexue::json::Value(), allocator), allocator);        \
+        value.AddMember(#PAR5, xuexue::json::Serialize::toValue(PAR5, xuexue::json::Value(), allocator), allocator);        \
+        value.AddMember(#PAR6, xuexue::json::Serialize::toValue(PAR6, xuexue::json::Value(), allocator), allocator);        \
+        value.AddMember(#PAR7, xuexue::json::Serialize::toValue(PAR7, xuexue::json::Value(), allocator), allocator);        \
+        return std::move(value);                                                                                            \
+    }                                                                                                                       \
+                                                                                                                            \
+    virtual xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const \
+    {                                                                                                                       \
+        value.SetObject();                                                                                                  \
+        value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator);   \
+        value.AddMember(L## #PAR2, xuexue::json::Serialize::toValue(PAR2, xuexue::json::ValueW(), allocator), allocator);   \
+        value.AddMember(L## #PAR3, xuexue::json::Serialize::toValue(PAR3, xuexue::json::ValueW(), allocator), allocator);   \
+        value.AddMember(L## #PAR4, xuexue::json::Serialize::toValue(PAR4, xuexue::json::ValueW(), allocator), allocator);   \
+        value.AddMember(L## #PAR5, xuexue::json::Serialize::toValue(PAR5, xuexue::json::ValueW(), allocator), allocator);   \
+        value.AddMember(L## #PAR6, xuexue::json::Serialize::toValue(PAR6, xuexue::json::ValueW(), allocator), allocator);   \
+        value.AddMember(L## #PAR7, xuexue::json::Serialize::toValue(PAR7, xuexue::json::ValueW(), allocator), allocator);   \
+        return std::move(value);                                                                                            \
+    }                                                                                                                       \
+                                                                                                                            \
+    virtual void getObj(const xuexue::json::Value& value)                                                                   \
+    {                                                                                                                       \
+        if (value.HasMember(#PAR1)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                            \
+        }                                                                                                                   \
+        if (value.HasMember(#PAR2)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR2], PAR2);                                                            \
+        }                                                                                                                   \
+        if (value.HasMember(#PAR3)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR3], PAR3);                                                            \
+        }                                                                                                                   \
+        if (value.HasMember(#PAR4)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR4], PAR4);                                                            \
+        }                                                                                                                   \
+        if (value.HasMember(#PAR5)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR5], PAR5);                                                            \
+        }                                                                                                                   \
+        if (value.HasMember(#PAR6)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR6], PAR6);                                                            \
+        }                                                                                                                   \
+        if (value.HasMember(#PAR7)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR7], PAR7);                                                            \
+        }                                                                                                                   \
+    }                                                                                                                       \
+                                                                                                                            \
+    virtual void getObj(const xuexue::json::ValueW& value)                                                                  \
+    {                                                                                                                       \
+        if (value.HasMember(L## #PAR1)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                        \
+        }                                                                                                                   \
+        if (value.HasMember(L## #PAR2)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR2], PAR2);                                                        \
+        }                                                                                                                   \
+        if (value.HasMember(L## #PAR3)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR3], PAR3);                                                        \
+        }                                                                                                                   \
+        if (value.HasMember(L## #PAR4)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR4], PAR4);                                                        \
+        }                                                                                                                   \
+        if (value.HasMember(L## #PAR5)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR5], PAR5);                                                        \
+        }                                                                                                                   \
+        if (value.HasMember(L## #PAR6)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR6], PAR6);                                                        \
+        }                                                                                                                   \
+        if (value.HasMember(L## #PAR7)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR7], PAR7);                                                        \
+        }                                                                                                                   \
     }
 
-#define XUEXUE_JSON_OBJECT_M8(PAR1, PAR2, PAR3, PAR4, PAR5, PAR6, PAR7, PAR8)                                             \
-    xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const         \
-    {                                                                                                                     \
-        value.SetObject();                                                                                                \
-        value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);      \
-        value.AddMember(#PAR2, xuexue::json::Serialize::toValue(PAR2, xuexue::json::Value(), allocator), allocator);      \
-        value.AddMember(#PAR3, xuexue::json::Serialize::toValue(PAR3, xuexue::json::Value(), allocator), allocator);      \
-        value.AddMember(#PAR4, xuexue::json::Serialize::toValue(PAR4, xuexue::json::Value(), allocator), allocator);      \
-        value.AddMember(#PAR5, xuexue::json::Serialize::toValue(PAR5, xuexue::json::Value(), allocator), allocator);      \
-        value.AddMember(#PAR6, xuexue::json::Serialize::toValue(PAR6, xuexue::json::Value(), allocator), allocator);      \
-        value.AddMember(#PAR7, xuexue::json::Serialize::toValue(PAR7, xuexue::json::Value(), allocator), allocator);      \
-        value.AddMember(#PAR8, xuexue::json::Serialize::toValue(PAR8, xuexue::json::Value(), allocator), allocator);      \
-        return std::move(value);                                                                                          \
-    }                                                                                                                     \
-                                                                                                                          \
-    xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const       \
-    {                                                                                                                     \
-        value.SetObject();                                                                                                \
-        value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator); \
-        value.AddMember(L## #PAR2, xuexue::json::Serialize::toValue(PAR2, xuexue::json::ValueW(), allocator), allocator); \
-        value.AddMember(L## #PAR3, xuexue::json::Serialize::toValue(PAR3, xuexue::json::ValueW(), allocator), allocator); \
-        value.AddMember(L## #PAR4, xuexue::json::Serialize::toValue(PAR4, xuexue::json::ValueW(), allocator), allocator); \
-        value.AddMember(L## #PAR5, xuexue::json::Serialize::toValue(PAR5, xuexue::json::ValueW(), allocator), allocator); \
-        value.AddMember(L## #PAR6, xuexue::json::Serialize::toValue(PAR6, xuexue::json::ValueW(), allocator), allocator); \
-        value.AddMember(L## #PAR7, xuexue::json::Serialize::toValue(PAR7, xuexue::json::ValueW(), allocator), allocator); \
-        value.AddMember(L## #PAR8, xuexue::json::Serialize::toValue(PAR8, xuexue::json::ValueW(), allocator), allocator); \
-        return std::move(value);                                                                                          \
-    }                                                                                                                     \
-                                                                                                                          \
-    void getObj(const xuexue::json::Value& value)                                                                         \
-    {                                                                                                                     \
-        if (value.HasMember(#PAR1)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                          \
-        }                                                                                                                 \
-        if (value.HasMember(#PAR2)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR2], PAR2);                                                          \
-        }                                                                                                                 \
-        if (value.HasMember(#PAR3)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR3], PAR3);                                                          \
-        }                                                                                                                 \
-        if (value.HasMember(#PAR4)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR4], PAR4);                                                          \
-        }                                                                                                                 \
-        if (value.HasMember(#PAR5)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR5], PAR5);                                                          \
-        }                                                                                                                 \
-        if (value.HasMember(#PAR6)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR6], PAR6);                                                          \
-        }                                                                                                                 \
-        if (value.HasMember(#PAR7)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR7], PAR7);                                                          \
-        }                                                                                                                 \
-        if (value.HasMember(#PAR8)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR8], PAR8);                                                          \
-        }                                                                                                                 \
-    }                                                                                                                     \
-                                                                                                                          \
-    void getObj(const xuexue::json::ValueW& value)                                                                        \
-    {                                                                                                                     \
-        if (value.HasMember(L## #PAR1)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                      \
-        }                                                                                                                 \
-        if (value.HasMember(L## #PAR2)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR2], PAR2);                                                      \
-        }                                                                                                                 \
-        if (value.HasMember(L## #PAR3)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR3], PAR3);                                                      \
-        }                                                                                                                 \
-        if (value.HasMember(L## #PAR4)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR4], PAR4);                                                      \
-        }                                                                                                                 \
-        if (value.HasMember(L## #PAR5)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR5], PAR5);                                                      \
-        }                                                                                                                 \
-        if (value.HasMember(L## #PAR6)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR6], PAR6);                                                      \
-        }                                                                                                                 \
-        if (value.HasMember(L## #PAR7)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR7], PAR7);                                                      \
-        }                                                                                                                 \
-        if (value.HasMember(L## #PAR8)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR8], PAR8);                                                      \
-        }                                                                                                                 \
+#define XUEXUE_JSON_OBJECT_M8(PAR1, PAR2, PAR3, PAR4, PAR5, PAR6, PAR7, PAR8)                                               \
+    virtual xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const   \
+    {                                                                                                                       \
+        value.SetObject();                                                                                                  \
+        value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);        \
+        value.AddMember(#PAR2, xuexue::json::Serialize::toValue(PAR2, xuexue::json::Value(), allocator), allocator);        \
+        value.AddMember(#PAR3, xuexue::json::Serialize::toValue(PAR3, xuexue::json::Value(), allocator), allocator);        \
+        value.AddMember(#PAR4, xuexue::json::Serialize::toValue(PAR4, xuexue::json::Value(), allocator), allocator);        \
+        value.AddMember(#PAR5, xuexue::json::Serialize::toValue(PAR5, xuexue::json::Value(), allocator), allocator);        \
+        value.AddMember(#PAR6, xuexue::json::Serialize::toValue(PAR6, xuexue::json::Value(), allocator), allocator);        \
+        value.AddMember(#PAR7, xuexue::json::Serialize::toValue(PAR7, xuexue::json::Value(), allocator), allocator);        \
+        value.AddMember(#PAR8, xuexue::json::Serialize::toValue(PAR8, xuexue::json::Value(), allocator), allocator);        \
+        return std::move(value);                                                                                            \
+    }                                                                                                                       \
+                                                                                                                            \
+    virtual xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const \
+    {                                                                                                                       \
+        value.SetObject();                                                                                                  \
+        value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator);   \
+        value.AddMember(L## #PAR2, xuexue::json::Serialize::toValue(PAR2, xuexue::json::ValueW(), allocator), allocator);   \
+        value.AddMember(L## #PAR3, xuexue::json::Serialize::toValue(PAR3, xuexue::json::ValueW(), allocator), allocator);   \
+        value.AddMember(L## #PAR4, xuexue::json::Serialize::toValue(PAR4, xuexue::json::ValueW(), allocator), allocator);   \
+        value.AddMember(L## #PAR5, xuexue::json::Serialize::toValue(PAR5, xuexue::json::ValueW(), allocator), allocator);   \
+        value.AddMember(L## #PAR6, xuexue::json::Serialize::toValue(PAR6, xuexue::json::ValueW(), allocator), allocator);   \
+        value.AddMember(L## #PAR7, xuexue::json::Serialize::toValue(PAR7, xuexue::json::ValueW(), allocator), allocator);   \
+        value.AddMember(L## #PAR8, xuexue::json::Serialize::toValue(PAR8, xuexue::json::ValueW(), allocator), allocator);   \
+        return std::move(value);                                                                                            \
+    }                                                                                                                       \
+                                                                                                                            \
+    virtual void getObj(const xuexue::json::Value& value)                                                                   \
+    {                                                                                                                       \
+        if (value.HasMember(#PAR1)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                            \
+        }                                                                                                                   \
+        if (value.HasMember(#PAR2)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR2], PAR2);                                                            \
+        }                                                                                                                   \
+        if (value.HasMember(#PAR3)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR3], PAR3);                                                            \
+        }                                                                                                                   \
+        if (value.HasMember(#PAR4)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR4], PAR4);                                                            \
+        }                                                                                                                   \
+        if (value.HasMember(#PAR5)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR5], PAR5);                                                            \
+        }                                                                                                                   \
+        if (value.HasMember(#PAR6)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR6], PAR6);                                                            \
+        }                                                                                                                   \
+        if (value.HasMember(#PAR7)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR7], PAR7);                                                            \
+        }                                                                                                                   \
+        if (value.HasMember(#PAR8)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR8], PAR8);                                                            \
+        }                                                                                                                   \
+    }                                                                                                                       \
+                                                                                                                            \
+    virtual void getObj(const xuexue::json::ValueW& value)                                                                  \
+    {                                                                                                                       \
+        if (value.HasMember(L## #PAR1)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                        \
+        }                                                                                                                   \
+        if (value.HasMember(L## #PAR2)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR2], PAR2);                                                        \
+        }                                                                                                                   \
+        if (value.HasMember(L## #PAR3)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR3], PAR3);                                                        \
+        }                                                                                                                   \
+        if (value.HasMember(L## #PAR4)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR4], PAR4);                                                        \
+        }                                                                                                                   \
+        if (value.HasMember(L## #PAR5)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR5], PAR5);                                                        \
+        }                                                                                                                   \
+        if (value.HasMember(L## #PAR6)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR6], PAR6);                                                        \
+        }                                                                                                                   \
+        if (value.HasMember(L## #PAR7)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR7], PAR7);                                                        \
+        }                                                                                                                   \
+        if (value.HasMember(L## #PAR8)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR8], PAR8);                                                        \
+        }                                                                                                                   \
     }
 
-#define XUEXUE_JSON_OBJECT_M9(PAR1, PAR2, PAR3, PAR4, PAR5, PAR6, PAR7, PAR8, PAR9)                                       \
-    xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const         \
-    {                                                                                                                     \
-        value.SetObject();                                                                                                \
-        value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);      \
-        value.AddMember(#PAR2, xuexue::json::Serialize::toValue(PAR2, xuexue::json::Value(), allocator), allocator);      \
-        value.AddMember(#PAR3, xuexue::json::Serialize::toValue(PAR3, xuexue::json::Value(), allocator), allocator);      \
-        value.AddMember(#PAR4, xuexue::json::Serialize::toValue(PAR4, xuexue::json::Value(), allocator), allocator);      \
-        value.AddMember(#PAR5, xuexue::json::Serialize::toValue(PAR5, xuexue::json::Value(), allocator), allocator);      \
-        value.AddMember(#PAR6, xuexue::json::Serialize::toValue(PAR6, xuexue::json::Value(), allocator), allocator);      \
-        value.AddMember(#PAR7, xuexue::json::Serialize::toValue(PAR7, xuexue::json::Value(), allocator), allocator);      \
-        value.AddMember(#PAR8, xuexue::json::Serialize::toValue(PAR8, xuexue::json::Value(), allocator), allocator);      \
-        value.AddMember(#PAR9, xuexue::json::Serialize::toValue(PAR9, xuexue::json::Value(), allocator), allocator);      \
-        return std::move(value);                                                                                          \
-    }                                                                                                                     \
-                                                                                                                          \
-    xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const       \
-    {                                                                                                                     \
-        value.SetObject();                                                                                                \
-        value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator); \
-        value.AddMember(L## #PAR2, xuexue::json::Serialize::toValue(PAR2, xuexue::json::ValueW(), allocator), allocator); \
-        value.AddMember(L## #PAR3, xuexue::json::Serialize::toValue(PAR3, xuexue::json::ValueW(), allocator), allocator); \
-        value.AddMember(L## #PAR4, xuexue::json::Serialize::toValue(PAR4, xuexue::json::ValueW(), allocator), allocator); \
-        value.AddMember(L## #PAR5, xuexue::json::Serialize::toValue(PAR5, xuexue::json::ValueW(), allocator), allocator); \
-        value.AddMember(L## #PAR6, xuexue::json::Serialize::toValue(PAR6, xuexue::json::ValueW(), allocator), allocator); \
-        value.AddMember(L## #PAR7, xuexue::json::Serialize::toValue(PAR7, xuexue::json::ValueW(), allocator), allocator); \
-        value.AddMember(L## #PAR8, xuexue::json::Serialize::toValue(PAR8, xuexue::json::ValueW(), allocator), allocator); \
-        value.AddMember(L## #PAR9, xuexue::json::Serialize::toValue(PAR9, xuexue::json::ValueW(), allocator), allocator); \
-        return std::move(value);                                                                                          \
-    }                                                                                                                     \
-                                                                                                                          \
-    void getObj(const xuexue::json::Value& value)                                                                         \
-    {                                                                                                                     \
-        if (value.HasMember(#PAR1)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                          \
-        }                                                                                                                 \
-        if (value.HasMember(#PAR2)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR2], PAR2);                                                          \
-        }                                                                                                                 \
-        if (value.HasMember(#PAR3)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR3], PAR3);                                                          \
-        }                                                                                                                 \
-        if (value.HasMember(#PAR4)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR4], PAR4);                                                          \
-        }                                                                                                                 \
-        if (value.HasMember(#PAR5)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR5], PAR5);                                                          \
-        }                                                                                                                 \
-        if (value.HasMember(#PAR6)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR6], PAR6);                                                          \
-        }                                                                                                                 \
-        if (value.HasMember(#PAR7)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR7], PAR7);                                                          \
-        }                                                                                                                 \
-        if (value.HasMember(#PAR8)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR8], PAR8);                                                          \
-        }                                                                                                                 \
-        if (value.HasMember(#PAR9)) {                                                                                     \
-            xuexue::json::Serialize::getObj(value[#PAR9], PAR9);                                                          \
-        }                                                                                                                 \
-    }                                                                                                                     \
-                                                                                                                          \
-    void getObj(const xuexue::json::ValueW& value)                                                                        \
-    {                                                                                                                     \
-        if (value.HasMember(L## #PAR1)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                      \
-        }                                                                                                                 \
-        if (value.HasMember(L## #PAR2)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR2], PAR2);                                                      \
-        }                                                                                                                 \
-        if (value.HasMember(L## #PAR3)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR3], PAR3);                                                      \
-        }                                                                                                                 \
-        if (value.HasMember(L## #PAR4)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR4], PAR4);                                                      \
-        }                                                                                                                 \
-        if (value.HasMember(L## #PAR5)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR5], PAR5);                                                      \
-        }                                                                                                                 \
-        if (value.HasMember(L## #PAR6)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR6], PAR6);                                                      \
-        }                                                                                                                 \
-        if (value.HasMember(L## #PAR7)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR7], PAR7);                                                      \
-        }                                                                                                                 \
-        if (value.HasMember(L## #PAR8)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR8], PAR8);                                                      \
-        }                                                                                                                 \
-        if (value.HasMember(L## #PAR9)) {                                                                                 \
-            xuexue::json::Serialize::getObj(value[L## #PAR9], PAR9);                                                      \
-        }                                                                                                                 \
+#define XUEXUE_JSON_OBJECT_M9(PAR1, PAR2, PAR3, PAR4, PAR5, PAR6, PAR7, PAR8, PAR9)                                         \
+    virtual xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const   \
+    {                                                                                                                       \
+        value.SetObject();                                                                                                  \
+        value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);        \
+        value.AddMember(#PAR2, xuexue::json::Serialize::toValue(PAR2, xuexue::json::Value(), allocator), allocator);        \
+        value.AddMember(#PAR3, xuexue::json::Serialize::toValue(PAR3, xuexue::json::Value(), allocator), allocator);        \
+        value.AddMember(#PAR4, xuexue::json::Serialize::toValue(PAR4, xuexue::json::Value(), allocator), allocator);        \
+        value.AddMember(#PAR5, xuexue::json::Serialize::toValue(PAR5, xuexue::json::Value(), allocator), allocator);        \
+        value.AddMember(#PAR6, xuexue::json::Serialize::toValue(PAR6, xuexue::json::Value(), allocator), allocator);        \
+        value.AddMember(#PAR7, xuexue::json::Serialize::toValue(PAR7, xuexue::json::Value(), allocator), allocator);        \
+        value.AddMember(#PAR8, xuexue::json::Serialize::toValue(PAR8, xuexue::json::Value(), allocator), allocator);        \
+        value.AddMember(#PAR9, xuexue::json::Serialize::toValue(PAR9, xuexue::json::Value(), allocator), allocator);        \
+        return std::move(value);                                                                                            \
+    }                                                                                                                       \
+                                                                                                                            \
+    virtual xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const \
+    {                                                                                                                       \
+        value.SetObject();                                                                                                  \
+        value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator);   \
+        value.AddMember(L## #PAR2, xuexue::json::Serialize::toValue(PAR2, xuexue::json::ValueW(), allocator), allocator);   \
+        value.AddMember(L## #PAR3, xuexue::json::Serialize::toValue(PAR3, xuexue::json::ValueW(), allocator), allocator);   \
+        value.AddMember(L## #PAR4, xuexue::json::Serialize::toValue(PAR4, xuexue::json::ValueW(), allocator), allocator);   \
+        value.AddMember(L## #PAR5, xuexue::json::Serialize::toValue(PAR5, xuexue::json::ValueW(), allocator), allocator);   \
+        value.AddMember(L## #PAR6, xuexue::json::Serialize::toValue(PAR6, xuexue::json::ValueW(), allocator), allocator);   \
+        value.AddMember(L## #PAR7, xuexue::json::Serialize::toValue(PAR7, xuexue::json::ValueW(), allocator), allocator);   \
+        value.AddMember(L## #PAR8, xuexue::json::Serialize::toValue(PAR8, xuexue::json::ValueW(), allocator), allocator);   \
+        value.AddMember(L## #PAR9, xuexue::json::Serialize::toValue(PAR9, xuexue::json::ValueW(), allocator), allocator);   \
+        return std::move(value);                                                                                            \
+    }                                                                                                                       \
+                                                                                                                            \
+    virtual void getObj(const xuexue::json::Value& value)                                                                   \
+    {                                                                                                                       \
+        if (value.HasMember(#PAR1)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                            \
+        }                                                                                                                   \
+        if (value.HasMember(#PAR2)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR2], PAR2);                                                            \
+        }                                                                                                                   \
+        if (value.HasMember(#PAR3)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR3], PAR3);                                                            \
+        }                                                                                                                   \
+        if (value.HasMember(#PAR4)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR4], PAR4);                                                            \
+        }                                                                                                                   \
+        if (value.HasMember(#PAR5)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR5], PAR5);                                                            \
+        }                                                                                                                   \
+        if (value.HasMember(#PAR6)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR6], PAR6);                                                            \
+        }                                                                                                                   \
+        if (value.HasMember(#PAR7)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR7], PAR7);                                                            \
+        }                                                                                                                   \
+        if (value.HasMember(#PAR8)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR8], PAR8);                                                            \
+        }                                                                                                                   \
+        if (value.HasMember(#PAR9)) {                                                                                       \
+            xuexue::json::Serialize::getObj(value[#PAR9], PAR9);                                                            \
+        }                                                                                                                   \
+    }                                                                                                                       \
+                                                                                                                            \
+    virtual void getObj(const xuexue::json::ValueW& value)                                                                  \
+    {                                                                                                                       \
+        if (value.HasMember(L## #PAR1)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                        \
+        }                                                                                                                   \
+        if (value.HasMember(L## #PAR2)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR2], PAR2);                                                        \
+        }                                                                                                                   \
+        if (value.HasMember(L## #PAR3)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR3], PAR3);                                                        \
+        }                                                                                                                   \
+        if (value.HasMember(L## #PAR4)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR4], PAR4);                                                        \
+        }                                                                                                                   \
+        if (value.HasMember(L## #PAR5)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR5], PAR5);                                                        \
+        }                                                                                                                   \
+        if (value.HasMember(L## #PAR6)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR6], PAR6);                                                        \
+        }                                                                                                                   \
+        if (value.HasMember(L## #PAR7)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR7], PAR7);                                                        \
+        }                                                                                                                   \
+        if (value.HasMember(L## #PAR8)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR8], PAR8);                                                        \
+        }                                                                                                                   \
+        if (value.HasMember(L## #PAR9)) {                                                                                   \
+            xuexue::json::Serialize::getObj(value[L## #PAR9], PAR9);                                                        \
+        }                                                                                                                   \
     }
 
 #define XUEXUE_JSON_OBJECT_M10(PAR1, PAR2, PAR3, PAR4, PAR5, PAR6, PAR7, PAR8, PAR9, PAR10)                                 \
-    xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const           \
+    virtual xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const   \
     {                                                                                                                       \
         value.SetObject();                                                                                                  \
         value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);        \
@@ -564,7 +564,7 @@
         return std::move(value);                                                                                            \
     }                                                                                                                       \
                                                                                                                             \
-    xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const         \
+    virtual xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const \
     {                                                                                                                       \
         value.SetObject();                                                                                                  \
         value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator);   \
@@ -580,7 +580,7 @@
         return std::move(value);                                                                                            \
     }                                                                                                                       \
                                                                                                                             \
-    void getObj(const xuexue::json::Value& value)                                                                           \
+    virtual void getObj(const xuexue::json::Value& value)                                                                   \
     {                                                                                                                       \
         if (value.HasMember(#PAR1)) {                                                                                       \
             xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                            \
@@ -614,7 +614,7 @@
         }                                                                                                                   \
     }                                                                                                                       \
                                                                                                                             \
-    void getObj(const xuexue::json::ValueW& value)                                                                          \
+    virtual void getObj(const xuexue::json::ValueW& value)                                                                  \
     {                                                                                                                       \
         if (value.HasMember(L## #PAR1)) {                                                                                   \
             xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                        \
@@ -649,7 +649,7 @@
     }
 
 #define XUEXUE_JSON_OBJECT_M11(PAR1, PAR2, PAR3, PAR4, PAR5, PAR6, PAR7, PAR8, PAR9, PAR10, PAR11)                          \
-    xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const           \
+    virtual xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const   \
     {                                                                                                                       \
         value.SetObject();                                                                                                  \
         value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);        \
@@ -666,7 +666,7 @@
         return std::move(value);                                                                                            \
     }                                                                                                                       \
                                                                                                                             \
-    xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const         \
+    virtual xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const \
     {                                                                                                                       \
         value.SetObject();                                                                                                  \
         value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator);   \
@@ -683,7 +683,7 @@
         return std::move(value);                                                                                            \
     }                                                                                                                       \
                                                                                                                             \
-    void getObj(const xuexue::json::Value& value)                                                                           \
+    virtual void getObj(const xuexue::json::Value& value)                                                                   \
     {                                                                                                                       \
         if (value.HasMember(#PAR1)) {                                                                                       \
             xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                            \
@@ -720,7 +720,7 @@
         }                                                                                                                   \
     }                                                                                                                       \
                                                                                                                             \
-    void getObj(const xuexue::json::ValueW& value)                                                                          \
+    virtual void getObj(const xuexue::json::ValueW& value)                                                                  \
     {                                                                                                                       \
         if (value.HasMember(L## #PAR1)) {                                                                                   \
             xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                        \
@@ -758,7 +758,7 @@
     }
 
 #define XUEXUE_JSON_OBJECT_M12(PAR1, PAR2, PAR3, PAR4, PAR5, PAR6, PAR7, PAR8, PAR9, PAR10, PAR11, PAR12)                   \
-    xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const           \
+    virtual xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const   \
     {                                                                                                                       \
         value.SetObject();                                                                                                  \
         value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);        \
@@ -776,7 +776,7 @@
         return std::move(value);                                                                                            \
     }                                                                                                                       \
                                                                                                                             \
-    xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const         \
+    virtual xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const \
     {                                                                                                                       \
         value.SetObject();                                                                                                  \
         value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator);   \
@@ -794,7 +794,7 @@
         return std::move(value);                                                                                            \
     }                                                                                                                       \
                                                                                                                             \
-    void getObj(const xuexue::json::Value& value)                                                                           \
+    virtual void getObj(const xuexue::json::Value& value)                                                                   \
     {                                                                                                                       \
         if (value.HasMember(#PAR1)) {                                                                                       \
             xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                            \
@@ -834,7 +834,7 @@
         }                                                                                                                   \
     }                                                                                                                       \
                                                                                                                             \
-    void getObj(const xuexue::json::ValueW& value)                                                                          \
+    virtual void getObj(const xuexue::json::ValueW& value)                                                                  \
     {                                                                                                                       \
         if (value.HasMember(L## #PAR1)) {                                                                                   \
             xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                        \
@@ -875,7 +875,7 @@
     }
 
 #define XUEXUE_JSON_OBJECT_M13(PAR1, PAR2, PAR3, PAR4, PAR5, PAR6, PAR7, PAR8, PAR9, PAR10, PAR11, PAR12, PAR13)            \
-    xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const           \
+    virtual xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const   \
     {                                                                                                                       \
         value.SetObject();                                                                                                  \
         value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);        \
@@ -894,7 +894,7 @@
         return std::move(value);                                                                                            \
     }                                                                                                                       \
                                                                                                                             \
-    xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const         \
+    virtual xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const \
     {                                                                                                                       \
         value.SetObject();                                                                                                  \
         value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator);   \
@@ -913,7 +913,7 @@
         return std::move(value);                                                                                            \
     }                                                                                                                       \
                                                                                                                             \
-    void getObj(const xuexue::json::Value& value)                                                                           \
+    virtual void getObj(const xuexue::json::Value& value)                                                                   \
     {                                                                                                                       \
         if (value.HasMember(#PAR1)) {                                                                                       \
             xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                            \
@@ -956,7 +956,7 @@
         }                                                                                                                   \
     }                                                                                                                       \
                                                                                                                             \
-    void getObj(const xuexue::json::ValueW& value)                                                                          \
+    virtual void getObj(const xuexue::json::ValueW& value)                                                                  \
     {                                                                                                                       \
         if (value.HasMember(L## #PAR1)) {                                                                                   \
             xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                        \
@@ -1000,7 +1000,7 @@
     }
 
 #define XUEXUE_JSON_OBJECT_M14(PAR1, PAR2, PAR3, PAR4, PAR5, PAR6, PAR7, PAR8, PAR9, PAR10, PAR11, PAR12, PAR13, PAR14)     \
-    xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const           \
+    virtual xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const   \
     {                                                                                                                       \
         value.SetObject();                                                                                                  \
         value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);        \
@@ -1020,7 +1020,7 @@
         return std::move(value);                                                                                            \
     }                                                                                                                       \
                                                                                                                             \
-    xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const         \
+    virtual xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const \
     {                                                                                                                       \
         value.SetObject();                                                                                                  \
         value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator);   \
@@ -1040,7 +1040,7 @@
         return std::move(value);                                                                                            \
     }                                                                                                                       \
                                                                                                                             \
-    void getObj(const xuexue::json::Value& value)                                                                           \
+    virtual void getObj(const xuexue::json::Value& value)                                                                   \
     {                                                                                                                       \
         if (value.HasMember(#PAR1)) {                                                                                       \
             xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                            \
@@ -1086,7 +1086,7 @@
         }                                                                                                                   \
     }                                                                                                                       \
                                                                                                                             \
-    void getObj(const xuexue::json::ValueW& value)                                                                          \
+    virtual void getObj(const xuexue::json::ValueW& value)                                                                  \
     {                                                                                                                       \
         if (value.HasMember(L## #PAR1)) {                                                                                   \
             xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                        \
@@ -1133,7 +1133,7 @@
     }
 
 #define XUEXUE_JSON_OBJECT_M15(PAR1, PAR2, PAR3, PAR4, PAR5, PAR6, PAR7, PAR8, PAR9, PAR10, PAR11, PAR12, PAR13, PAR14, PAR15) \
-    xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const              \
+    virtual xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const      \
     {                                                                                                                          \
         value.SetObject();                                                                                                     \
         value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);           \
@@ -1154,7 +1154,7 @@
         return std::move(value);                                                                                               \
     }                                                                                                                          \
                                                                                                                                \
-    xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const            \
+    virtual xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const    \
     {                                                                                                                          \
         value.SetObject();                                                                                                     \
         value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator);      \
@@ -1175,7 +1175,7 @@
         return std::move(value);                                                                                               \
     }                                                                                                                          \
                                                                                                                                \
-    void getObj(const xuexue::json::Value& value)                                                                              \
+    virtual void getObj(const xuexue::json::Value& value)                                                                      \
     {                                                                                                                          \
         if (value.HasMember(#PAR1)) {                                                                                          \
             xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                               \
@@ -1224,7 +1224,7 @@
         }                                                                                                                      \
     }                                                                                                                          \
                                                                                                                                \
-    void getObj(const xuexue::json::ValueW& value)                                                                             \
+    virtual void getObj(const xuexue::json::ValueW& value)                                                                     \
     {                                                                                                                          \
         if (value.HasMember(L## #PAR1)) {                                                                                      \
             xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                           \
@@ -1274,7 +1274,7 @@
     }
 
 #define XUEXUE_JSON_OBJECT_M16(PAR1, PAR2, PAR3, PAR4, PAR5, PAR6, PAR7, PAR8, PAR9, PAR10, PAR11, PAR12, PAR13, PAR14, PAR15, PAR16) \
-    xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const                     \
+    virtual xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const             \
     {                                                                                                                                 \
         value.SetObject();                                                                                                            \
         value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);                  \
@@ -1296,7 +1296,7 @@
         return std::move(value);                                                                                                      \
     }                                                                                                                                 \
                                                                                                                                       \
-    xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const                   \
+    virtual xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const           \
     {                                                                                                                                 \
         value.SetObject();                                                                                                            \
         value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator);             \
@@ -1318,7 +1318,7 @@
         return std::move(value);                                                                                                      \
     }                                                                                                                                 \
                                                                                                                                       \
-    void getObj(const xuexue::json::Value& value)                                                                                     \
+    virtual void getObj(const xuexue::json::Value& value)                                                                             \
     {                                                                                                                                 \
         if (value.HasMember(#PAR1)) {                                                                                                 \
             xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                                      \
@@ -1370,7 +1370,7 @@
         }                                                                                                                             \
     }                                                                                                                                 \
                                                                                                                                       \
-    void getObj(const xuexue::json::ValueW& value)                                                                                    \
+    virtual void getObj(const xuexue::json::ValueW& value)                                                                            \
     {                                                                                                                                 \
         if (value.HasMember(L## #PAR1)) {                                                                                             \
             xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                                  \
@@ -1424,7 +1424,7 @@
 
 #define XUEXUE_JSON_OBJECT_M17(PAR1, PAR2, PAR3, PAR4, PAR5, PAR6, PAR7, PAR8, PAR9, PAR10, PAR11, PAR12, PAR13, PAR14, PAR15, PAR16, \
                                PAR17)                                                                                                 \
-    xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const                     \
+    virtual xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const             \
     {                                                                                                                                 \
         value.SetObject();                                                                                                            \
         value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);                  \
@@ -1447,7 +1447,7 @@
         return std::move(value);                                                                                                      \
     }                                                                                                                                 \
                                                                                                                                       \
-    xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const                   \
+    virtual xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const           \
     {                                                                                                                                 \
         value.SetObject();                                                                                                            \
         value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator);             \
@@ -1470,7 +1470,7 @@
         return std::move(value);                                                                                                      \
     }                                                                                                                                 \
                                                                                                                                       \
-    void getObj(const xuexue::json::Value& value)                                                                                     \
+    virtual void getObj(const xuexue::json::Value& value)                                                                             \
     {                                                                                                                                 \
         if (value.HasMember(#PAR1)) {                                                                                                 \
             xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                                      \
@@ -1525,7 +1525,7 @@
         }                                                                                                                             \
     }                                                                                                                                 \
                                                                                                                                       \
-    void getObj(const xuexue::json::ValueW& value)                                                                                    \
+    virtual void getObj(const xuexue::json::ValueW& value)                                                                            \
     {                                                                                                                                 \
         if (value.HasMember(L## #PAR1)) {                                                                                             \
             xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                                  \
@@ -1582,7 +1582,7 @@
 
 #define XUEXUE_JSON_OBJECT_M18(PAR1, PAR2, PAR3, PAR4, PAR5, PAR6, PAR7, PAR8, PAR9, PAR10, PAR11, PAR12, PAR13, PAR14, PAR15, PAR16, \
                                PAR17, PAR18)                                                                                          \
-    xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const                     \
+    virtual xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const             \
     {                                                                                                                                 \
         value.SetObject();                                                                                                            \
         value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);                  \
@@ -1606,7 +1606,7 @@
         return std::move(value);                                                                                                      \
     }                                                                                                                                 \
                                                                                                                                       \
-    xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const                   \
+    virtual xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const           \
     {                                                                                                                                 \
         value.SetObject();                                                                                                            \
         value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator);             \
@@ -1630,7 +1630,7 @@
         return std::move(value);                                                                                                      \
     }                                                                                                                                 \
                                                                                                                                       \
-    void getObj(const xuexue::json::Value& value)                                                                                     \
+    virtual void getObj(const xuexue::json::Value& value)                                                                             \
     {                                                                                                                                 \
         if (value.HasMember(#PAR1)) {                                                                                                 \
             xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                                      \
@@ -1688,7 +1688,7 @@
         }                                                                                                                             \
     }                                                                                                                                 \
                                                                                                                                       \
-    void getObj(const xuexue::json::ValueW& value)                                                                                    \
+    virtual void getObj(const xuexue::json::ValueW& value)                                                                            \
     {                                                                                                                                 \
         if (value.HasMember(L## #PAR1)) {                                                                                             \
             xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                                  \
@@ -1748,7 +1748,7 @@
 
 #define XUEXUE_JSON_OBJECT_M19(PAR1, PAR2, PAR3, PAR4, PAR5, PAR6, PAR7, PAR8, PAR9, PAR10, PAR11, PAR12, PAR13, PAR14, PAR15, PAR16, \
                                PAR17, PAR18, PAR19)                                                                                   \
-    xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const                     \
+    virtual xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const             \
     {                                                                                                                                 \
         value.SetObject();                                                                                                            \
         value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);                  \
@@ -1773,7 +1773,7 @@
         return std::move(value);                                                                                                      \
     }                                                                                                                                 \
                                                                                                                                       \
-    xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const                   \
+    virtual xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const           \
     {                                                                                                                                 \
         value.SetObject();                                                                                                            \
         value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator);             \
@@ -1798,7 +1798,7 @@
         return std::move(value);                                                                                                      \
     }                                                                                                                                 \
                                                                                                                                       \
-    void getObj(const xuexue::json::Value& value)                                                                                     \
+    virtual void getObj(const xuexue::json::Value& value)                                                                             \
     {                                                                                                                                 \
         if (value.HasMember(#PAR1)) {                                                                                                 \
             xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                                      \
@@ -1859,7 +1859,7 @@
         }                                                                                                                             \
     }                                                                                                                                 \
                                                                                                                                       \
-    void getObj(const xuexue::json::ValueW& value)                                                                                    \
+    virtual void getObj(const xuexue::json::ValueW& value)                                                                            \
     {                                                                                                                                 \
         if (value.HasMember(L## #PAR1)) {                                                                                             \
             xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                                  \
@@ -1922,7 +1922,7 @@
 
 #define XUEXUE_JSON_OBJECT_M20(PAR1, PAR2, PAR3, PAR4, PAR5, PAR6, PAR7, PAR8, PAR9, PAR10, PAR11, PAR12, PAR13, PAR14, PAR15, PAR16, \
                                PAR17, PAR18, PAR19, PAR20)                                                                            \
-    xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const                     \
+    virtual xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const             \
     {                                                                                                                                 \
         value.SetObject();                                                                                                            \
         value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);                  \
@@ -1948,7 +1948,7 @@
         return std::move(value);                                                                                                      \
     }                                                                                                                                 \
                                                                                                                                       \
-    xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const                   \
+    virtual xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const           \
     {                                                                                                                                 \
         value.SetObject();                                                                                                            \
         value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator);             \
@@ -1974,7 +1974,7 @@
         return std::move(value);                                                                                                      \
     }                                                                                                                                 \
                                                                                                                                       \
-    void getObj(const xuexue::json::Value& value)                                                                                     \
+    virtual void getObj(const xuexue::json::Value& value)                                                                             \
     {                                                                                                                                 \
         if (value.HasMember(#PAR1)) {                                                                                                 \
             xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                                      \
@@ -2038,7 +2038,7 @@
         }                                                                                                                             \
     }                                                                                                                                 \
                                                                                                                                       \
-    void getObj(const xuexue::json::ValueW& value)                                                                                    \
+    virtual void getObj(const xuexue::json::ValueW& value)                                                                            \
     {                                                                                                                                 \
         if (value.HasMember(L## #PAR1)) {                                                                                             \
             xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                                  \
@@ -2104,7 +2104,7 @@
 
 #define XUEXUE_JSON_OBJECT_M21(PAR1, PAR2, PAR3, PAR4, PAR5, PAR6, PAR7, PAR8, PAR9, PAR10, PAR11, PAR12, PAR13, PAR14, PAR15, PAR16, \
                                PAR17, PAR18, PAR19, PAR20, PAR21)                                                                     \
-    xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const                     \
+    virtual xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const             \
     {                                                                                                                                 \
         value.SetObject();                                                                                                            \
         value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);                  \
@@ -2131,7 +2131,7 @@
         return std::move(value);                                                                                                      \
     }                                                                                                                                 \
                                                                                                                                       \
-    xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const                   \
+    virtual xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const           \
     {                                                                                                                                 \
         value.SetObject();                                                                                                            \
         value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator);             \
@@ -2158,7 +2158,7 @@
         return std::move(value);                                                                                                      \
     }                                                                                                                                 \
                                                                                                                                       \
-    void getObj(const xuexue::json::Value& value)                                                                                     \
+    virtual void getObj(const xuexue::json::Value& value)                                                                             \
     {                                                                                                                                 \
         if (value.HasMember(#PAR1)) {                                                                                                 \
             xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                                      \
@@ -2225,7 +2225,7 @@
         }                                                                                                                             \
     }                                                                                                                                 \
                                                                                                                                       \
-    void getObj(const xuexue::json::ValueW& value)                                                                                    \
+    virtual void getObj(const xuexue::json::ValueW& value)                                                                            \
     {                                                                                                                                 \
         if (value.HasMember(L## #PAR1)) {                                                                                             \
             xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                                  \
@@ -2294,7 +2294,7 @@
 
 #define XUEXUE_JSON_OBJECT_M22(PAR1, PAR2, PAR3, PAR4, PAR5, PAR6, PAR7, PAR8, PAR9, PAR10, PAR11, PAR12, PAR13, PAR14, PAR15, PAR16, \
                                PAR17, PAR18, PAR19, PAR20, PAR21, PAR22)                                                              \
-    xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const                     \
+    virtual xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const             \
     {                                                                                                                                 \
         value.SetObject();                                                                                                            \
         value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);                  \
@@ -2322,7 +2322,7 @@
         return std::move(value);                                                                                                      \
     }                                                                                                                                 \
                                                                                                                                       \
-    xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const                   \
+    virtual xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const           \
     {                                                                                                                                 \
         value.SetObject();                                                                                                            \
         value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator);             \
@@ -2350,7 +2350,7 @@
         return std::move(value);                                                                                                      \
     }                                                                                                                                 \
                                                                                                                                       \
-    void getObj(const xuexue::json::Value& value)                                                                                     \
+    virtual void getObj(const xuexue::json::Value& value)                                                                             \
     {                                                                                                                                 \
         if (value.HasMember(#PAR1)) {                                                                                                 \
             xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                                      \
@@ -2420,7 +2420,7 @@
         }                                                                                                                             \
     }                                                                                                                                 \
                                                                                                                                       \
-    void getObj(const xuexue::json::ValueW& value)                                                                                    \
+    virtual void getObj(const xuexue::json::ValueW& value)                                                                            \
     {                                                                                                                                 \
         if (value.HasMember(L## #PAR1)) {                                                                                             \
             xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                                  \
@@ -2492,7 +2492,7 @@
 
 #define XUEXUE_JSON_OBJECT_M23(PAR1, PAR2, PAR3, PAR4, PAR5, PAR6, PAR7, PAR8, PAR9, PAR10, PAR11, PAR12, PAR13, PAR14, PAR15, PAR16, \
                                PAR17, PAR18, PAR19, PAR20, PAR21, PAR22, PAR23)                                                       \
-    xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const                     \
+    virtual xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const             \
     {                                                                                                                                 \
         value.SetObject();                                                                                                            \
         value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);                  \
@@ -2521,7 +2521,7 @@
         return std::move(value);                                                                                                      \
     }                                                                                                                                 \
                                                                                                                                       \
-    xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const                   \
+    virtual xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const           \
     {                                                                                                                                 \
         value.SetObject();                                                                                                            \
         value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator);             \
@@ -2550,7 +2550,7 @@
         return std::move(value);                                                                                                      \
     }                                                                                                                                 \
                                                                                                                                       \
-    void getObj(const xuexue::json::Value& value)                                                                                     \
+    virtual void getObj(const xuexue::json::Value& value)                                                                             \
     {                                                                                                                                 \
         if (value.HasMember(#PAR1)) {                                                                                                 \
             xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                                      \
@@ -2623,7 +2623,7 @@
         }                                                                                                                             \
     }                                                                                                                                 \
                                                                                                                                       \
-    void getObj(const xuexue::json::ValueW& value)                                                                                    \
+    virtual void getObj(const xuexue::json::ValueW& value)                                                                            \
     {                                                                                                                                 \
         if (value.HasMember(L## #PAR1)) {                                                                                             \
             xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                                  \
@@ -2698,7 +2698,7 @@
 
 #define XUEXUE_JSON_OBJECT_M24(PAR1, PAR2, PAR3, PAR4, PAR5, PAR6, PAR7, PAR8, PAR9, PAR10, PAR11, PAR12, PAR13, PAR14, PAR15, PAR16, \
                                PAR17, PAR18, PAR19, PAR20, PAR21, PAR22, PAR23, PAR24)                                                \
-    xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const                     \
+    virtual xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const             \
     {                                                                                                                                 \
         value.SetObject();                                                                                                            \
         value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);                  \
@@ -2728,7 +2728,7 @@
         return std::move(value);                                                                                                      \
     }                                                                                                                                 \
                                                                                                                                       \
-    xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const                   \
+    virtual xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const           \
     {                                                                                                                                 \
         value.SetObject();                                                                                                            \
         value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator);             \
@@ -2758,7 +2758,7 @@
         return std::move(value);                                                                                                      \
     }                                                                                                                                 \
                                                                                                                                       \
-    void getObj(const xuexue::json::Value& value)                                                                                     \
+    virtual void getObj(const xuexue::json::Value& value)                                                                             \
     {                                                                                                                                 \
         if (value.HasMember(#PAR1)) {                                                                                                 \
             xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                                      \
@@ -2834,7 +2834,7 @@
         }                                                                                                                             \
     }                                                                                                                                 \
                                                                                                                                       \
-    void getObj(const xuexue::json::ValueW& value)                                                                                    \
+    virtual void getObj(const xuexue::json::ValueW& value)                                                                            \
     {                                                                                                                                 \
         if (value.HasMember(L## #PAR1)) {                                                                                             \
             xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                                  \
@@ -2912,7 +2912,7 @@
 
 #define XUEXUE_JSON_OBJECT_M25(PAR1, PAR2, PAR3, PAR4, PAR5, PAR6, PAR7, PAR8, PAR9, PAR10, PAR11, PAR12, PAR13, PAR14, PAR15, PAR16, \
                                PAR17, PAR18, PAR19, PAR20, PAR21, PAR22, PAR23, PAR24, PAR25)                                         \
-    xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const                     \
+    virtual xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const             \
     {                                                                                                                                 \
         value.SetObject();                                                                                                            \
         value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);                  \
@@ -2943,7 +2943,7 @@
         return std::move(value);                                                                                                      \
     }                                                                                                                                 \
                                                                                                                                       \
-    xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const                   \
+    virtual xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const           \
     {                                                                                                                                 \
         value.SetObject();                                                                                                            \
         value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator);             \
@@ -2974,7 +2974,7 @@
         return std::move(value);                                                                                                      \
     }                                                                                                                                 \
                                                                                                                                       \
-    void getObj(const xuexue::json::Value& value)                                                                                     \
+    virtual void getObj(const xuexue::json::Value& value)                                                                             \
     {                                                                                                                                 \
         if (value.HasMember(#PAR1)) {                                                                                                 \
             xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                                      \
@@ -3053,7 +3053,7 @@
         }                                                                                                                             \
     }                                                                                                                                 \
                                                                                                                                       \
-    void getObj(const xuexue::json::ValueW& value)                                                                                    \
+    virtual void getObj(const xuexue::json::ValueW& value)                                                                            \
     {                                                                                                                                 \
         if (value.HasMember(L## #PAR1)) {                                                                                             \
             xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                                  \
@@ -3134,7 +3134,7 @@
 
 #define XUEXUE_JSON_OBJECT_M26(PAR1, PAR2, PAR3, PAR4, PAR5, PAR6, PAR7, PAR8, PAR9, PAR10, PAR11, PAR12, PAR13, PAR14, PAR15, PAR16, \
                                PAR17, PAR18, PAR19, PAR20, PAR21, PAR22, PAR23, PAR24, PAR25, PAR26)                                  \
-    xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const                     \
+    virtual xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const             \
     {                                                                                                                                 \
         value.SetObject();                                                                                                            \
         value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);                  \
@@ -3166,7 +3166,7 @@
         return std::move(value);                                                                                                      \
     }                                                                                                                                 \
                                                                                                                                       \
-    xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const                   \
+    virtual xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const           \
     {                                                                                                                                 \
         value.SetObject();                                                                                                            \
         value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator);             \
@@ -3198,7 +3198,7 @@
         return std::move(value);                                                                                                      \
     }                                                                                                                                 \
                                                                                                                                       \
-    void getObj(const xuexue::json::Value& value)                                                                                     \
+    virtual void getObj(const xuexue::json::Value& value)                                                                             \
     {                                                                                                                                 \
         if (value.HasMember(#PAR1)) {                                                                                                 \
             xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                                      \
@@ -3280,7 +3280,7 @@
         }                                                                                                                             \
     }                                                                                                                                 \
                                                                                                                                       \
-    void getObj(const xuexue::json::ValueW& value)                                                                                    \
+    virtual void getObj(const xuexue::json::ValueW& value)                                                                            \
     {                                                                                                                                 \
         if (value.HasMember(L## #PAR1)) {                                                                                             \
             xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                                  \
@@ -3364,7 +3364,7 @@
 
 #define XUEXUE_JSON_OBJECT_M27(PAR1, PAR2, PAR3, PAR4, PAR5, PAR6, PAR7, PAR8, PAR9, PAR10, PAR11, PAR12, PAR13, PAR14, PAR15, PAR16, \
                                PAR17, PAR18, PAR19, PAR20, PAR21, PAR22, PAR23, PAR24, PAR25, PAR26, PAR27)                           \
-    xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const                     \
+    virtual xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const             \
     {                                                                                                                                 \
         value.SetObject();                                                                                                            \
         value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);                  \
@@ -3397,7 +3397,7 @@
         return std::move(value);                                                                                                      \
     }                                                                                                                                 \
                                                                                                                                       \
-    xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const                   \
+    virtual xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const           \
     {                                                                                                                                 \
         value.SetObject();                                                                                                            \
         value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator);             \
@@ -3430,7 +3430,7 @@
         return std::move(value);                                                                                                      \
     }                                                                                                                                 \
                                                                                                                                       \
-    void getObj(const xuexue::json::Value& value)                                                                                     \
+    virtual void getObj(const xuexue::json::Value& value)                                                                             \
     {                                                                                                                                 \
         if (value.HasMember(#PAR1)) {                                                                                                 \
             xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                                      \
@@ -3515,7 +3515,7 @@
         }                                                                                                                             \
     }                                                                                                                                 \
                                                                                                                                       \
-    void getObj(const xuexue::json::ValueW& value)                                                                                    \
+    virtual void getObj(const xuexue::json::ValueW& value)                                                                            \
     {                                                                                                                                 \
         if (value.HasMember(L## #PAR1)) {                                                                                             \
             xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                                  \
@@ -3602,7 +3602,7 @@
 
 #define XUEXUE_JSON_OBJECT_M28(PAR1, PAR2, PAR3, PAR4, PAR5, PAR6, PAR7, PAR8, PAR9, PAR10, PAR11, PAR12, PAR13, PAR14, PAR15, PAR16, \
                                PAR17, PAR18, PAR19, PAR20, PAR21, PAR22, PAR23, PAR24, PAR25, PAR26, PAR27, PAR28)                    \
-    xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const                     \
+    virtual xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const             \
     {                                                                                                                                 \
         value.SetObject();                                                                                                            \
         value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);                  \
@@ -3636,7 +3636,7 @@
         return std::move(value);                                                                                                      \
     }                                                                                                                                 \
                                                                                                                                       \
-    xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const                   \
+    virtual xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const           \
     {                                                                                                                                 \
         value.SetObject();                                                                                                            \
         value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator);             \
@@ -3670,7 +3670,7 @@
         return std::move(value);                                                                                                      \
     }                                                                                                                                 \
                                                                                                                                       \
-    void getObj(const xuexue::json::Value& value)                                                                                     \
+    virtual void getObj(const xuexue::json::Value& value)                                                                             \
     {                                                                                                                                 \
         if (value.HasMember(#PAR1)) {                                                                                                 \
             xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                                      \
@@ -3758,7 +3758,7 @@
         }                                                                                                                             \
     }                                                                                                                                 \
                                                                                                                                       \
-    void getObj(const xuexue::json::ValueW& value)                                                                                    \
+    virtual void getObj(const xuexue::json::ValueW& value)                                                                            \
     {                                                                                                                                 \
         if (value.HasMember(L## #PAR1)) {                                                                                             \
             xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                                  \
@@ -3848,7 +3848,7 @@
 
 #define XUEXUE_JSON_OBJECT_M29(PAR1, PAR2, PAR3, PAR4, PAR5, PAR6, PAR7, PAR8, PAR9, PAR10, PAR11, PAR12, PAR13, PAR14, PAR15, PAR16, \
                                PAR17, PAR18, PAR19, PAR20, PAR21, PAR22, PAR23, PAR24, PAR25, PAR26, PAR27, PAR28, PAR29)             \
-    xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const                     \
+    virtual xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const             \
     {                                                                                                                                 \
         value.SetObject();                                                                                                            \
         value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);                  \
@@ -3883,7 +3883,7 @@
         return std::move(value);                                                                                                      \
     }                                                                                                                                 \
                                                                                                                                       \
-    xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const                   \
+    virtual xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const           \
     {                                                                                                                                 \
         value.SetObject();                                                                                                            \
         value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator);             \
@@ -3918,7 +3918,7 @@
         return std::move(value);                                                                                                      \
     }                                                                                                                                 \
                                                                                                                                       \
-    void getObj(const xuexue::json::Value& value)                                                                                     \
+    virtual void getObj(const xuexue::json::Value& value)                                                                             \
     {                                                                                                                                 \
         if (value.HasMember(#PAR1)) {                                                                                                 \
             xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                                      \
@@ -4009,7 +4009,7 @@
         }                                                                                                                             \
     }                                                                                                                                 \
                                                                                                                                       \
-    void getObj(const xuexue::json::ValueW& value)                                                                                    \
+    virtual void getObj(const xuexue::json::ValueW& value)                                                                            \
     {                                                                                                                                 \
         if (value.HasMember(L## #PAR1)) {                                                                                             \
             xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                                  \
@@ -4102,7 +4102,7 @@
 
 #define XUEXUE_JSON_OBJECT_M30(PAR1, PAR2, PAR3, PAR4, PAR5, PAR6, PAR7, PAR8, PAR9, PAR10, PAR11, PAR12, PAR13, PAR14, PAR15, PAR16, \
                                PAR17, PAR18, PAR19, PAR20, PAR21, PAR22, PAR23, PAR24, PAR25, PAR26, PAR27, PAR28, PAR29, PAR30)      \
-    xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const                     \
+    virtual xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const             \
     {                                                                                                                                 \
         value.SetObject();                                                                                                            \
         value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);                  \
@@ -4138,7 +4138,7 @@
         return std::move(value);                                                                                                      \
     }                                                                                                                                 \
                                                                                                                                       \
-    xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const                   \
+    virtual xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const           \
     {                                                                                                                                 \
         value.SetObject();                                                                                                            \
         value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator);             \
@@ -4174,7 +4174,7 @@
         return std::move(value);                                                                                                      \
     }                                                                                                                                 \
                                                                                                                                       \
-    void getObj(const xuexue::json::Value& value)                                                                                     \
+    virtual void getObj(const xuexue::json::Value& value)                                                                             \
     {                                                                                                                                 \
         if (value.HasMember(#PAR1)) {                                                                                                 \
             xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                                      \
@@ -4268,7 +4268,7 @@
         }                                                                                                                             \
     }                                                                                                                                 \
                                                                                                                                       \
-    void getObj(const xuexue::json::ValueW& value)                                                                                    \
+    virtual void getObj(const xuexue::json::ValueW& value)                                                                            \
     {                                                                                                                                 \
         if (value.HasMember(L## #PAR1)) {                                                                                             \
             xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                                  \
@@ -4364,7 +4364,7 @@
 
 #define XUEXUE_JSON_OBJECT_M31(PAR1, PAR2, PAR3, PAR4, PAR5, PAR6, PAR7, PAR8, PAR9, PAR10, PAR11, PAR12, PAR13, PAR14, PAR15, PAR16,   \
                                PAR17, PAR18, PAR19, PAR20, PAR21, PAR22, PAR23, PAR24, PAR25, PAR26, PAR27, PAR28, PAR29, PAR30, PAR31) \
-    xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const                       \
+    virtual xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const               \
     {                                                                                                                                   \
         value.SetObject();                                                                                                              \
         value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);                    \
@@ -4401,7 +4401,7 @@
         return std::move(value);                                                                                                        \
     }                                                                                                                                   \
                                                                                                                                         \
-    xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const                     \
+    virtual xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const             \
     {                                                                                                                                   \
         value.SetObject();                                                                                                              \
         value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator);               \
@@ -4438,7 +4438,7 @@
         return std::move(value);                                                                                                        \
     }                                                                                                                                   \
                                                                                                                                         \
-    void getObj(const xuexue::json::Value& value)                                                                                       \
+    virtual void getObj(const xuexue::json::Value& value)                                                                               \
     {                                                                                                                                   \
         if (value.HasMember(#PAR1)) {                                                                                                   \
             xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                                        \
@@ -4535,7 +4535,7 @@
         }                                                                                                                               \
     }                                                                                                                                   \
                                                                                                                                         \
-    void getObj(const xuexue::json::ValueW& value)                                                                                      \
+    virtual void getObj(const xuexue::json::ValueW& value)                                                                              \
     {                                                                                                                                   \
         if (value.HasMember(L## #PAR1)) {                                                                                               \
             xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                                    \
@@ -4635,7 +4635,7 @@
 #define XUEXUE_JSON_OBJECT_M32(PAR1, PAR2, PAR3, PAR4, PAR5, PAR6, PAR7, PAR8, PAR9, PAR10, PAR11, PAR12, PAR13, PAR14, PAR15, PAR16,   \
                                PAR17, PAR18, PAR19, PAR20, PAR21, PAR22, PAR23, PAR24, PAR25, PAR26, PAR27, PAR28, PAR29, PAR30, PAR31, \
                                PAR32)                                                                                                   \
-    xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const                       \
+    virtual xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const               \
     {                                                                                                                                   \
         value.SetObject();                                                                                                              \
         value.AddMember(#PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::Value(), allocator), allocator);                    \
@@ -4673,7 +4673,7 @@
         return std::move(value);                                                                                                        \
     }                                                                                                                                   \
                                                                                                                                         \
-    xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const                     \
+    virtual xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const             \
     {                                                                                                                                   \
         value.SetObject();                                                                                                              \
         value.AddMember(L## #PAR1, xuexue::json::Serialize::toValue(PAR1, xuexue::json::ValueW(), allocator), allocator);               \
@@ -4711,7 +4711,7 @@
         return std::move(value);                                                                                                        \
     }                                                                                                                                   \
                                                                                                                                         \
-    void getObj(const xuexue::json::Value& value)                                                                                       \
+    virtual void getObj(const xuexue::json::Value& value)                                                                               \
     {                                                                                                                                   \
         if (value.HasMember(#PAR1)) {                                                                                                   \
             xuexue::json::Serialize::getObj(value[#PAR1], PAR1);                                                                        \
@@ -4811,7 +4811,7 @@
         }                                                                                                                               \
     }                                                                                                                                   \
                                                                                                                                         \
-    void getObj(const xuexue::json::ValueW& value)                                                                                      \
+    virtual void getObj(const xuexue::json::ValueW& value)                                                                              \
     {                                                                                                                                   \
         if (value.HasMember(L## #PAR1)) {                                                                                               \
             xuexue::json::Serialize::getObj(value[L## #PAR1], PAR1);                                                                    \
