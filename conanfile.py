@@ -19,7 +19,7 @@ class xuexuejsonConan(ConanFile):
     topics = ("json", "daixian")
     settings = "os", "compiler", "build_type", "arch"
     options = {"build_test": [True, False]}
-    default_options = {"build_test": True}
+    default_options = {"build_test": False}
     generators = "cmake"
     exports_sources = "src/*"
 
