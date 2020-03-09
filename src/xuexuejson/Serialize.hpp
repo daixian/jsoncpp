@@ -706,7 +706,7 @@ class JsonHelper
 #ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
         else if (value.IsString()) {
             try {
-                obj = static_cast<short>(std::stoi(value.GetString()));
+                obj = static_cast<char>(std::stoi(value.GetString()));
             }
             catch (const std::exception&) {
             }
@@ -722,7 +722,7 @@ class JsonHelper
 #ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
         else if (value.IsString()) {
             try {
-                obj = static_cast<short>(std::stoi(value.GetString()));
+                obj = static_cast<char>(std::stoi(value.GetString()));
             }
             catch (const std::exception&) {
             }
