@@ -24,14 +24,19 @@ class xuexuejsonConan(ConanFile):
     exports_sources = "src/*"
 
     def requirements(self):
-        self.requires.add("rapidjson/1.1.0")
+        #https://docs.conan.io/en/latest/mastering/conditional.html
+        #标准的写法是requires()
+        self.requires("rapidjson/1.1.0")
 
     def build_requirements(self):
-        self.build_requires.add("gtest/1.8.1@bincrafters/stable")
-        self.build_requires.add("boost/1.71.0")
-        self.build_requires.add("poco/1.9.4")
-        self.build_requires.add("eigen/3.3.7")
-        self.build_requires.add("opencv/3.4.5@daixian/stable")
+        #https://docs.conan.io/en/latest/devtools/build_requires.html
+        #标准的写法是build_requires()
+        if self.options.build_test == "True":
+            self.build_requires("gtest/1.8.1@bincrafters/stable")
+            self.build_requires("boost/1.71.0")
+            self.build_requires("poco/1.9.4")
+            self.build_requires("eigen/3.3.7")
+            self.build_requires("opencv/3.4.5@daixian/stable")
 
     def _configure_cmake(self):
         '''
