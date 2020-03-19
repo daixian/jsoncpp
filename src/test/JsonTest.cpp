@@ -607,6 +607,11 @@ TEST(Json, classNest)
 
     ASSERT_TRUE(ob.oa.v0 == ob2.oa.v0);
     ASSERT_TRUE(ob.oa.v1 == ob2.oa.v1);
+
+    //string的长度小于15字节的话或许可以这样比较?
+    //应该不行0xcc是未初始化地址，release下可能会出错
+    // /GZ选项编译代码时，未初始化的变量将自动分配给该值（字节级别）
+    //ASSERT_TRUE(std::memcmp(&ob, &ob2, sizeof(ob)) == 0);
 }
 
 TEST(Json, cvPoint)
@@ -614,8 +619,7 @@ TEST(Json, cvPoint)
     cv::Point o(123, 321);
     string text = JsonMapper::toJson(o);
     cv::Point o2 = JsonMapper::toObject<cv::Point>(text);
-    ASSERT_TRUE(o.x == o2.x);
-    ASSERT_TRUE(o.y == o2.y);
+    ASSERT_TRUE(o == o2);
 }
 
 TEST(Json, cvPoint3)
@@ -736,4 +740,66 @@ TEST(Json, cvObject)
     ASSERT_TRUE(line->type == line2->type);
 }
 
+class StringClass : XUEXUE_JSON_OBJECT
+{
+  public:
+    StringClass() {}
+    ~StringClass() {}
+    std::string s1;
+
+    std::string s2;
+
+    XUEXUE_JSON_OBJECT_M2(s1, s2)
+  private:
+};
+
+TEST(String, readStream)
+{
+
+    StringClass sc;
+    sc.s1 = "12345678901234567890123456789012345678901234567890123456789012345678901234567890";
+    sc.s2 = "123";
+    int size = sizeof(sc);
+    int size1 = sizeof(sc.s1);
+    int size2 = sizeof(sc.s2);
+
+    void* psc = &(sc);
+    void* p1 = &(sc.s1);
+    void* p2 = &(sc.s2);
+
+    //ASSERT_TRUE(std::memcmp(p1, p2, sizeof(size)) == 0);
+
+    std::string str = "Example string";
+    for (size_t i = 0; i < 20; i++) {
+        str += str;
+    }
+    std::istringstream iss;
+    std::stringbuf* pbuf = iss.rdbuf();
+    pbuf->str(str);
+    int in_avail = pbuf->in_avail();
+    std::string text = JsonHelper::readStream(iss);
+    ASSERT_TRUE(text == str);
+}
+
+TEST(String, istreamToJson)
+{
+
+    StringClass sc;
+    sc.s1 = "12345678901234567890123456789012345678901234567890123456789012345678901234567890";
+    sc.s2 = "123";
+    int size = sizeof(sc);
+    int size1 = sizeof(sc.s1);
+    int size2 = sizeof(sc.s2);
+
+    //ASSERT_TRUE(std::memcmp(p1, p2, sizeof(size)) == 0);
+
+    std::string str = JsonMapper::toJson(sc);
+    std::istringstream iss;
+    std::stringbuf* pbuf = iss.rdbuf();
+    pbuf->str(str);
+    int in_avail = pbuf->in_avail();
+    StringClass sc2 = JsonMapper::toObject<StringClass>(iss);
+    ASSERT_TRUE(sc.s1 == sc2.s1);
+    ASSERT_TRUE(sc.s2 == sc2.s2);
+}
 } // namespace dxtest

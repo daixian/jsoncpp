@@ -11,32 +11,32 @@ os.system("chcp 65001")
 
 class xuexuejsonConan(ConanFile):
     name = "xuexuejson"
-    version = "1.0.0"
-    license = "<Put the package license here>"
+    version = "1.1.0"
+    license = "GLWTPL (Good Luck With That Public License)"
     author = "daixian<amano_tooko@qq.com>"
     url = "https://github.com/daixian/jsoncpp"
-    description = "c++的json,纯头文件"
-    topics = ("json", "daixian")
-    settings = "os", "compiler", "build_type", "arch"
+    description = "c++，基于rapidjson的json封装，纯头文件，高性能。"
+    topics = ("json", "rapidjson", "daixian")
+    settings = None
     options = {"build_test": [True, False]}
     default_options = {"build_test": False}
     generators = "cmake"
     exports_sources = "src/*"
 
     def requirements(self):
-        #https://docs.conan.io/en/latest/mastering/conditional.html
-        #标准的写法是requires()
+        # https://docs.conan.io/en/latest/mastering/conditional.html
+        # 标准的写法是requires()
         self.requires("rapidjson/1.1.0")
 
     def build_requirements(self):
-        #https://docs.conan.io/en/latest/devtools/build_requires.html
-        #标准的写法是build_requires()
+        # https://docs.conan.io/en/latest/devtools/build_requires.html
+        # 标准的写法是build_requires()
         if self.options.build_test == "True":
             self.build_requires("gtest/1.8.1@bincrafters/stable")
             self.build_requires("boost/1.71.0")
             self.build_requires("poco/1.9.4")
-            self.build_requires("eigen/3.3.7")
-            self.build_requires("opencv/3.4.5@daixian/stable")
+            # self.build_requires("eigen/3.3.7")
+            self.build_requires("opencv/4.2.0@daixian/stable")
 
     def _configure_cmake(self):
         '''

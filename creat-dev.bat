@@ -6,4 +6,4 @@ REM python ./tools/DownloadLib.py -d "C:/dxlib/download" -l "C:/dxlib/lib" "conc
 mkdir build
 cd build
 conan install .. -s compiler.runtime=MD -s arch=x86_64 -s build_type=Release --build missing -o build_test=True
-cmake ../src -G "Visual Studio 15 Win64" -DCALIB_BUILD_SHARED:BOOL="0" -DCALIB_BUILD_TESTS:BOOL="1" -DCMAKE_CONFIGURATION_TYPES:STRING="Debug;Release;RelWithDebInfo"
+cmake ../src -G "Visual Studio 15 Win64" -DXUEXUEJSON_BUILD_TESTS:BOOL="1" -DCMAKE_CONFIGURATION_TYPES:STRING="Debug;Release;RelWithDebInfo"
