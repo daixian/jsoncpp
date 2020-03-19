@@ -564,12 +564,12 @@ class ClassB : XUEXUE_JSON_OBJECT
     string str;
     unsigned char uc;
     char c;
-    unsigned short usi;
-    short si;
-    unsigned int ui;
-    int i;
-    uint64_t uli;
-    int64_t li;
+    unsigned short usi = 0;
+    short si = 0;
+    unsigned int ui = 0;
+    int i = 0;
+    uint64_t uli = 0;
+    int64_t li = 0;
     ClassA oa;
 
     XUEXUE_JSON_OBJECT_M10(str, uc, c, usi, si, ui, i, uli, li, oa);
@@ -595,6 +595,8 @@ TEST(Json, classNest)
 
     string text = JsonMapper::toJson(ob);
     ClassB ob2 = JsonMapper::toObject<ClassB>(text);
+    std::cout << text << std::endl;
+
     ASSERT_TRUE(ob.str == ob2.str);
     ASSERT_TRUE(ob.uc == ob2.uc);
     ASSERT_TRUE(ob.c == ob2.c);
@@ -603,7 +605,7 @@ TEST(Json, classNest)
     ASSERT_TRUE(ob.ui == ob2.ui);
     ASSERT_TRUE(ob.i == ob2.i);
     ASSERT_TRUE(ob.uli == ob2.uli);
-    ASSERT_TRUE(ob.li == ob2.li);
+    ASSERT_TRUE(ob.li == ob2.li)<< ob.li <<"<->" << ob2.li;
 
     ASSERT_TRUE(ob.oa.v0 == ob2.oa.v0);
     ASSERT_TRUE(ob.oa.v1 == ob2.oa.v1);
@@ -665,7 +667,7 @@ class cvComponent : XUEXUE_JSON_SUPER_OBJECT
 /// <summary>
 /// Line组件
 /// </summary>
-class cvLine : public cvComponent, XUEXUE_JSON_OBJECT
+class cvLine : public cvComponent
 {
   public:
     cvLine() {}
