@@ -1,5 +1,5 @@
 #! /bin/bash
-chcp 65001
+
 echo "生成一个开发用的VS工程目录"
 
 export CC=/usr/bin/gcc-7
