@@ -777,7 +777,7 @@ TEST(String, readStream)
     std::istringstream iss;
     std::stringbuf* pbuf = iss.rdbuf();
     pbuf->str(str);
-    int in_avail = pbuf->in_avail();
+    auto in_avail = pbuf->in_avail();
     std::string text = JsonHelper::readStream(iss);
     ASSERT_TRUE(text == str);
 }

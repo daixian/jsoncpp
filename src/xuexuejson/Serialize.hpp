@@ -265,7 +265,7 @@ class JsonHelper
         char buff[128];
         std::string text;
         while (true) {
-            int count = is.readsome(buff, sizeof(buff));
+            auto count = is.readsome(buff, sizeof(buff));
             text.append(buff, count);
             if (count < sizeof(buff)) {
                 break;
@@ -696,38 +696,6 @@ class JsonHelper
 #endif
     }
 
-    static inline void ValueTypeAdapte(const Value& value, int& obj)
-    {
-        if (value.IsInt()) {
-            obj = value.GetInt();
-        }
-#ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
-        else if (value.IsString()) {
-            try {
-                obj = std::stoi(value.GetString());
-            }
-            catch (const std::exception&) {
-            }
-        }
-#endif
-    }
-
-    static inline void ValueTypeAdapte(const ValueW& value, int& obj)
-    {
-        if (value.IsInt()) {
-            obj = value.GetInt();
-        }
-#ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
-        else if (value.IsString()) {
-            try {
-                obj = std::stoi(value.GetString());
-            }
-            catch (const std::exception&) {
-            }
-        }
-#endif
-    }
-
     static inline void ValueTypeAdapte(const Value& value, char& obj)
     {
         if (value.IsInt()) {
@@ -792,10 +760,42 @@ class JsonHelper
 #endif
     }
 
-    static inline void ValueTypeAdapte(const Value& value, int64_t& obj)
+    static inline void ValueTypeAdapte(const Value& value, int& obj)
     {
         if (value.IsInt()) {
             obj = value.GetInt();
+        }
+#ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
+        else if (value.IsString()) {
+            try {
+                obj = std::stoi(value.GetString());
+            }
+            catch (const std::exception&) {
+            }
+        }
+#endif
+    }
+
+    static inline void ValueTypeAdapte(const ValueW& value, int& obj)
+    {
+        if (value.IsInt()) {
+            obj = value.GetInt();
+        }
+#ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
+        else if (value.IsString()) {
+            try {
+                obj = std::stoi(value.GetString());
+            }
+            catch (const std::exception&) {
+            }
+        }
+#endif
+    }
+
+    static inline void ValueTypeAdapte(const Value& value, int64_t& obj)
+    {
+        if (value.IsInt64()) {
+            obj = value.GetInt64();
         }
 #ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
         else if (value.IsString()) {
@@ -810,8 +810,8 @@ class JsonHelper
 
     static inline void ValueTypeAdapte(const ValueW& value, int64_t& obj)
     {
-        if (value.IsInt()) {
-            obj = value.GetInt();
+        if (value.IsInt64()) {
+            obj = value.GetInt64();
         }
 #ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
         else if (value.IsString()) {
@@ -826,8 +826,8 @@ class JsonHelper
 
     static inline void ValueTypeAdapte(const Value& value, uint8_t& obj)
     {
-        if (value.IsInt()) {
-            obj = static_cast<uint8_t>(value.GetInt());
+        if (value.IsUint()) {
+            obj = static_cast<uint8_t>(value.GetUint());
         }
 #ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
         else if (value.IsString()) {
@@ -842,8 +842,8 @@ class JsonHelper
 
     static inline void ValueTypeAdapte(const ValueW& value, uint8_t& obj)
     {
-        if (value.IsInt()) {
-            obj = static_cast<uint8_t>(value.GetInt());
+        if (value.IsUint()) {
+            obj = static_cast<uint8_t>(value.GetUint());
         }
 #ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
         else if (value.IsString()) {
@@ -858,8 +858,8 @@ class JsonHelper
 
     static inline void ValueTypeAdapte(const Value& value, uint16_t& obj)
     {
-        if (value.IsInt()) {
-            obj = static_cast<uint16_t>(value.GetInt());
+        if (value.IsUint()) {
+            obj = static_cast<uint16_t>(value.GetUint());
         }
 #ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
         else if (value.IsString()) {
@@ -874,8 +874,8 @@ class JsonHelper
 
     static inline void ValueTypeAdapte(const ValueW& value, uint16_t& obj)
     {
-        if (value.IsInt()) {
-            obj = static_cast<uint16_t>(value.GetInt());
+        if (value.IsUint()) {
+            obj = static_cast<uint16_t>(value.GetUint());
         }
 #ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
         else if (value.IsString()) {
@@ -2065,7 +2065,7 @@ class Serialize
                                   rapidjson::MemoryPoolAllocator<>& allocator)
     {
         value.SetArray();
-        for (size_t i = 0; i < obj.size(); i++) {
+        for (rapidjson::SizeType i = 0; i < obj.size(); i++) {
             value.PushBack(toValue(obj[i], Value(), allocator), allocator);
         }
         return std::move(value);
@@ -2077,7 +2077,7 @@ class Serialize
         if (!value.IsArray()) //它应该是一个array
             return;
         obj.clear();
-        for (size_t i = 0; i < value.Size(); i++) {
+        for (rapidjson::SizeType i = 0; i < value.Size(); i++) {
             T o;
             getObj(value[i], o);
             obj.push_back(o);
@@ -2089,7 +2089,7 @@ class Serialize
                                    rapidjson::MemoryPoolAllocator<>& allocator)
     {
         value.SetArray();
-        for (size_t i = 0; i < obj.size(); i++) {
+        for (rapidjson::SizeType i = 0; i < obj.size(); i++) {
             value.PushBack(toValue(obj[i], ValueW(), allocator), allocator);
         }
         return std::move(value);
@@ -2101,7 +2101,7 @@ class Serialize
         if (!value.IsArray()) //它应该是一个array
             return;
         obj.clear();
-        for (size_t i = 0; i < value.Size(); i++) {
+        for (rapidjson::SizeType i = 0; i < value.Size(); i++) {
             T o;
             getObj(value[i], o);
             obj.push_back(o);
@@ -2126,7 +2126,7 @@ class Serialize
         if (!value.IsArray()) //它应该是一个array
             return;
         obj.clear();
-        for (size_t i = 0; i < value.Size(); i++) {
+        for (rapidjson::SizeType i = 0; i < value.Size(); i++) {
             T o;
             getObj(value[i], o);
             obj.push_back(o);
@@ -2174,7 +2174,7 @@ class Serialize
     {
         if (!value.IsArray()) //它应该是一个array
             return;
-        for (size_t i = 0; i < value.Size(); i++) {
+        for (rapidjson::SizeType i = 0; i < value.Size(); i++) {
             getObj(value[i], obj[i]);
         }
     }
@@ -2184,7 +2184,7 @@ class Serialize
                                    rapidjson::MemoryPoolAllocator<>& allocator)
     {
         value.SetArray();
-        for (size_t i = 0; i < obj.size(); i++) {
+        for (rapidjson::SizeType i = 0; i < obj.size(); i++) {
             value.PushBack(toValue(obj[i], ValueW(), allocator), allocator);
         }
         return std::move(value);
@@ -2195,7 +2195,7 @@ class Serialize
     {
         if (!value.IsArray()) //它应该是一个array
             return;
-        for (size_t i = 0; i < value.Size(); i++) {
+        for (rapidjson::SizeType i = 0; i < value.Size(); i++) {
             getObj(value[i], obj[i]);
         }
     }
