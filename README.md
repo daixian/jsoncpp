@@ -1,18 +1,30 @@
-# xuexuejson
-使用rapidjson的高性能封装，纯头文件。
-使用两个宏定义即可以实现对象转到json的支持，同时支持对象的嵌套，十分有爱。
+# xuexuejson :snowflake:
+
+## 简介
+使用rapidjson的高性能封装，纯头文件，支持msvc，gcc，clang。
+使用两个宏定义即可以实现对象转到json的支持，同时支持对象的嵌套，可以很方便的实现一些dto对象的序列化反序列化，十分有爱。
+
+## 使用
+如果定义了XUEXUE_JSON_SUPPORT_OPENCV和XUEXUE_JSON_SUPPORT_EIGEN就会直接支持一些opencv和eigen里的常用对象。
+有几个需要注意的：
+* 对象必须要有一个默认构造函数。
+* 对象的成员基本是以map的形式。
+* 在反序列化的时候如果成员用到继承那么需要使用智能指针，详见JsonTest.cpp里的实现方法。
+* 成员如果是字符串需要使用std::string，没有支持char*。
+
 ``` cpp
-//支持opencv和eigen中的一些类型
 #define XUEXUE_JSON_SUPPORT_OPENCV
 #define XUEXUE_JSON_SUPPORT_EIGEN
+//上面这两个定义，支持opencv和eigen中的一些类型，不用可以去掉
 #include "xuexuejson/Serialize.hpp"
 
-//下面这个类使用两个宏定义XUEXUE_JSON_OBJECT和XUEXUE_JSON_OBJECT_M4即实现所有的json转换支持。其中XUEXUE_JSON_OBJECT_M4代表后面的成员个数是4个。
+//下面这个类使用两个宏定义XUEXUE_JSON_OBJECT和XUEXUE_JSON_OBJECT_M4即可自动实现支持对象和json相互转换。其中XUEXUE_JSON_OBJECT_M4的数字4代表后面的成员个数是4个。这个宏定义实际上是自动写了4个接口函数。
 
 //传递相机标定参数的dto
 class CalibParamDto : XUEXUE_JSON_OBJECT
 {
   public:
+    //注意必须要有一个默认构造函数
     CalibParamDto() {}
     ~CalibParamDto() {}
 
@@ -33,11 +45,15 @@ class CalibParamDto : XUEXUE_JSON_OBJECT
   private:
 };
 
-test(){
+Test(){
     CalibParamDto obj;
     //上面的CalibParamDto已经支持了json转换方法,直接转换即可
     std::string text = JsonMapper::toJson(obj, true);
+    
     CalibParamDto obj2;
     JsonMapper::toObject(text, obj2);
 }
 ```
+
+## 构建
+这个库是纯头文件，只包含Serialize.hpp和JsonSerializableImpl.h这两个文件。依赖rapidjson库。*另外这个库自豪的使用了conan构建工具。*
