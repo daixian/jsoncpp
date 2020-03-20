@@ -33,4 +33,4 @@ class xuexuejsonTestConan(ConanFile):
     def test(self):
         if not tools.cross_building(self.settings):
             os.chdir("bin")
-            self.run(".%stest" % os.sep)
+            self.run('.%stest --gtest_output="xml:gtest_report.xml"' % os.sep)
