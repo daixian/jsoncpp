@@ -605,7 +605,7 @@ TEST(Json, classNest)
     ASSERT_TRUE(ob.ui == ob2.ui);
     ASSERT_TRUE(ob.i == ob2.i);
     ASSERT_TRUE(ob.uli == ob2.uli);
-    ASSERT_TRUE(ob.li == ob2.li)<< ob.li <<"<->" << ob2.li;
+    ASSERT_TRUE(ob.li == ob2.li) << ob.li << "<->" << ob2.li;
 
     ASSERT_TRUE(ob.oa.v0 == ob2.oa.v0);
     ASSERT_TRUE(ob.oa.v1 == ob2.oa.v1);
@@ -757,7 +757,6 @@ class StringClass : XUEXUE_JSON_OBJECT
 
 TEST(String, readStream)
 {
-
     StringClass sc;
     sc.s1 = "12345678901234567890123456789012345678901234567890123456789012345678901234567890";
     sc.s2 = "123";
@@ -785,7 +784,6 @@ TEST(String, readStream)
 
 TEST(String, istreamToJson)
 {
-
     StringClass sc;
     sc.s1 = "12345678901234567890123456789012345678901234567890123456789012345678901234567890";
     sc.s2 = "123";

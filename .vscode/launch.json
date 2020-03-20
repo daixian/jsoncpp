@@ -22,9 +22,9 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "g++ build active file",
+            // "preLaunchTask": "creat-dev", //实际每次运行前需要使用cmake工具build
             "miDebuggerPath": "/usr/bin/gdb",
-            // "additionalSOLibSearchPath":"${workspaceFolder}/build/bin/test.out"
+            // "miDebuggerServerAddress": "127.0.0.1:10000",
         }
     ]
 }

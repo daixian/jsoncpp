@@ -11,7 +11,7 @@ os.system("chcp 65001")
 
 class xuexuejsonConan(ConanFile):
     name = "xuexuejson"
-    version = "1.1.0"
+    version = "1.1.1"
     license = "GLWTPL (Good Luck With That Public License)"
     author = "daixian<amano_tooko@qq.com>"
     url = "https://github.com/daixian/jsoncpp"
