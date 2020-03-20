@@ -1,4 +1,4 @@
-﻿#! /bin/bash
+#!/bin/bash
 
 echo "生成一个开发用的VS工程目录"
 

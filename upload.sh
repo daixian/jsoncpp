@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 conan upload boost --all -r=xuexue 
 conan upload bzip2 --all -r=xuexue 
