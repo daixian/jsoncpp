@@ -18,7 +18,8 @@
 //上面这两个定义，支持opencv和eigen中的一些类型，不用可以去掉
 #include "xuexuejson/Serialize.hpp"
 
-//下面这个类使用两个宏定义XUEXUE_JSON_OBJECT和XUEXUE_JSON_OBJECT_M4即可自动实现支持对象和json相互转换。其中XUEXUE_JSON_OBJECT_M4的数字4代表后面的成员个数是4个。这个宏定义实际上是自动写了4个接口函数。
+//下面这个类使用两个宏定义XUEXUE_JSON_OBJECT和XUEXUE_JSON_OBJECT_M4即可自动实现支持对象和json相互转换。
+//其中XUEXUE_JSON_OBJECT_M4的数字4代表后面的成员个数是4个。这个宏定义实际上是自动完成了几个接口函数。
 
 //传递相机标定参数的dto
 class CalibParamDto : XUEXUE_JSON_OBJECT
@@ -40,7 +41,7 @@ class CalibParamDto : XUEXUE_JSON_OBJECT
     //标定使用的图片路径列表
     std::vector<std::string> imageListB;
 
-    //obj<->json
+    //obj<->json,将你需要参与json序列化的成员写到括号里面.
     XUEXUE_JSON_OBJECT_M4(method, params, imageListA, imageListB)
   private:
 };

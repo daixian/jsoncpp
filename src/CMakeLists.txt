@@ -28,23 +28,6 @@ if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
     set(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/install CACHE PATH "Install directory" FORCE)
 endif(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 
-
-# 设置工程外部库的文件夹 $ENV{HOME}
-if(WIN32)
-set(PROJECT_LIB_DIR "C:/dxlib/lib" CACHE STRING "dx's lib")
-else()
-set(PROJECT_LIB_DIR $ENV{HOME}/dxlib/lib CACHE STRING "dx's lib")
-endif()
-message(STATUS "PROJECT_LIB_DIR = " ${PROJECT_LIB_DIR})
-
-# 现在使用了conan库,这里并不需要了
-if(WIN32)
-# # 设置编译选项为MT https://stackoverflow.com/questions/14172856/compile-with-mt-instead-of-md-using-cmake
-#     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MD")
-    #为了调试版本来设置一下
-    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MD")
-endif()
-
 #设置文件输出的目录
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)

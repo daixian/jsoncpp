@@ -13,4 +13,13 @@ conan_basic_setup()
 
 include(CheckIncludeFile)
 
+
+# 现在使用了conan库,这里并不需要了，这里是为了方便创建一个可以link的调试工程
+if(WIN32)
+#   设置编译选项为MT https://stackoverflow.com/questions/14172856/compile-with-mt-instead-of-md-using-cmake
+#     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MD")
+#   为了调试版本来设置一下
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MD")
+endif()
+
 add_subdirectory("src")
