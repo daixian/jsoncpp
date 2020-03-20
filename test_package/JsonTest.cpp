@@ -1,7 +1,7 @@
 ﻿#include "gtest/gtest.h"
 #define XUEXUE_JSON_SUPPORT_OPENCV
 #define XUEXUE_JSON_SUPPORT_EIGEN
-#include "../xuexuejson/Serialize.hpp"
+#include "xuexuejson/Serialize.hpp"
 #include "Poco/Format.h"
 #include <thread>
 #include <boost/format.hpp>

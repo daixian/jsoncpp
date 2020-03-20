@@ -9,6 +9,6 @@ export CXX=/usr/bin/g++-7
 # 之后在launch.json的配置中,不需要启动构建了,去掉"preLaunchTask": "g++ build active file"这一行,直接调试即可。
 mkdir build
 cd build
-conan install .. -s build_type=Debug -o build_test=True --build missing 
+conan install ../test_package -s build_type=Debug --build missing 
 # cmake .. -G "Unix Makefiles" -DXUEXUEJSON_BUILD_TESTS:BOOL="1" -DCMAKE_CONFIGURATION_TYPES:STRING="Debug"
 # make

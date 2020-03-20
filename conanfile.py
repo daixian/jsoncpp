@@ -18,8 +18,8 @@ class xuexuejsonConan(ConanFile):
     description = "c++，基于rapidjson的json封装，纯头文件，高性能。"
     topics = ("json", "rapidjson", "daixian")
     settings = None
-    options = {"build_test": [True, False]}
-    default_options = {"build_test": False}
+    options = None
+    default_options = None
     generators = "cmake"
     exports_sources = "src/*"
 
@@ -28,23 +28,12 @@ class xuexuejsonConan(ConanFile):
         # 标准的写法是requires()
         self.requires("rapidjson/1.1.0")
 
-    def build_requirements(self):
-        # https://docs.conan.io/en/latest/devtools/build_requires.html
-        # 标准的写法是build_requires()
-        if self.options.build_test == "True":
-            self.build_requires("gtest/1.8.1@bincrafters/stable")
-            self.build_requires("boost/1.71.0")
-            self.build_requires("poco/1.9.4")
-            # self.build_requires("eigen/3.3.7")
-            self.build_requires("opencv/4.2.0@daixian/stable")
-
     def _configure_cmake(self):
         '''
         转换python的设置到CMake
         '''
         cmake = CMake(self)
         # cmake.definitions["DNET_BUILD_SHARED"] = self.options.shared
-        cmake.definitions["XUEXUEJSON_BUILD_TESTS"] = self.options.build_test
         return cmake
 
     def build(self):
