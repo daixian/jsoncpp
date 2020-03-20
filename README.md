@@ -1,5 +1,7 @@
 # xuexuejson :snowflake:
 
+[![Build status](https://daixian.visualstudio.com/Pipeline/_apis/build/status/Pipeline-xuexuejson)](https://daixian.visualstudio.com/Pipeline/_build/latest?definitionId=12)
+
 ## 简介
 使用rapidjson的高性能封装，纯头文件，支持msvc，gcc，clang。
 使用两个宏定义即可以实现对象转到json的支持，同时支持对象的嵌套，可以很方便的实现一些dto对象的序列化反序列化，十分有爱。
