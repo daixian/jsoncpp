@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+#coding=utf-8
 import os
 
 from conans import ConanFile, CMake, tools

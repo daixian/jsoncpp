@@ -1,9 +1,10 @@
-# coding: utf-8
-from conans import ConanFile, CMake, tools
-
+#!/usr/bin/env python3
+#coding=utf-8
 import os
 import sys
 import io
+from conans import ConanFile, CMake, tools
+
 # sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='gbk')
 
 os.system("chcp 65001")
