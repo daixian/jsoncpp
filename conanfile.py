@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-#coding=utf-8
+# coding=utf-8
 import os
 import sys
 import io
@@ -12,7 +12,7 @@ os.system("chcp 65001")
 
 class xuexuejsonConan(ConanFile):
     name = "xuexuejson"
-    version = "1.1.1"
+    version = "1.1.2"
     license = "GLWTPL (Good Luck With That Public License)"
     author = "daixian<amano_tooko@qq.com>"
     url = "https://github.com/daixian/jsoncpp"
@@ -30,9 +30,7 @@ class xuexuejsonConan(ConanFile):
         self.requires("rapidjson/1.1.0")
 
     def _configure_cmake(self):
-        '''
-        转换python的设置到CMake
-        '''
+        """转换python的设置到CMake"""
         cmake = CMake(self)
         # cmake.definitions["DNET_BUILD_SHARED"] = self.options.shared
         return cmake
@@ -56,7 +54,32 @@ class xuexuejsonConan(ConanFile):
         # self.copy("*.dylib*", dst="lib", keep_path=False)
         # self.copy("*.so", dst="lib", keep_path=False)
         # self.copy("*.a", dst="lib", keep_path=False)
+        self.copy_archive()
+
+    def copy_archive(self):
+        """把安装文件拷贝到当前源文件目录来,方便在CI中上传"""
+        dest = os.getenv("CONAN_ARCHIVE_PATH")
+        if not dest is None:
+            print("copy_archive():执行目录CONAN_ARCHIVE_PATH="+dest)
+            self.copy("*.h", dst=dest+os.sep+"include", src="src")
+            self.copy("*.hpp", dst=dest+os.sep+"include", src="src")
+        else:
+            print("copy_archive():执行目录CONAN_ARCHIVE_PATH为空，不执行archive拷贝")
 
     def package_info(self):
         self.info.header_only()
         # self.cpp_info.libs = ["jsoncpp"]
+
+    def imports(self):
+        """这个函数的相关文档:
+        * 1. Before running build() it will execute imports() in the build folder, copying dependencies artifacts
+        * 2. Run the build() method, which could use such imported binaries.
+        * 3. Remove the copied (imported) artifacts after build() is finished.
+        https://docs.conan.io/en/latest/reference/conanfile/methods.html#imports"""
+        self.copy("LICENSE", dst="licenses", folder=True, ignore_case=True)
+
+    # def deploy(self):
+        # self.copy("*.h", dst="archive/include", src="src")
+        # self.copy("*.hpp", dst="archive/include", src="src")
+        # self.copy("*.exe")  # copy from current package
+        # self.copy_deps("*.dll") # copy from dependencies

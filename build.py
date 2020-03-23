@@ -12,18 +12,23 @@ def system(command):
 
 
 if __name__ == "__main__":
+    print(sys.version)
     params = " ".join(sys.argv[1:])
+    pydir = os.path.split(os.path.realpath(__file__))[0]
+    archivedir = pydir+os.sep+"temp"+os.sep+"archive"+os.sep+"xuexuejson"
+    # 设置环境变量，CONAN_REVISIONS_ENABLED
+    os.putenv('CONAN_REVISIONS_ENABLED', '1')
+    # 设置环境变量，拷贝ARCHIVE的文件夹目录
+    os.putenv('CONAN_ARCHIVE_PATH', archivedir)
+    print("当前平台是:"+platform.system())
     if platform.system() == "Windows":
-        print("当前平台是windows.")
-        system('set CONAN_REVISIONS_ENABLED=1')
-        system('conan create . daixian/stable -s compiler.version=15 -s compiler.runtime=MD \
-        -s arch=x86_64 -s build_type=Release --build missing %s' % params)
+        cmd = 'conan create . daixian/stable -s compiler.version=15 -s compiler.runtime=MD \
+-s arch=x86_64 -s build_type=Release --build missing %s' % params
+        system(cmd)
     elif platform.system() == "Linux":
-        print("当前平台是Linux.")
         # 使用gcc7
-        system('export CC=/usr/bin/gcc-7')
-        system('export CXX=/usr/bin/g++-7')
-        system('export CONAN_REVISIONS_ENABLED=1')
+        os.environ['CC'] = '/usr/bin/gcc-7'
+        os.environ['CXX'] = '/usr/bin/g++-7'
         system('conan create . daixian/stable -s compiler.version=7.5 -s arch=x86_64 \
         -s build_type=Release --build missing')
     else:
