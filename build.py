@@ -5,6 +5,7 @@ import sys
 import io
 import platform
 import subprocess
+import json
 
 # os.system("chcp 65001")
 # sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf8')
@@ -36,21 +37,29 @@ if __name__ == "__main__":
     params = " ".join(sys.argv[1:])
     gitTag = get_git_tag()
     print("当前git的tag是:" + gitTag)
-    # os.putenv('CUR_GIT_TAG', gitTag) #这个sb函数会自己去掉下划线,坑死...
-    os.environ['CUR_GIT_TAG'] = gitTag
-    print("尝试设置环境变量,当前CUR_GIT_TAG环境变量是:" + os.environ['CUR_GIT_TAG'])
-
-    os.system(
-        'Write-Host "##vso[task.setvariable variable=GitTag]%s"' % gitTag)
     sys.stdout.flush()
 
     pydir = os.path.split(os.path.realpath(__file__))[0]
-    archivedir = pydir+os.sep+"temp"+os.sep+"archive"+os.sep+"xuexuejson"
+    tempDir = pydir+os.sep+"temp"
+    archivedir = tempDir+os.sep+"archive"+os.sep+"xuexuejson"
+
+    # 实际上python设置的环境变量没有办法传递到CI那里
+    os.environ['CUR_GIT_TAG'] = gitTag
+    print("尝试设置环境变量,当前CUR_GIT_TAG环境变量是:" + os.environ['CUR_GIT_TAG'])
     # 设置环境变量，CONAN_REVISIONS_ENABLED
     os.environ['CONAN_REVISIONS_ENABLED'] = '1'
     # 设置环境变量，拷贝ARCHIVE的文件夹目录
     os.environ['CONAN_ARCHIVE_PATH'] = archivedir
     print('尝试设置环境变量,设置archivedir:', os.environ['CONAN_ARCHIVE_PATH'])
+
+    # 保存环境变量到json
+    env_dist = {}
+    for key in os.environ:
+        env_dist[key] = os.environ[key]
+    jsonstr = json.dumps(env_dist)
+    open(tempDir+os.sep+'env.json', 'w').write(jsonstr)
+    open(tempDir+os.sep+'CUR_GIT_TAG', 'w').write(gitTag)
+
     print("当前平台是:"+platform.system())
     sys.stdout.flush()
     if platform.system() == "Windows":
