@@ -4,9 +4,11 @@ import os
 import sys
 import io
 import platform
+import subprocess
 
 os.system("chcp 65001")
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf8')
+# sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf8')
+
 
 def system(command):
     retcode = os.system(command)
@@ -16,9 +18,14 @@ def system(command):
 
 def get_git_tag() -> str:
     """得到当前git的tag文本"""
-    stream = os.popen('git tag -n10')
-    gitTag = stream.read()
-    return gitTag.strip()
+    # stream = os.popen('git tag -n10')
+    # gitTag = stream.read()
+    # return gitTag.strip()
+    process = subprocess.Popen(['git', 'tag', '-n10'],
+                               stdout=subprocess.PIPE,
+                               stderr=subprocess.PIPE, encoding="utf-8")
+    stdout, stderr = process.communicate()
+    return stdout.strip()
 
 
 if __name__ == "__main__":
