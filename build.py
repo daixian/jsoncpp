@@ -39,6 +39,9 @@ if __name__ == "__main__":
     # os.putenv('CUR_GIT_TAG', gitTag) #这个sb函数会自己去掉下划线,坑死...
     os.environ['CUR_GIT_TAG'] = gitTag
     print("尝试设置环境变量,当前CUR_GIT_TAG环境变量是:" + os.environ['CUR_GIT_TAG'])
+
+    os.system(
+        'Write-Host "##vso[task.setvariable variable=GitTag]%s"' % gitTag)
     sys.stdout.flush()
 
     pydir = os.path.split(os.path.realpath(__file__))[0]
