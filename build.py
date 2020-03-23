@@ -4,6 +4,7 @@ import os
 import sys
 import platform
 
+os.system("chcp 65001")
 
 def system(command):
     retcode = os.system(command)
