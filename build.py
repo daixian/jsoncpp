@@ -30,21 +30,23 @@ def get_git_tag() -> str:
 
 if __name__ == "__main__":
     print(sys.version)
-    #删除原先安装的库,它会影响构建
+    # 删除原先安装的库,它会影响构建
     system('conan remove xuexuejson -f')
 
     params = " ".join(sys.argv[1:])
     gitTag = get_git_tag()
     print("当前git的tag是:" + gitTag)
-    os.putenv('CUR_GIT_TAG', gitTag)
+    # os.putenv('CUR_GIT_TAG', gitTag) #这个sb函数会自己去掉下划线,坑死...
+    os.environ['CUR_GIT_TAG'] = gitTag
+    print("当前CUR_GIT_TAG环境变量是:" + os.environ['CUR_GIT_TAG'])
     sys.stdout.flush()
 
     pydir = os.path.split(os.path.realpath(__file__))[0]
     archivedir = pydir+os.sep+"temp"+os.sep+"archive"+os.sep+"xuexuejson"
     # 设置环境变量，CONAN_REVISIONS_ENABLED
-    os.putenv('CONAN_REVISIONS_ENABLED', '1')
+    os.environ['CONAN_REVISIONS_ENABLED'] = '1'
     # 设置环境变量，拷贝ARCHIVE的文件夹目录
-    os.putenv('CONAN_ARCHIVE_PATH', archivedir)
+    os.environ['CONAN_ARCHIVE_PATH'] = archivedir
     print('设置archivedir:', archivedir)
     print("当前平台是:"+platform.system())
     sys.stdout.flush()
