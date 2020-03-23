@@ -6,7 +6,7 @@ import io
 import platform
 import subprocess
 
-os.system("chcp 65001")
+# os.system("chcp 65001")
 # sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf8')
 
 
@@ -38,7 +38,7 @@ if __name__ == "__main__":
     print("当前git的tag是:" + gitTag)
     # os.putenv('CUR_GIT_TAG', gitTag) #这个sb函数会自己去掉下划线,坑死...
     os.environ['CUR_GIT_TAG'] = gitTag
-    print("当前CUR_GIT_TAG环境变量是:" + os.environ['CUR_GIT_TAG'])
+    print("尝试设置环境变量,当前CUR_GIT_TAG环境变量是:" + os.environ['CUR_GIT_TAG'])
     sys.stdout.flush()
 
     pydir = os.path.split(os.path.realpath(__file__))[0]
@@ -47,7 +47,7 @@ if __name__ == "__main__":
     os.environ['CONAN_REVISIONS_ENABLED'] = '1'
     # 设置环境变量，拷贝ARCHIVE的文件夹目录
     os.environ['CONAN_ARCHIVE_PATH'] = archivedir
-    print('设置archivedir:', archivedir)
+    print('尝试设置环境变量,设置archivedir:', os.environ['CONAN_ARCHIVE_PATH'])
     print("当前平台是:"+platform.system())
     sys.stdout.flush()
     if platform.system() == "Windows":

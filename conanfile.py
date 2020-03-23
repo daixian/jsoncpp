@@ -7,7 +7,7 @@ from conans import ConanFile, CMake, tools
 
 # sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='gbk')
 
-os.system("chcp 65001")
+# os.system("chcp 65001")
 
 
 class xuexuejsonConan(ConanFile):
@@ -58,9 +58,9 @@ class xuexuejsonConan(ConanFile):
 
     def copy_archive(self):
         """把安装文件拷贝到当前源文件目录来,方便在CI中上传"""
-        dest = os.getenv("CONAN_ARCHIVE_PATH")
+        dest = os.environ["CONAN_ARCHIVE_PATH"]
+        print("copy_archive():执行目录CONAN_ARCHIVE_PATH="+dest)
         if not dest is None:
-            print("copy_archive():执行目录CONAN_ARCHIVE_PATH="+dest)
             self.copy("*.h", dst=dest+os.sep+"include", src="src")
             self.copy("*.hpp", dst=dest+os.sep+"include", src="src")
         else:
