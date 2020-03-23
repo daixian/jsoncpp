@@ -11,9 +11,20 @@ def system(command):
         raise Exception("Error while executing:\n\t %s" % command)
 
 
+def get_git_tag() -> str:
+    """得到当前git的tag文本"""
+    stream = os.popen('git tag -n10')
+    gitTag = stream.read()
+    return gitTag.strip()
+
+
 if __name__ == "__main__":
     print(sys.version)
     params = " ".join(sys.argv[1:])
+    gitTag = get_git_tag()
+    print("当前git的tag是:" + gitTag)
+    os.putenv('CUR_GIT_TAG', gitTag)
+
     pydir = os.path.split(os.path.realpath(__file__))[0]
     archivedir = pydir+os.sep+"temp"+os.sep+"archive"+os.sep+"xuexuejson"
     # 设置环境变量，CONAN_REVISIONS_ENABLED
