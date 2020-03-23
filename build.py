@@ -2,9 +2,11 @@
 # coding=utf-8
 import os
 import sys
+import io
 import platform
 
 os.system("chcp 65001")
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf8')
 
 def system(command):
     retcode = os.system(command)
