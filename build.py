@@ -30,10 +30,14 @@ def get_git_tag() -> str:
 
 if __name__ == "__main__":
     print(sys.version)
+    #删除原先安装的库,它会影响构建
+    system('conan remove xuexuejson -f')
+
     params = " ".join(sys.argv[1:])
     gitTag = get_git_tag()
     print("当前git的tag是:" + gitTag)
     os.putenv('CUR_GIT_TAG', gitTag)
+    sys.stdout.flush()
 
     pydir = os.path.split(os.path.realpath(__file__))[0]
     archivedir = pydir+os.sep+"temp"+os.sep+"archive"+os.sep+"xuexuejson"
@@ -41,7 +45,9 @@ if __name__ == "__main__":
     os.putenv('CONAN_REVISIONS_ENABLED', '1')
     # 设置环境变量，拷贝ARCHIVE的文件夹目录
     os.putenv('CONAN_ARCHIVE_PATH', archivedir)
+    print('设置archivedir:', archivedir)
     print("当前平台是:"+platform.system())
+    sys.stdout.flush()
     if platform.system() == "Windows":
         cmd = 'conan create . daixian/stable -s compiler.version=15 -s compiler.runtime=MD \
 -s arch=x86_64 -s build_type=Release --build missing %s' % params
