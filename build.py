@@ -52,6 +52,9 @@ if __name__ == "__main__":
     os.environ['CONAN_ARCHIVE_PATH'] = archivedir
     print('尝试设置环境变量,设置archivedir:', os.environ['CONAN_ARCHIVE_PATH'])
 
+    # 递归创建一下文件夹
+    os.makedirs(archivedir)
+
     # 保存环境变量到json
     env_dist = {}
     for key in os.environ:
