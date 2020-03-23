@@ -19,10 +19,10 @@ def system(command):
 
 def get_git_tag() -> str:
     """得到当前git的tag文本"""
-    # stream = os.popen('git tag -n10')
+    # stream = os.popen('git tag -n1')
     # gitTag = stream.read()
     # return gitTag.strip()
-    process = subprocess.Popen(['git', 'tag', '-n10'],
+    process = subprocess.Popen(['git', 'tag', '-n1'],
                                stdout=subprocess.PIPE,
                                stderr=subprocess.PIPE, encoding="utf-8")
     stdout, stderr = process.communicate()
