@@ -5,7 +5,8 @@ import sys
 import io
 from conans import ConanFile, CMake, tools
 
-# sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='gbk')
+#加上这个否则agent中乱码
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf8')
 
 # os.system("chcp 65001")
 
