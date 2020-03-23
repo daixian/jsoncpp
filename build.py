@@ -8,8 +8,7 @@ import subprocess
 import json
 
 # os.system("chcp 65001")
-# sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf8')
-
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf8')
 
 def system(command):
     retcode = os.system(command)
