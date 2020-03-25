@@ -10,6 +10,7 @@ import json
 # os.system("chcp 65001")
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf8')
 
+
 def system(command):
     retcode = os.system(command)
     if retcode != 0:
@@ -18,14 +19,22 @@ def system(command):
 
 def get_git_tag() -> str:
     """得到当前git的tag文本"""
-    # stream = os.popen('git tag -n1')
+    # stream = os.popen('git tag --sort=-version:refname | head -n1')
     # gitTag = stream.read()
     # return gitTag.strip()
-    process = subprocess.Popen(['git', 'tag', '-n1'],
+    # if platform.system() == "Windows":
+    #     cmd = 'git tag --sort=-version:refname | Select -First 1'
+    # 这个subprocess.Popen不能支持上面的句子
+    process = subprocess.Popen('git tag --sort=-version:refname', shell=True,
                                stdout=subprocess.PIPE,
                                stderr=subprocess.PIPE, encoding="utf-8")
     stdout, stderr = process.communicate()
-    return stdout.strip()
+    if stderr is not None and len(stderr) > 0:
+        print(stderr)
+    if(stdout is not None and len(stdout.split())):
+        return stdout.strip().split()[0]
+    print("git获取tag失败!")
+    return None
 
 
 if __name__ == "__main__":
@@ -52,7 +61,7 @@ if __name__ == "__main__":
     print('尝试设置环境变量,设置archivedir:', os.environ['CONAN_ARCHIVE_PATH'])
 
     # 递归创建一下文件夹
-    os.makedirs(archivedir,exist_ok=True)
+    os.makedirs(archivedir, exist_ok=True)
 
     # 保存环境变量到json
     env_dist = {}
@@ -60,7 +69,8 @@ if __name__ == "__main__":
         env_dist[key] = os.environ[key]
     jsonstr = json.dumps(env_dist)
     open(tempDir+os.sep+'env.json', 'w').write(jsonstr)
-    open(tempDir+os.sep+'CUR_GIT_TAG', 'w').write(gitTag)
+    if gitTag is not None:
+        open(tempDir+os.sep+'CUR_GIT_TAG', 'w').write(gitTag)
 
     print("当前平台是:"+platform.system())
     sys.stdout.flush()
