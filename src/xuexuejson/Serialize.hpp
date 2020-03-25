@@ -2267,6 +2267,90 @@ class JsonMapper
 {
   public:
     ///-------------------------------------------------------------------------------------------------
+    /// <summary>
+    /// 转换整个obj到一个Document.如果之后还要转成string可以调用JsonHelper::toJson()里的方法.
+    /// </summary>
+    ///
+    /// <typeparam name="T"> Generic type parameter. </typeparam>
+    /// <param name="obj"> 要转换的obj对象. </param>
+    ///
+    /// <returns> Obj as a Document. </returns>
+    ///-------------------------------------------------------------------------------------------------
+    template <class T>
+    static inline Document toDocument(const T& obj)
+    {
+        using namespace rapidjson;
+
+        Document doc;
+        auto& allocator = doc.GetAllocator();
+        //作者好像已经屏蔽了doc类型的move,所以这句move实际只是刚好让编译通过
+        Serialize::toValue(obj, std::move(doc), allocator);
+
+        return doc;
+    }
+
+    ///-------------------------------------------------------------------------------------------------
+    /// <summary>
+    /// 转换整个obj到一个Document.如果之后还要转成string可以调用JsonHelper::toJson()里的方法.
+    /// </summary>
+    ///
+    /// <typeparam name="T"> Generic type parameter. </typeparam>
+    /// <param name="obj"> 要转换的obj对象. </param>
+    /// <param name="doc"> [out] The document. </param>
+    ///-------------------------------------------------------------------------------------------------
+    template <class T>
+    static inline void toDocument(const T& obj, Document& doc)
+    {
+        using namespace rapidjson;
+
+        auto& allocator = doc.GetAllocator();
+        //作者好像已经屏蔽了doc类型的move,所以这句move实际只是刚好让编译通过
+        Serialize::toValue(obj, std::move(doc), allocator);
+    }
+
+    ///-------------------------------------------------------------------------------------------------
+    /// <summary>
+    /// 转换整个obj到一个DocumentW.如果之后还要转成string可以调用JsonHelper::toJson()里的方法.
+    /// </summary>
+    ///
+    /// <typeparam name="T"> Generic type parameter. </typeparam>
+    /// <param name="obj"> 要转换的obj对象. </param>
+    ///
+    /// <returns> Obj as a Document. </returns>
+    ///-------------------------------------------------------------------------------------------------
+    template <class T>
+    static inline DocumentW toDocumentW(const T& obj)
+    {
+        using namespace rapidjson;
+
+        DocumentW doc;
+        auto& allocator = doc.GetAllocator();
+        //作者好像已经屏蔽了doc类型的move,所以这句move实际只是刚好让编译通过
+        Serialize::toValue(obj, std::move(doc), allocator);
+
+        return doc;
+    }
+
+    ///-------------------------------------------------------------------------------------------------
+    /// <summary>
+    /// 转换整个obj到一个DocumentW.如果之后还要转成string可以调用JsonHelper::toJson()里的方法.
+    /// </summary>
+    ///
+    /// <typeparam name="T"> Generic type parameter. </typeparam>
+    /// <param name="obj"> 要转换的obj对象. </param>
+    /// <param name="doc"> [out] The document. </param>
+    ///-------------------------------------------------------------------------------------------------
+    template <class T>
+    static inline void toDocumentW(const T& obj, DocumentW& doc)
+    {
+        using namespace rapidjson;
+
+        auto& allocator = doc.GetAllocator();
+        //作者好像已经屏蔽了doc类型的move,所以这句move实际只是刚好让编译通过
+        Serialize::toValue(obj, std::move(doc), allocator);
+    }
+
+    ///-------------------------------------------------------------------------------------------------
     /// <summary> 转换整个obj到string. </summary>
     ///
     /// <remarks> Dx, 2019/3/11. </remarks>

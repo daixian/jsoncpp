@@ -183,3 +183,105 @@ TEST(BasicTypes, classNest_BaseTypeMax)
     ASSERT_TRUE(ob.oa.v0 == ob2.oa.v0);
     ASSERT_TRUE(ob.oa.v1 == ob2.oa.v1);
 }
+
+TEST(JsonMapper, toDocument)
+{
+    ClassB ob;
+    ob.str = "12312是是";
+    ob.b = true;
+    ob.uc = UCHAR_MAX;
+    ob.c = CHAR_MIN;
+    ob.usi = USHRT_MAX;
+    ob.si = SHRT_MIN;
+    ob.ui = UINT_MAX;
+    ob.i = INT_MIN;
+    ob.uli = ULONG_MAX;
+    ob.li = LONG_MIN;
+
+    ob.oa.v0 = Eigen::Vector3d(123, 3123543, 53456);
+    ob.oa.v1 = cv::Vec3d(345, 321, 76);
+
+    string text = JsonMapper::toJson(ob, false);
+
+    //测试一下toDocument方法
+    auto doc = JsonMapper::toDocument(ob);
+    string text_doc = JsonHelper::toJson(doc, false);
+    EXPECT_TRUE(text == text_doc);
+}
+
+TEST(JsonMapper, toDocument2)
+{
+    ClassB ob;
+    ob.str = "12312是是";
+    ob.b = true;
+    ob.uc = UCHAR_MAX;
+    ob.c = CHAR_MIN;
+    ob.usi = USHRT_MAX;
+    ob.si = SHRT_MIN;
+    ob.ui = UINT_MAX;
+    ob.i = INT_MIN;
+    ob.uli = ULONG_MAX;
+    ob.li = LONG_MIN;
+
+    ob.oa.v0 = Eigen::Vector3d(123, 3123543, 53456);
+    ob.oa.v1 = cv::Vec3d(345, 321, 76);
+
+    string text = JsonMapper::toJson(ob, false);
+
+    //测试一下toDocument方法
+    Document doc;
+    JsonMapper::toDocument(ob, doc);
+    string text_doc = JsonHelper::toJson(doc, false);
+    EXPECT_TRUE(text == text_doc);
+}
+
+TEST(JsonMapper, toDocumentW)
+{
+    ClassB ob;
+    ob.str = "12312是是";
+    ob.b = true;
+    ob.uc = UCHAR_MAX;
+    ob.c = CHAR_MIN;
+    ob.usi = USHRT_MAX;
+    ob.si = SHRT_MIN;
+    ob.ui = UINT_MAX;
+    ob.i = INT_MIN;
+    ob.uli = ULONG_MAX;
+    ob.li = LONG_MIN;
+
+    ob.oa.v0 = Eigen::Vector3d(123, 3123543, 53456);
+    ob.oa.v1 = cv::Vec3d(345, 321, 76);
+
+    wstring text = JsonMapper::toJsonW(ob, false);
+
+    //测试一下toDocument方法
+    auto doc = JsonMapper::toDocumentW(ob);
+    wstring text_doc = JsonHelper::toJsonW(doc, false);
+    EXPECT_TRUE(text == text_doc);
+}
+
+TEST(JsonMapper, toDocumentW2)
+{
+    ClassB ob;
+    ob.str = "12312是是";
+    ob.b = true;
+    ob.uc = UCHAR_MAX;
+    ob.c = CHAR_MIN;
+    ob.usi = USHRT_MAX;
+    ob.si = SHRT_MIN;
+    ob.ui = UINT_MAX;
+    ob.i = INT_MIN;
+    ob.uli = ULONG_MAX;
+    ob.li = LONG_MIN;
+
+    ob.oa.v0 = Eigen::Vector3d(123, 3123543, 53456);
+    ob.oa.v1 = cv::Vec3d(345, 321, 76);
+
+    wstring text = JsonMapper::toJsonW(ob, false);
+
+    //测试一下toDocument方法
+    DocumentW doc;
+    JsonMapper::toDocumentW(ob, doc);
+    wstring text_doc = JsonHelper::toJsonW(doc, false);
+    EXPECT_TRUE(text == text_doc);
+}
