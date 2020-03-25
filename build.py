@@ -29,12 +29,12 @@ def get_git_tag() -> str:
                                stdout=subprocess.PIPE,
                                stderr=subprocess.PIPE, encoding="utf-8")
     stdout, stderr = process.communicate()
-    if stderr is not None and len(stderr) > 0:
-        print(stderr)
-    if(stdout is not None and len(stdout.split())):
+    if stderr:
+        print("get_git_tag():Error "+stderr)
+    if stdout.strip():
         return stdout.strip().split()[0]
     print("git获取tag失败!")
-    return None
+    return ""
 
 
 if __name__ == "__main__":
@@ -69,7 +69,7 @@ if __name__ == "__main__":
         env_dist[key] = os.environ[key]
     jsonstr = json.dumps(env_dist)
     open(tempDir+os.sep+'env.json', 'w').write(jsonstr)
-    if gitTag is not None:
+    if gitTag:
         open(tempDir+os.sep+'CUR_GIT_TAG', 'w').write(gitTag)
 
     print("当前平台是:"+platform.system())
