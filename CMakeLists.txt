@@ -30,4 +30,5 @@ endif(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 
 #设置文件输出的目录
 message(STATUS "总工程的CMAKE_BINARY_DIR = ${CMAKE_BINARY_DIR}")
+add_subdirectory("src")
 add_subdirectory("test_package")

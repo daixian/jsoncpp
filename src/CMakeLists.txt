@@ -1,7 +1,7 @@
 ﻿cmake_minimum_required(VERSION 3.1.0)
 
 # 在上面设置工具链之后下面要立马project命令
-project(JSONCPP VERSION 2.0.0 LANGUAGES CXX)
+project(JSONCPP VERSION 2.0.0 LANGUAGES C CXX)
 
 # set(CMAKE_CXX_STANDARD 14)
 
@@ -11,11 +11,6 @@ if (NOT DEFINED CONAN_BUILD_INFO_PATH)
     conan_basic_setup()
     # conan_set_vs_runtime()
 endif()
-
-# 设置是否编译Test
-option(XUEXUEJSON_BUILD_TESTS "XUEXUEJSON_BUILD_TESTS" ON)
-message(STATUS "XUEXUEJSON_BUILD_TESTS = ${XUEXUEJSON_BUILD_TESTS}" )
-
 
 # add_definitions(-D DLOG_UTF8)
 add_definitions(-D _NO_ASYNCRTIMP)
@@ -33,4 +28,4 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
 set(RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-# add_subdirectory(xuexuejson)
+add_subdirectory(xuexuejson)

@@ -1,7 +1,7 @@
 ﻿#include "gtest/gtest.h"
 #define XUEXUE_JSON_SUPPORT_OPENCV
 #define XUEXUE_JSON_SUPPORT_EIGEN
-#include "xuexuejson/Serialize.hpp"
+#include "xuexuejson/JsonMapper.hpp"
 #include "Poco/Format.h"
 #include <thread>
 #include <boost/format.hpp>
@@ -25,25 +25,25 @@ class BasicTypes_int64_t : XUEXUE_JSON_OBJECT
     virtual xuexue::json::Value&& toValue(xuexue::json::Value&& value, rapidjson::MemoryPoolAllocator<>& allocator) const
     {
         value.SetObject();
-        value.AddMember("data", xuexue::json::Serialize::toValue(data, xuexue::json::Value(), allocator), allocator);
+        value.AddMember("data", Serialize::toValue(data, xuexue::json::Value(), allocator), allocator);
         return std::move(value);
     }
     virtual xuexue::json::ValueW&& toValue(xuexue::json::ValueW&& value, rapidjson::MemoryPoolAllocator<>& allocator) const
     {
         value.SetObject();
-        value.AddMember(L"data", xuexue::json::Serialize::toValue(data, xuexue::json::ValueW(), allocator), allocator);
+        value.AddMember(L"data", Serialize::toValue(data, xuexue::json::ValueW(), allocator), allocator);
         return std::move(value);
     }
     virtual void getObj(const xuexue::json::Value& value)
     {
         if (value.HasMember("data")) {
-            xuexue::json::Serialize::getObj(value["data"], data);
+            Serialize::getObj(value["data"], data);
         }
     }
     virtual void getObj(const xuexue::json::ValueW& value)
     {
         if (value.HasMember(L"data")) {
-            xuexue::json::Serialize::getObj(value[L"data"], data);
+            Serialize::getObj(value[L"data"], data);
         }
     }
 };

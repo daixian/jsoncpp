@@ -5,14 +5,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(SUB_NAME "xuexuejson")
 
-add_definitions(-D UNICODE)
-if(WIN32)
-    add_definitions(-D _WINDOWS)
-    add_definitions(-D _USERDLL)
-    # 这个设置只支持windows，所以不要使用了
-    # add_definitions(-D SPDLOG_WCHAR_TO_UTF8_SUPPORT)
-endif()
-
 # set(SOURCE_LIST
 #     main.cpp
 # )
@@ -38,11 +30,9 @@ assign_source_group(${SOURCE_LIST})
 message(STATUS "SOURCE_LIST = ${SOURCE_LIST}")
 
 # Library definition
-add_library(${SUB_NAME}
-            STATIC
-            ${SOURCE_LIST})
- 
- 
+add_library(${SUB_NAME} INTERFACE)
+
+# SET_TARGET_PROPERTIES（${SUB_NAME} PROPERTIES LINKER_LANGUAGE C11）
 # find_package(Threads)
 
 # if(WIN32)
@@ -53,8 +43,9 @@ add_library(${SUB_NAME}
 message(STATUS "CMAKE_SOURCE_DIR = ${CMAKE_SOURCE_DIR}")
 message(STATUS "CONAN_LIBS = ${CONAN_LIBS}")
 
-target_include_directories(${SUB_NAME} PRIVATE ${CMAKE_SOURCE_DIR})
-target_link_libraries(${SUB_NAME} PRIVATE ${CONAN_LIBS} ${CMAKE_THREAD_LIBS_INIT})
+target_sources(${SUB_NAME} INTERFACE ${SOURCE_LIST})
+target_include_directories(${SUB_NAME} INTERFACE ${CMAKE_SOURCE_DIR})
+# target_link_libraries(${SUB_NAME} INTERFACE ${CONAN_LIBS} ${CMAKE_THREAD_LIBS_INIT})
 
 
 # # 全都安装到根目录
