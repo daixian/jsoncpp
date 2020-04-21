@@ -23,8 +23,12 @@
 #define XUEXUE_JSON_IGNORE_TYPE_ERROR
 
 //默认定义支持这些大库里的类型，如果不需要则注销掉这两行
-// #define XUEXUE_JSON_SUPPORT_OPENCV
-// #define XUEXUE_JSON_SUPPORT_EIGEN
+#ifdef OPENCV_CORE_HPP
+#    define XUEXUE_JSON_SUPPORT_OPENCV
+#endif
+#ifdef EIGEN_GEOMETRY_MODULE_H
+#    define XUEXUE_JSON_SUPPORT_EIGEN
+#endif
 
 //一些大库使用到的基本类型
 #ifdef XUEXUE_JSON_SUPPORT_OPENCV

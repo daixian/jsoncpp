@@ -248,7 +248,7 @@ TEST(Json, cvMat_double)
     cv::Mat m;
     m = (cv::Mat_<double>(4, 4) << 1, 0, 0, 0,
          0, -1, 0, 0,
-         0, 0, 1, 0,
+         0, 0, 0.1, 0,
          0, 0, 0, 1);
 
     //序列化到doc
