@@ -727,4 +727,23 @@ TEST(String, istreamToJson)
     ASSERT_TRUE(sc.s1 == sc2.s1);
     ASSERT_TRUE(sc.s2 == sc2.s2);
 }
+
+TEST(String, loadFile)
+{
+    std::vector<std::string> vStr;
+    vStr.push_back("123");
+    vStr.push_back("456");
+    string text = JsonMapper::toJson(vStr);
+    JsonHelper::save("file.json", text);
+    vector<string> vStr2 = JsonMapper::loadFile<vector<string>>("file.json");
+    for (size_t i = 0; i < vStr.size(); i++) {
+        ASSERT_TRUE(vStr[i] == vStr2[i]);
+    }
+}
+
+TEST(String, loadFileNoFile)
+{
+    //会抛出异常
+    ASSERT_THROW(vector<string> vStr2 = JsonMapper::loadFile<vector<string>>("nofile"), invalid_argument);
+}
 } // namespace dxtest

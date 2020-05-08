@@ -81,6 +81,7 @@
         "xutility": "cpp",
         "concepts": "cpp",
         "eulerangles": "cpp",
-        "geometry": "cpp"
+        "geometry": "cpp",
+        "strstream": "cpp"
     }
 }

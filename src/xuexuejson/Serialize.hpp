@@ -18,6 +18,7 @@
 #include <iostream>
 #include <fstream>
 #include <memory>
+#include <stdexcept>
 
 //定义是否忽略那些基本类型不匹配的错误，可以接一些类型不匹配但是逻辑上能对应的数据
 #define XUEXUE_JSON_IGNORE_TYPE_ERROR
@@ -2320,7 +2321,7 @@ class JsonMapper
     /// <typeparam name="T"> Generic type parameter. </typeparam>
     /// <param name="obj"> 要转换的obj对象. </param>
     ///
-    /// <returns> Obj as a Document. </returns>
+    /// <returns> DocumentW对象. </returns>
     ///-------------------------------------------------------------------------------------------------
     template <class T>
     static inline DocumentW toDocumentW(const T& obj)
@@ -2363,7 +2364,7 @@ class JsonMapper
     /// <param name="obj">      要转换的obj对象. </param>
     /// <param name="isPretty"> (Optional) 是否启用缩进格式打印. </param>
     ///
-    /// <returns> Doc as a std::wstring. </returns>
+    /// <returns> josn文本. </returns>
     ///-------------------------------------------------------------------------------------------------
     template <class T>
     static inline std::string toJson(const T& obj, bool isPretty = false)
@@ -2396,7 +2397,7 @@ class JsonMapper
     /// <param name="obj">      要转换的obj对象. </param>
     /// <param name="isPretty"> (Optional) 是否启用缩进格式打印. </param>
     ///
-    /// <returns> Doc as a std::wstring. </returns>
+    /// <returns> josn文本. </returns>
     ///-------------------------------------------------------------------------------------------------
     template <class T>
     static inline std::wstring toJsonW(const T& obj, bool isPretty = false)
@@ -2446,7 +2447,7 @@ class JsonMapper
     /// <typeparam name="T"> Generic type parameter. </typeparam>
     /// <param name="text"> The text. </param>
     ///
-    /// <returns> json序列化的对象. </returns>
+    /// <returns> json反序列化的对象. </returns>
     ///-------------------------------------------------------------------------------------------------
     template <class T>
     static inline T toObject(const std::string& text)
@@ -2484,9 +2485,9 @@ class JsonMapper
     /// <remarks> Dx, 2019/3/12. </remarks>
     ///
     /// <typeparam name="T"> Generic type parameter. </typeparam>
-    /// <param name="is"> [in,out] 数据流. </param>
+    /// <param name="is"> [in] 数据流. </param>
     ///
-    /// <returns> json序列化的对象. </returns>
+    /// <returns> json反序列化的对象. </returns>
     ///-------------------------------------------------------------------------------------------------
     template <class T>
     static inline T toObject(std::istream& is)
@@ -2526,7 +2527,7 @@ class JsonMapper
     /// <typeparam name="T"> Generic type parameter. </typeparam>
     /// <param name="text"> The text. </param>
     ///
-    /// <returns> json序列化的对象. </returns>
+    /// <returns> json反序列化的对象. </returns>
     ///-------------------------------------------------------------------------------------------------
     template <class T>
     static inline T toObjectW(const std::wstring& text)
@@ -2568,7 +2569,7 @@ class JsonMapper
     /// <typeparam name="T"> Generic type parameter. </typeparam>
     /// <param name="is"> 数据流. </param>
     ///
-    /// <returns> json序列化的对象. </returns>
+    /// <returns> json反序列化的对象. </returns>
     ///-------------------------------------------------------------------------------------------------
     template <class T>
     static inline T toObjectW(const std::wistream& is)
@@ -2580,6 +2581,31 @@ class JsonMapper
         document.ParseStream(s);
         T obj;
         Serialize::getObj(document, obj);
+        return obj;
+    }
+
+    ///-------------------------------------------------------------------------------------------------
+    /// <summary> 载入一个本地的json文件. </summary>
+    ///
+    /// <typeparam name="T"> Generic type parameter. </typeparam>
+    /// <param name="jsonFilePath"> json文件路径. </param>
+    ///
+    /// <returns> json反序列化的对象. </returns>
+    ///-------------------------------------------------------------------------------------------------
+    template <class T>
+    static inline T loadFile(const std::string& jsonFilePath)
+    {
+        std::ifstream ifs;
+        ifs.open(jsonFilePath);
+
+        T obj;
+        if (ifs.is_open()) {
+            JsonMapper::toObject<T>(ifs, obj);
+        }
+        else {
+            throw std::invalid_argument("can not open json file!");
+        }
+        ifs.close();
         return obj;
     }
 };
