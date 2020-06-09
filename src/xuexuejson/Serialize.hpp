@@ -771,6 +771,9 @@ class JsonHelper
             obj = value.GetInt();
         }
 #ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
+        else if (value.IsNumber()) {
+            obj = static_cast<int>(value.GetDouble());
+        }
         else if (value.IsString()) {
             try {
                 obj = std::stoi(value.GetString());
@@ -787,6 +790,9 @@ class JsonHelper
             obj = value.GetInt();
         }
 #ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
+        else if (value.IsNumber()) {
+            obj = static_cast<int>(value.GetDouble());
+        }
         else if (value.IsString()) {
             try {
                 obj = std::stoi(value.GetString());
@@ -803,6 +809,9 @@ class JsonHelper
             obj = value.GetInt64();
         }
 #ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
+        else if (value.IsNumber()) {
+            obj = static_cast<int64_t>(value.GetDouble());
+        }
         else if (value.IsString()) {
             try {
                 obj = std::stoll(value.GetString());
@@ -819,6 +828,9 @@ class JsonHelper
             obj = value.GetInt64();
         }
 #ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
+        else if (value.IsNumber()) {
+            obj = static_cast<int64_t>(value.GetDouble());
+        }
         else if (value.IsString()) {
             try {
                 obj = std::stoll(value.GetString());
@@ -899,6 +911,12 @@ class JsonHelper
             obj = value.GetUint();
         }
 #ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
+        else if (value.IsNumber()) {
+            double d = value.GetDouble();
+            if (d >= 0) {
+                obj = static_cast<uint32_t>(d);
+            }
+        }
         else if (value.IsString()) {
             try {
                 obj = static_cast<uint32_t>(std::stoul(value.GetString()));
@@ -915,6 +933,12 @@ class JsonHelper
             obj = value.GetUint();
         }
 #ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
+        else if (value.IsNumber()) {
+            double d = value.GetDouble();
+            if (d >= 0) {
+                obj = static_cast<uint32_t>(d);
+            }
+        }
         else if (value.IsString()) {
             try {
                 obj = static_cast<uint32_t>(std::stoul(value.GetString()));
@@ -931,6 +955,12 @@ class JsonHelper
             obj = value.GetUint64();
         }
 #ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
+        else if (value.IsNumber()) {
+            double d = value.GetDouble();
+            if (d >= 0) {
+                obj = static_cast<uint64_t>(d);
+            }
+        }
         else if (value.IsString()) {
             try {
                 obj = std::stoull(value.GetString());
@@ -947,6 +977,12 @@ class JsonHelper
             obj = value.GetUint64();
         }
 #ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
+        else if (value.IsNumber()) {
+            double d = value.GetDouble();
+            if (d >= 0) {
+                obj = static_cast<uint64_t>(d);
+            }
+        }
         else if (value.IsString()) {
             try {
                 obj = std::stoull(value.GetString());
@@ -959,10 +995,13 @@ class JsonHelper
 
     static inline void ValueTypeAdapte(const Value& value, float& obj)
     {
-        if (value.IsFloat()) {
+        if (value.IsFloat() || value.IsInt()) {
             obj = value.GetFloat();
         }
 #ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
+        else if (value.IsNumber()) {
+            obj = static_cast<float>(value.GetDouble());
+        }
         else if (value.IsString()) {
             try {
                 obj = std::stof(value.GetString());
@@ -975,10 +1014,13 @@ class JsonHelper
 
     static inline void ValueTypeAdapte(const ValueW& value, float& obj)
     {
-        if (value.IsFloat()) {
+        if (value.IsFloat() || value.IsInt()) {
             obj = value.GetFloat();
         }
 #ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
+        else if (value.IsNumber()) {
+            obj = static_cast<float>(value.GetDouble());
+        }
         else if (value.IsString()) {
             try {
                 obj = std::stof(value.GetString());
@@ -991,10 +1033,13 @@ class JsonHelper
 
     static inline void ValueTypeAdapte(const Value& value, double& obj)
     {
-        if (value.IsDouble()) {
+        if (value.IsDouble() || value.IsInt()) {
             obj = value.GetDouble();
         }
 #ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
+        else if (value.IsNumber()) {
+            obj = value.GetDouble();
+        }
         else if (value.IsString()) {
             try {
                 obj = std::stod(value.GetString());
@@ -1007,10 +1052,13 @@ class JsonHelper
 
     static inline void ValueTypeAdapte(const ValueW& value, double& obj)
     {
-        if (value.IsDouble()) {
+        if (value.IsDouble() || value.IsInt()) {
             obj = value.GetDouble();
         }
 #ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
+        else if (value.IsNumber()) {
+            obj = value.GetDouble();
+        }
         else if (value.IsString()) {
             try {
                 obj = std::stod(value.GetString());
