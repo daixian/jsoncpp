@@ -805,7 +805,7 @@ class JsonHelper
 
     static inline void ValueTypeAdapte(const Value& value, int64_t& obj)
     {
-        if (value.IsInt64()) {
+        if (value.IsInt() || value.IsInt64()) {
             obj = value.GetInt64();
         }
 #ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
@@ -824,7 +824,7 @@ class JsonHelper
 
     static inline void ValueTypeAdapte(const ValueW& value, int64_t& obj)
     {
-        if (value.IsInt64()) {
+        if (value.IsInt() || value.IsInt64()) {
             obj = value.GetInt64();
         }
 #ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
@@ -951,7 +951,7 @@ class JsonHelper
 
     static inline void ValueTypeAdapte(const Value& value, uint64_t& obj)
     {
-        if (value.IsUint64()) {
+        if (value.IsUint() || value.IsUint64()) {
             obj = value.GetUint64();
         }
 #ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
@@ -973,7 +973,7 @@ class JsonHelper
 
     static inline void ValueTypeAdapte(const ValueW& value, uint64_t& obj)
     {
-        if (value.IsUint64()) {
+        if (value.IsUint() || value.IsUint64()) {
             obj = value.GetUint64();
         }
 #ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
@@ -1033,13 +1033,10 @@ class JsonHelper
 
     static inline void ValueTypeAdapte(const Value& value, double& obj)
     {
-        if (value.IsDouble() || value.IsInt()) {
+        if (value.IsNumber()) {
             obj = value.GetDouble();
         }
 #ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
-        else if (value.IsNumber()) {
-            obj = value.GetDouble();
-        }
         else if (value.IsString()) {
             try {
                 obj = std::stod(value.GetString());
@@ -1052,13 +1049,10 @@ class JsonHelper
 
     static inline void ValueTypeAdapte(const ValueW& value, double& obj)
     {
-        if (value.IsDouble() || value.IsInt()) {
+        if (value.IsNumber()) {
             obj = value.GetDouble();
         }
 #ifdef XUEXUE_JSON_IGNORE_TYPE_ERROR
-        else if (value.IsNumber()) {
-            obj = value.GetDouble();
-        }
         else if (value.IsString()) {
             try {
                 obj = std::stod(value.GetString());
