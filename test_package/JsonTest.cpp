@@ -746,4 +746,88 @@ TEST(String, loadFileNoFile)
     //会抛出异常
     ASSERT_THROW(vector<string> vStr2 = JsonMapper::loadFile<vector<string>>("nofile"), invalid_argument);
 }
+
+TEST(wstring, toJsonW)
+{
+    std::vector<std::wstring> vStr;
+    vStr.push_back(L"568876❀❀❀");
+    vStr.push_back(L"❀❀86786");
+
+    wstring json = JsonMapper::toJsonW(vStr, true);
+
+    vector<wstring> vStr3 = JsonMapper::toObjectW<vector<wstring>>(json);
+    for (size_t i = 0; i < vStr.size(); i++) {
+        ASSERT_TRUE(vStr[i] == vStr3[i]);
+    }
+}
+
+TEST(string, toJsonW)
+{
+    std::vector<std::string> vStr;
+    vStr.push_back("568876❀❀❀");
+    vStr.push_back("❀❀86786");
+
+    wstring json = JsonMapper::toJsonW(vStr, true);
+
+    vector<string> vStr3 = JsonMapper::toObjectW<vector<string>>(json);
+    for (size_t i = 0; i < vStr.size(); i++) {
+        ASSERT_TRUE(vStr[i] == vStr3[i]);
+    }
+}
+
+TEST(string, toJson_ofstream)
+{
+    std::vector<std::string> vStr;
+    vStr.push_back("568❀❀❀876❀❀❀");
+    vStr.push_back("86786");
+    ofstream ofs("output.json");
+    JsonMapper ::toJson(vStr, ofs, true);
+    ofs.close();
+    vector<string> vStr2 = JsonMapper::loadFile<vector<string>>("output.json");
+    for (size_t i = 0; i < vStr.size(); i++) {
+        ASSERT_TRUE(vStr[i] == vStr2[i]);
+    }
+}
+
+TEST(wstring, toJson_ofstream)
+{
+    std::vector<std::wstring> vStr;
+    vStr.push_back(L"568876❀❀❀");
+    vStr.push_back(L"❀❀86786");
+    ofstream ofs("output2.json");
+    JsonMapper::toJson(vStr, ofs, true);
+    ofs.close();
+
+    vector<wstring> vStr2 = JsonMapper::loadFile<vector<wstring>>("output2.json");
+    for (size_t i = 0; i < vStr.size(); i++) {
+        ASSERT_TRUE(vStr[i] == vStr2[i]);
+    }
+}
+
+/*
+TEST(wstring, toJsonW_wofstream)
+{
+    //std::locale oNewLocale(std::locale(), "", std::locale::ctype);
+    //std::locale oPreviousLocale = std::locale::global(oNewLocale);
+
+    std::vector<std::wstring> vStr;
+    vStr.push_back(L"568876❀❀❀");
+    vStr.push_back(L"❀❀86786");
+    wofstream ofs("output2.json");
+    //wcout.imbue(locale(locale(),"",LC_CTYPE));
+    ofs << vStr[0];
+
+    JsonMapper::toJsonW(vStr, ofs, true);
+    ofs.close();
+
+    wifstream ifs("output2.json");
+
+    vector<wstring> vStr2 = JsonMapper::toObjectW<vector<wstring>>(ifs);
+    for (size_t i = 0; i < vStr.size(); i++) {
+        ASSERT_TRUE(vStr[i] == vStr2[i]);
+    }
+    //std::locale::global(oPreviousLocale);
+}
+*/
+
 } // namespace dxtest

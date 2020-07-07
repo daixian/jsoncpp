@@ -2462,6 +2462,66 @@ class JsonMapper
         return std::wstring(sb.GetString());
     }
 
+    /**
+     * 转换整个obj到json然后写入流
+     *
+     * @tparam T Generic type parameter.
+     * @param          obj      要转换的obj对象.
+     * @param [in,out] os       要写入的流.
+     * @param          isPretty (Optional) 是否美观打印.
+     */
+    template <class T>
+    static inline void toJson(const T& obj, std::ostream& os, bool isPretty = false)
+    {
+        using namespace rapidjson;
+
+        Document doc;
+        auto& allocator = doc.GetAllocator();
+        //作者好像已经屏蔽了doc类型的move,所以这句move实际只是刚好让编译通过
+        Serialize::toValue(obj, std::move(doc), allocator);
+
+        OStreamWrapper osw(os);
+
+        if (isPretty) {
+            PrettyWriter<OStreamWrapper> writer(osw);
+            doc.Accept(writer);
+        }
+        else {
+            Writer<OStreamWrapper> writer(osw);
+            doc.Accept(writer); // Accept() traverses the DOM and generates Handler events.
+        }
+    }
+
+    /**
+     * 转换整个obj到json然后写入流.(注意在windows下使用wofstream会有一些问题,所以这个方法目前没有单元测试)
+     *
+     * @tparam T Generic type parameter.
+     * @param          obj      要转换的obj对象.
+     * @param [in,out] os       要写入的流.
+     * @param          isPretty (Optional) 是否美观打印.
+     */
+    template <class T>
+    static inline void toJsonW(const T& obj, std::wostream& os, bool isPretty = false)
+    {
+        using namespace rapidjson;
+
+        DocumentW doc;
+        auto& allocator = doc.GetAllocator();
+        //作者好像已经屏蔽了doc类型的move,所以这句move实际只是刚好让编译通过
+        Serialize::toValue(obj, std::move(doc), allocator);
+
+        WOStreamWrapper osw(os);
+
+        if (isPretty) {
+            PrettyWriter<WOStreamWrapper, UTF16<>, UTF16<>> writer(osw);
+            doc.Accept(writer);
+        }
+        else {
+            Writer<WOStreamWrapper, UTF16<>, UTF16<>> writer(osw);
+            doc.Accept(writer); // Accept() traverses the DOM and generates Handler events.
+        }
+    }
+
     ///-------------------------------------------------------------------------------------------------
     /// <summary> 从json读取并给对象赋值. </summary>
     ///
@@ -2593,13 +2653,12 @@ class JsonMapper
     /// <param name="obj"> [in,out] 支持json序列化的对象. </param>
     ///-------------------------------------------------------------------------------------------------
     template <class T>
-    static inline void toObjectW(const std::wistream& is, T& obj)
+    static inline void toObjectW(std::wistream& is, T& obj)
     {
         using namespace rapidjson;
         DocumentW document;
         WIStreamWrapper isw(is);
-        StringStreamW s(isw);
-        document.ParseStream(s);
+        document.ParseStream(isw);
         Serialize::getObj(document, obj);
     }
 
@@ -2614,13 +2673,12 @@ class JsonMapper
     /// <returns> json反序列化的对象. </returns>
     ///-------------------------------------------------------------------------------------------------
     template <class T>
-    static inline T toObjectW(const std::wistream& is)
+    static inline T toObjectW(std::wistream& is)
     {
         using namespace rapidjson;
         DocumentW document;
         WIStreamWrapper isw(is);
-        StringStreamW s(isw);
-        document.ParseStream(s);
+        document.ParseStream(isw);
         T obj;
         Serialize::getObj(document, obj);
         return obj;

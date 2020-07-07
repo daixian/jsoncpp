@@ -12,7 +12,7 @@ from conans import ConanFile, CMake, tools
 
 class xuexuejsonConan(ConanFile):
     name = "xuexuejson"
-    version = "1.1.7"
+    version = "1.1.8"
     license = "GLWTPL (Good Luck With That Public License)"
     author = "daixian<amano_tooko@qq.com>"
     url = "https://github.com/daixian/jsoncpp"
@@ -27,7 +27,7 @@ class xuexuejsonConan(ConanFile):
     def requirements(self):
         # https://docs.conan.io/en/latest/mastering/conditional.html
         # 标准的写法是requires()
-        self.requires("rapidjson/1.1.0")
+        self.requires("rapidjson/[>=1.1.0]")
 
     def _configure_cmake(self):
         """转换python的设置到CMake"""
