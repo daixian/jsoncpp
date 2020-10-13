@@ -31,6 +31,18 @@ TEST(String, UTF16ToUTF8)
     ASSERT_EQ(utf8, utf8_2);
 }
 
+TEST(String, UTF8ToUTF16_EMPTY)
+{
+    string utf8 = "";
+    wstring utf16 = L"";
+
+    wstring utf16_2 = JsonHelper::utf8To16(utf8);
+    string utf8_2 = JsonHelper::utf16To8(utf16);
+
+    ASSERT_EQ(utf16, utf16_2);
+    ASSERT_EQ(utf8, utf8_2);
+}
+
 class StringClass : XUEXUE_JSON_OBJECT
 {
   public:
