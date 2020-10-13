@@ -1,10 +1,6 @@
-﻿#include "gtest/gtest.h"
-#define XUEXUE_JSON_SUPPORT_OPENCV
-#define XUEXUE_JSON_SUPPORT_EIGEN
+#include "gtest/gtest.h"
 #include "xuexuejson/Serialize.hpp"
-#include "Poco/Format.h"
 #include <thread>
-#include <boost/format.hpp>
 
 #pragma execution_character_set("utf-8")
 
@@ -76,10 +72,18 @@ class ClassA : XUEXUE_JSON_OBJECT
     ClassA() {}
     ~ClassA() {}
 
-    Eigen::Vector3d v0;
-    cv::Vec3d v1;
+    string str;
+    bool b = false;
+    unsigned char uc;
+    char c;
+    unsigned short usi = 0;
+    short si = 0;
+    unsigned int ui = 0;
+    int i = 0;
+    uint64_t uli = 0;
+    int64_t li = 0;
 
-    XUEXUE_JSON_OBJECT_M2(v0, v1);
+    XUEXUE_JSON_OBJECT_M10(str, b, uc, c, usi, si, ui, i, uli, li)
 
   private:
 };
@@ -102,7 +106,7 @@ class ClassB : XUEXUE_JSON_OBJECT
     int64_t li = 0;
     ClassA oa;
 
-    XUEXUE_JSON_OBJECT_M11(str, b, uc, c, usi, si, ui, i, uli, li, oa);
+    XUEXUE_JSON_OBJECT_M11(str, b, uc, c, usi, si, ui, i, uli, li, oa)
 
   private:
 };
@@ -121,8 +125,16 @@ TEST(BasicTypes, classNest_BaseTypeMin)
     ob.uli = ULONG_MAX;
     ob.li = LONG_MIN;
 
-    ob.oa.v0 = Eigen::Vector3d(123, 3123543, 53456);
-    ob.oa.v1 = cv::Vec3d(345, 321, 76);
+    ob.oa.str = "12312是是";
+    ob.oa.b = true;
+    ob.oa.uc = UCHAR_MAX;
+    ob.oa.c = CHAR_MIN;
+    ob.oa.usi = USHRT_MAX;
+    ob.oa.si = SHRT_MIN;
+    ob.oa.ui = UINT_MAX;
+    ob.oa.i = INT_MIN;
+    ob.oa.uli = ULONG_MAX;
+    ob.oa.li = LONG_MIN;
 
     string text = JsonMapper::toJson(ob);
     ClassB ob2 = JsonMapper::toObject<ClassB>(text);
@@ -139,8 +151,16 @@ TEST(BasicTypes, classNest_BaseTypeMin)
     ASSERT_TRUE(ob.uli == ob2.uli);
     ASSERT_TRUE(ob.li == ob2.li) << ob.li << "<->" << ob2.li;
 
-    ASSERT_TRUE(ob.oa.v0 == ob2.oa.v0);
-    ASSERT_TRUE(ob.oa.v1 == ob2.oa.v1);
+    ASSERT_TRUE(ob.oa.str == ob2.oa.str);
+    ASSERT_TRUE(ob.oa.b == ob2.oa.b);
+    ASSERT_TRUE(ob.oa.uc == ob2.oa.uc);
+    ASSERT_TRUE(ob.oa.c == ob2.oa.c);
+    ASSERT_TRUE(ob.oa.usi == ob2.oa.usi);
+    ASSERT_TRUE(ob.oa.si == ob2.oa.si);
+    ASSERT_TRUE(ob.oa.ui == ob2.oa.ui);
+    ASSERT_TRUE(ob.oa.i == ob2.oa.i);
+    ASSERT_TRUE(ob.oa.uli == ob2.oa.uli);
+    ASSERT_TRUE(ob.oa.li == ob2.oa.li) << ob.oa.li << "<->" << ob2.oa.li;
 
     //string的长度小于15字节的话或许可以这样比较?
     //应该不行0xcc是未初始化地址，release下可能会出错
@@ -162,8 +182,16 @@ TEST(BasicTypes, classNest_BaseTypeMax)
     ob.uli = ULONG_MAX;
     ob.li = LONG_MAX;
 
-    ob.oa.v0 = Eigen::Vector3d(123, 3123543, 53456);
-    ob.oa.v1 = cv::Vec3d(345, 321, 76);
+    ob.oa.str = "12312是是";
+    ob.oa.b = true;
+    ob.oa.uc = UCHAR_MAX;
+    ob.oa.c = CHAR_MAX;
+    ob.oa.usi = USHRT_MAX;
+    ob.oa.si = SHRT_MAX;
+    ob.oa.ui = UINT_MAX;
+    ob.oa.i = INT_MAX;
+    ob.oa.uli = ULONG_MAX;
+    ob.oa.li = LONG_MAX;
 
     string text = JsonMapper::toJson(ob);
     ClassB ob2 = JsonMapper::toObject<ClassB>(text);
@@ -180,11 +208,19 @@ TEST(BasicTypes, classNest_BaseTypeMax)
     ASSERT_TRUE(ob.uli == ob2.uli);
     ASSERT_TRUE(ob.li == ob2.li) << ob.li << "<->" << ob2.li;
 
-    ASSERT_TRUE(ob.oa.v0 == ob2.oa.v0);
-    ASSERT_TRUE(ob.oa.v1 == ob2.oa.v1);
+    ASSERT_TRUE(ob.oa.str == ob2.oa.str);
+    ASSERT_TRUE(ob.oa.b == ob2.oa.b);
+    ASSERT_TRUE(ob.oa.uc == ob2.oa.uc);
+    ASSERT_TRUE(ob.oa.c == ob2.oa.c);
+    ASSERT_TRUE(ob.oa.usi == ob2.oa.usi);
+    ASSERT_TRUE(ob.oa.si == ob2.oa.si);
+    ASSERT_TRUE(ob.oa.ui == ob2.oa.ui);
+    ASSERT_TRUE(ob.oa.i == ob2.oa.i);
+    ASSERT_TRUE(ob.oa.uli == ob2.oa.uli);
+    ASSERT_TRUE(ob.oa.li == ob2.oa.li) << ob.oa.li << "<->" << ob2.oa.li;
 }
 
-TEST(JsonMapper, toDocument)
+TEST(BasicTypes, toDocument)
 {
     ClassB ob;
     ob.str = "12312是是";
@@ -198,8 +234,16 @@ TEST(JsonMapper, toDocument)
     ob.uli = ULONG_MAX;
     ob.li = LONG_MIN;
 
-    ob.oa.v0 = Eigen::Vector3d(123, 3123543, 53456);
-    ob.oa.v1 = cv::Vec3d(345, 321, 76);
+    ob.oa.str = "12312是是";
+    ob.oa.b = true;
+    ob.oa.uc = UCHAR_MAX;
+    ob.oa.c = CHAR_MIN;
+    ob.oa.usi = USHRT_MAX;
+    ob.oa.si = SHRT_MIN;
+    ob.oa.ui = UINT_MAX;
+    ob.oa.i = INT_MIN;
+    ob.oa.uli = ULONG_MAX;
+    ob.oa.li = LONG_MIN;
 
     string text = JsonMapper::toJson(ob, false);
 
@@ -209,7 +253,7 @@ TEST(JsonMapper, toDocument)
     EXPECT_TRUE(text == text_doc);
 }
 
-TEST(JsonMapper, toDocument2)
+TEST(BasicTypes, toDocument2)
 {
     ClassB ob;
     ob.str = "12312是是";
@@ -223,8 +267,16 @@ TEST(JsonMapper, toDocument2)
     ob.uli = ULONG_MAX;
     ob.li = LONG_MIN;
 
-    ob.oa.v0 = Eigen::Vector3d(123, 3123543, 53456);
-    ob.oa.v1 = cv::Vec3d(345, 321, 76);
+    ob.oa.str = "12312是是";
+    ob.oa.b = true;
+    ob.oa.uc = UCHAR_MAX;
+    ob.oa.c = CHAR_MIN;
+    ob.oa.usi = USHRT_MAX;
+    ob.oa.si = SHRT_MIN;
+    ob.oa.ui = UINT_MAX;
+    ob.oa.i = INT_MIN;
+    ob.oa.uli = ULONG_MAX;
+    ob.oa.li = LONG_MIN;
 
     string text = JsonMapper::toJson(ob, false);
 
@@ -235,7 +287,7 @@ TEST(JsonMapper, toDocument2)
     EXPECT_TRUE(text == text_doc);
 }
 
-TEST(JsonMapper, toDocumentW)
+TEST(BasicTypes, toDocumentW)
 {
     ClassB ob;
     ob.str = "12312是是";
@@ -249,8 +301,16 @@ TEST(JsonMapper, toDocumentW)
     ob.uli = ULONG_MAX;
     ob.li = LONG_MIN;
 
-    ob.oa.v0 = Eigen::Vector3d(123, 3123543, 53456);
-    ob.oa.v1 = cv::Vec3d(345, 321, 76);
+    ob.oa.str = "12312是是";
+    ob.oa.b = true;
+    ob.oa.uc = UCHAR_MAX;
+    ob.oa.c = CHAR_MIN;
+    ob.oa.usi = USHRT_MAX;
+    ob.oa.si = SHRT_MIN;
+    ob.oa.ui = UINT_MAX;
+    ob.oa.i = INT_MIN;
+    ob.oa.uli = ULONG_MAX;
+    ob.oa.li = LONG_MIN;
 
     wstring text = JsonMapper::toJsonW(ob, false);
 
@@ -260,7 +320,7 @@ TEST(JsonMapper, toDocumentW)
     EXPECT_TRUE(text == text_doc);
 }
 
-TEST(JsonMapper, toDocumentW2)
+TEST(BasicTypes, toDocumentW2)
 {
     ClassB ob;
     ob.str = "12312是是";
@@ -274,8 +334,16 @@ TEST(JsonMapper, toDocumentW2)
     ob.uli = ULONG_MAX;
     ob.li = LONG_MIN;
 
-    ob.oa.v0 = Eigen::Vector3d(123, 3123543, 53456);
-    ob.oa.v1 = cv::Vec3d(345, 321, 76);
+    ob.oa.str = "12312是是";
+    ob.oa.b = true;
+    ob.oa.uc = UCHAR_MAX;
+    ob.oa.c = CHAR_MIN;
+    ob.oa.usi = USHRT_MAX;
+    ob.oa.si = SHRT_MIN;
+    ob.oa.ui = UINT_MAX;
+    ob.oa.i = INT_MIN;
+    ob.oa.uli = ULONG_MAX;
+    ob.oa.li = LONG_MIN;
 
     wstring text = JsonMapper::toJsonW(ob, false);
 

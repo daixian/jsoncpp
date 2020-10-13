@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.1.0)
 
 #增加这个wrapper工程让vscode的cmake插件可以工作
-project(cmake_wrapper VERSION 1.0.0 LANGUAGES CXX)
+project(xuexuejson_wrapper VERSION 1.0.0 LANGUAGES CXX)
 
 message(STATUS "CMAKE_BINARY_DIR = ${CMAKE_BINARY_DIR}")
 
@@ -30,4 +30,5 @@ endif(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 
 #设置文件输出的目录
 message(STATUS "总工程的CMAKE_BINARY_DIR = ${CMAKE_BINARY_DIR}")
+add_subdirectory("src")
 add_subdirectory("test_package")
