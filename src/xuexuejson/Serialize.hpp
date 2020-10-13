@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "rapidjson/document.h"
 #include "rapidjson/istreamwrapper.h"
 #include "rapidjson/ostreamwrapper.h"
@@ -2544,7 +2544,7 @@ class JsonMapper
     /**
      * 从json读取并给对象赋值.
      *
-     * @exception exception 解析json失败时抛出.
+     * @exception std::logic_error 解析json失败时抛出.
      *
      * @tparam T Generic type parameter.
      * @param          text The text.
@@ -2561,14 +2561,14 @@ class JsonMapper
             Serialize::getObj(document, obj);
         }
         else {
-            throw exception("json has parse error!");
+            throw std::logic_error("json has parse error!");
         }
     }
 
     /**
      * 从json读取并给对象赋值.
      *
-     * @exception exception 解析json失败时抛出.
+     * @exception std::logic_error 解析json失败时抛出.
      *
      * @tparam T Generic type parameter.
      * @param  text The text.
@@ -2590,7 +2590,7 @@ class JsonMapper
             Serialize::getObj(document, obj);
         }
         else {
-            throw exception("json has parse error!");
+            throw std::logic_error("json has parse error!");
         }
         return obj;
     }
@@ -2598,7 +2598,7 @@ class JsonMapper
     /**
      * 从json读取并给对象赋值.
      *
-     * @exception exception 解析json失败时抛出.
+     * @exception std::logic_error 解析json失败时抛出.
      *
      * @tparam T Generic type parameter.
      * @param [in,out] is  数据流.
@@ -2615,14 +2615,14 @@ class JsonMapper
             Serialize::getObj(document, obj);
         }
         else {
-            throw exception("json has parse error!");
+            throw std::logic_error("json has parse error!");
         }
     }
 
     /**
      * 从json读取并给对象赋值.
      *
-     * @exception exception 解析json失败时抛出.
+     * @exception std::logic_error 解析json失败时抛出.
      *
      * @tparam T Generic type parameter.
      * @param [in] is 数据流.
@@ -2641,7 +2641,7 @@ class JsonMapper
             Serialize::getObj(document, obj);
         }
         else {
-            throw exception("json has parse error!");
+            throw std::logic_error("json has parse error!");
         }
         return obj;
     }
@@ -2649,7 +2649,7 @@ class JsonMapper
     /**
      * 从json读取并给对象赋值.
      *
-     * @exception exception 解析json失败时抛出.
+     * @exception std::logic_error 解析json失败时抛出.
      *
      * @tparam T Generic type parameter.
      * @param          text The text.
@@ -2667,14 +2667,14 @@ class JsonMapper
             Serialize::getObj(document, obj);
         }
         else {
-            throw exception("json has parse error!");
+            throw std::logic_error("json has parse error!");
         }
     }
 
     /**
      * 从json读取并给对象赋值.
      *
-     * @exception exception 解析json失败时抛出.
+     * @exception std::logic_error 解析json失败时抛出.
      *
      * @tparam T Generic type parameter.
      * @param  text The text.
@@ -2693,7 +2693,7 @@ class JsonMapper
             Serialize::getObj(document, obj);
         }
         else {
-            throw exception("json has parse error!");
+            throw std::logic_error("json has parse error!");
         }
         return obj;
     }
@@ -2701,7 +2701,7 @@ class JsonMapper
     /**
      * 从json读取并给对象赋值.
      *
-     * @exception exception 解析json失败时抛出.
+     * @exception std::logic_error 解析json失败时抛出.
      *
      * @tparam T Generic type parameter.
      * @param [in,out] is  The text.
@@ -2718,14 +2718,14 @@ class JsonMapper
             Serialize::getObj(document, obj);
         }
         else {
-            throw exception("json has parse error!");
+            throw std::logic_error("json has parse error!");
         }
     }
 
     /**
      * 从json读取并给对象赋值.
      *
-     * @exception exception 解析json失败时抛出.
+     * @exception std::logic_error 解析json失败时抛出.
      *
      * @tparam T Generic type parameter.
      * @param [in,out] is 数据流.
@@ -2744,7 +2744,7 @@ class JsonMapper
             Serialize::getObj(document, obj);
         }
         else {
-            throw exception("json has parse error!");
+            throw std::logic_error("json has parse error!");
         }
         return obj;
     }
@@ -2752,7 +2752,7 @@ class JsonMapper
     /**
      * 载入一个本地的json文件.
      *
-     * @exception e                     解析json失败时抛出.
+     * @exception std::logic_error      解析json失败时抛出.
      * @exception std::invalid_argument 无法打开文件时抛出.
      *
      * @tparam T Generic type parameter.
