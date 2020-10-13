@@ -1,4 +1,4 @@
-#include "gtest/gtest.h"
+﻿#include "gtest/gtest.h"
 #include "xuexuejson/Serialize.hpp"
 
 #pragma execution_character_set("utf-8")
@@ -33,17 +33,17 @@ TEST(Json, typeAdapte)
     vector<int> vs2 = JsonMapper::toObject<vector<int>>(texe);
 
     for (size_t i = 0; i < vs.size(); i++) {
-        ASSERT_TRUE((std::to_string(vs2[i]) == vs[i]));
+        ASSERT_EQ(std::to_string(vs2[i]), vs[i]);
     }
 
     texe = JsonMapper::toJson("true", false);
     bool b = false;
     b = JsonMapper::toObject<bool>(texe);
-    ASSERT_TRUE(b == true);
+    ASSERT_EQ(b, true);
 
     texe = JsonMapper::toJson("false", false);
     b = JsonMapper::toObject<bool>(texe);
-    ASSERT_TRUE(b == false);
+    ASSERT_EQ(b, false);
 }
 
 TEST(Json, unity3dColor32)

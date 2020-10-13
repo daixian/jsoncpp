@@ -1,4 +1,4 @@
-#include "gtest/gtest.h"
+﻿#include "gtest/gtest.h"
 
 #define XUEXUE_JSON_SUPPORT_EIGEN
 #include "xuexuejson/Serialize.hpp"
@@ -74,7 +74,7 @@ void* cvComponent::instance() const
     return nullptr;
 }
 
-TEST(Json, cvObject)
+TEST(Eigen, cvObject)
 {
     std::shared_ptr<cvLine> line = std::make_shared<cvLine>();
     line->type = "cvLine";
@@ -95,7 +95,7 @@ TEST(Json, cvObject)
 
     text = JsonMapper::toJson(obj);
     cvObject o2 = JsonMapper::toObject<cvObject>(text);
-    ASSERT_TRUE(o2.components.size() == obj.components.size());
+    ASSERT_EQ(o2.components.size(), obj.components.size());
 
     cvLine* line2 = static_cast<cvLine*>((o2.components[0]).get());
     ASSERT_TRUE(line->color == line2->color);

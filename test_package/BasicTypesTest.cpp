@@ -1,4 +1,4 @@
-#include "gtest/gtest.h"
+﻿#include "gtest/gtest.h"
 #include "xuexuejson/Serialize.hpp"
 #include <thread>
 
@@ -7,6 +7,59 @@
 using namespace xuexue::json;
 using namespace std;
 using namespace rapidjson;
+
+TEST(BasicTypes, int)
+{
+    ASSERT_EQ(JsonMapper::toObject<int>("21312"), 21312);
+    ASSERT_EQ(JsonMapper::toJson(21312), "21312");
+}
+
+TEST(BasicTypes, INT_MAX_TEST)
+{
+    ASSERT_EQ(JsonMapper::toObject<int>("2147483647"), INT_MAX);
+    ASSERT_EQ(JsonMapper::toJson(INT_MAX), "2147483647");
+}
+
+TEST(BasicTypes, INT_MIN_TEST)
+{
+    ASSERT_EQ(JsonMapper::toObject<int>("-2147483648"), INT_MIN);
+    ASSERT_EQ(JsonMapper::toJson(INT_MIN), "-2147483648");
+}
+
+TEST(BasicTypes, float)
+{
+    ASSERT_EQ(JsonMapper::toObject<float>("2.5"), 2.5);
+    ASSERT_EQ(JsonMapper::toJson(2.5), "2.5");
+}
+
+TEST(BasicTypes, int_float)
+{
+    //整数写法的浮点也要支持
+    ASSERT_EQ(JsonMapper::toObject<float>("2"), 2);
+    ASSERT_EQ(JsonMapper::toJson(2.0f), "2.0");
+}
+
+TEST(BasicTypes, int_double)
+{
+    //整数写法的浮点也要支持
+    ASSERT_EQ(JsonMapper::toObject<double>("2"), 2);
+    ASSERT_EQ(JsonMapper::toJson(2.0), "2.0");
+}
+
+TEST(BasicTypes, bool)
+{
+    ASSERT_EQ(JsonMapper::toObject<bool>("\"true\""), true);
+    string text = JsonMapper::toJson(true);
+    ASSERT_EQ(JsonMapper::toJson(true), "true");
+}
+
+TEST(BasicTypes, char)
+{
+    ASSERT_EQ(JsonMapper::toObject<char>("21312"), (char)21312);
+    ASSERT_EQ(JsonMapper::toJson((char)100), "100");
+}
+
+//------------------------------------------------------------------------------
 
 class BasicTypes_int64_t : XUEXUE_JSON_OBJECT
 {
@@ -50,17 +103,17 @@ TEST(BasicTypes, int64_t_123)
 
     string text = JsonMapper::toJson(o);
     BasicTypes_int64_t o2 = JsonMapper::toObject<BasicTypes_int64_t>(text);
-    ASSERT_TRUE(o.data == o2.data);
+    ASSERT_EQ(o.data, o2.data);
 }
 
 TEST(BasicTypes, int64_t_LONG_MIN)
 {
-    ASSERT_TRUE(static_cast<int64_t>(LONG_MIN) == LONG_MIN);
+    ASSERT_EQ(static_cast<int64_t>(LONG_MIN), LONG_MIN);
     BasicTypes_int64_t o(static_cast<int64_t>(LONG_MIN));
 
     string text = JsonMapper::toJson(o);
     BasicTypes_int64_t o2 = JsonMapper::toObject<BasicTypes_int64_t>(text);
-    ASSERT_TRUE(o.data == o2.data);
+    ASSERT_EQ(o.data, o2.data);
 }
 
 //------------------------------------------------------------------------------
@@ -74,8 +127,8 @@ class ClassA : XUEXUE_JSON_OBJECT
 
     string str;
     bool b = false;
-    unsigned char uc;
-    char c;
+    unsigned char uc = 0;
+    char c = 0;
     unsigned short usi = 0;
     short si = 0;
     unsigned int ui = 0;
@@ -96,8 +149,8 @@ class ClassB : XUEXUE_JSON_OBJECT
 
     string str;
     bool b = false;
-    unsigned char uc;
-    char c;
+    unsigned char uc = 0;
+    char c = 0;
     unsigned short usi = 0;
     short si = 0;
     unsigned int ui = 0;
@@ -140,32 +193,32 @@ TEST(BasicTypes, classNest_BaseTypeMin)
     ClassB ob2 = JsonMapper::toObject<ClassB>(text);
     std::cout << text << std::endl;
 
-    ASSERT_TRUE(ob.str == ob2.str);
-    ASSERT_TRUE(ob.b == ob2.b);
-    ASSERT_TRUE(ob.uc == ob2.uc);
-    ASSERT_TRUE(ob.c == ob2.c);
-    ASSERT_TRUE(ob.usi == ob2.usi);
-    ASSERT_TRUE(ob.si == ob2.si);
-    ASSERT_TRUE(ob.ui == ob2.ui);
-    ASSERT_TRUE(ob.i == ob2.i);
-    ASSERT_TRUE(ob.uli == ob2.uli);
-    ASSERT_TRUE(ob.li == ob2.li) << ob.li << "<->" << ob2.li;
+    ASSERT_EQ(ob.str, ob2.str);
+    ASSERT_EQ(ob.b, ob2.b);
+    ASSERT_EQ(ob.uc, ob2.uc);
+    ASSERT_EQ(ob.c, ob2.c);
+    ASSERT_EQ(ob.usi, ob2.usi);
+    ASSERT_EQ(ob.si, ob2.si);
+    ASSERT_EQ(ob.ui, ob2.ui);
+    ASSERT_EQ(ob.i, ob2.i);
+    ASSERT_EQ(ob.uli, ob2.uli);
+    ASSERT_EQ(ob.li, ob2.li);
 
-    ASSERT_TRUE(ob.oa.str == ob2.oa.str);
-    ASSERT_TRUE(ob.oa.b == ob2.oa.b);
-    ASSERT_TRUE(ob.oa.uc == ob2.oa.uc);
-    ASSERT_TRUE(ob.oa.c == ob2.oa.c);
-    ASSERT_TRUE(ob.oa.usi == ob2.oa.usi);
-    ASSERT_TRUE(ob.oa.si == ob2.oa.si);
-    ASSERT_TRUE(ob.oa.ui == ob2.oa.ui);
-    ASSERT_TRUE(ob.oa.i == ob2.oa.i);
-    ASSERT_TRUE(ob.oa.uli == ob2.oa.uli);
-    ASSERT_TRUE(ob.oa.li == ob2.oa.li) << ob.oa.li << "<->" << ob2.oa.li;
+    ASSERT_EQ(ob.oa.str, ob2.oa.str);
+    ASSERT_EQ(ob.oa.b, ob2.oa.b);
+    ASSERT_EQ(ob.oa.uc, ob2.oa.uc);
+    ASSERT_EQ(ob.oa.c, ob2.oa.c);
+    ASSERT_EQ(ob.oa.usi, ob2.oa.usi);
+    ASSERT_EQ(ob.oa.si, ob2.oa.si);
+    ASSERT_EQ(ob.oa.ui, ob2.oa.ui);
+    ASSERT_EQ(ob.oa.i, ob2.oa.i);
+    ASSERT_EQ(ob.oa.uli, ob2.oa.uli);
+    ASSERT_EQ(ob.oa.li, ob2.oa.li);
 
     //string的长度小于15字节的话或许可以这样比较?
     //应该不行0xcc是未初始化地址，release下可能会出错
     // /GZ选项编译代码时，未初始化的变量将自动分配给该值（字节级别）
-    //ASSERT_TRUE(std::memcmp(&ob, &ob2, sizeof(ob)) == 0);
+    //ASSERT_EQ(std::memcmp(&ob, &ob2, sizeof(ob)) , 0);
 }
 
 TEST(BasicTypes, classNest_BaseTypeMax)
@@ -197,27 +250,27 @@ TEST(BasicTypes, classNest_BaseTypeMax)
     ClassB ob2 = JsonMapper::toObject<ClassB>(text);
     std::cout << text << std::endl;
 
-    ASSERT_TRUE(ob.str == ob2.str);
-    ASSERT_TRUE(ob.b == ob2.b);
-    ASSERT_TRUE(ob.uc == ob2.uc);
-    ASSERT_TRUE(ob.c == ob2.c);
-    ASSERT_TRUE(ob.usi == ob2.usi);
-    ASSERT_TRUE(ob.si == ob2.si);
-    ASSERT_TRUE(ob.ui == ob2.ui);
-    ASSERT_TRUE(ob.i == ob2.i);
-    ASSERT_TRUE(ob.uli == ob2.uli);
-    ASSERT_TRUE(ob.li == ob2.li) << ob.li << "<->" << ob2.li;
+    ASSERT_EQ(ob.str, ob2.str);
+    ASSERT_EQ(ob.b, ob2.b);
+    ASSERT_EQ(ob.uc, ob2.uc);
+    ASSERT_EQ(ob.c, ob2.c);
+    ASSERT_EQ(ob.usi, ob2.usi);
+    ASSERT_EQ(ob.si, ob2.si);
+    ASSERT_EQ(ob.ui, ob2.ui);
+    ASSERT_EQ(ob.i, ob2.i);
+    ASSERT_EQ(ob.uli, ob2.uli);
+    ASSERT_EQ(ob.li, ob2.li) << ob.li << "<->" << ob2.li;
 
-    ASSERT_TRUE(ob.oa.str == ob2.oa.str);
-    ASSERT_TRUE(ob.oa.b == ob2.oa.b);
-    ASSERT_TRUE(ob.oa.uc == ob2.oa.uc);
-    ASSERT_TRUE(ob.oa.c == ob2.oa.c);
-    ASSERT_TRUE(ob.oa.usi == ob2.oa.usi);
-    ASSERT_TRUE(ob.oa.si == ob2.oa.si);
-    ASSERT_TRUE(ob.oa.ui == ob2.oa.ui);
-    ASSERT_TRUE(ob.oa.i == ob2.oa.i);
-    ASSERT_TRUE(ob.oa.uli == ob2.oa.uli);
-    ASSERT_TRUE(ob.oa.li == ob2.oa.li) << ob.oa.li << "<->" << ob2.oa.li;
+    ASSERT_EQ(ob.oa.str, ob2.oa.str);
+    ASSERT_EQ(ob.oa.b, ob2.oa.b);
+    ASSERT_EQ(ob.oa.uc, ob2.oa.uc);
+    ASSERT_EQ(ob.oa.c, ob2.oa.c);
+    ASSERT_EQ(ob.oa.usi, ob2.oa.usi);
+    ASSERT_EQ(ob.oa.si, ob2.oa.si);
+    ASSERT_EQ(ob.oa.ui, ob2.oa.ui);
+    ASSERT_EQ(ob.oa.i, ob2.oa.i);
+    ASSERT_EQ(ob.oa.uli, ob2.oa.uli);
+    ASSERT_EQ(ob.oa.li, ob2.oa.li) << ob.oa.li << "<->" << ob2.oa.li;
 }
 
 TEST(BasicTypes, toDocument)

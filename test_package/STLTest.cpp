@@ -1,4 +1,4 @@
-#include "gtest/gtest.h"
+﻿#include "gtest/gtest.h"
 #include "xuexuejson/Serialize.hpp"
 
 #pragma execution_character_set("utf-8")
@@ -23,8 +23,8 @@ TEST(STL, ListTest)
         auto it2 = ls2.begin();
         auto it3 = ls3.begin();
         for (auto& item : ls) {
-            ASSERT_TRUE(item == *it2);
-            ASSERT_TRUE(item == *it3);
+            ASSERT_EQ(item, *it2);
+            ASSERT_EQ(item, *it3);
             ++it2;
             ++it3;
         }
@@ -46,8 +46,8 @@ TEST(STL, ArrayTest)
         array<string, 100> arr3 = JsonMapper::toObject<array<string, 100>>(texe);
 
         for (size_t i = 0; i < arr.size(); i++) {
-            ASSERT_TRUE(arr[i] == arr2[i]);
-            ASSERT_TRUE(arr[i] == arr3[i]);
+            ASSERT_EQ(arr[i], arr2[i]);
+            ASSERT_EQ(arr[i], arr3[i]);
         }
     }
 }
@@ -69,7 +69,7 @@ class VectorData : public testing::Test
         Data()
         {
             for (size_t i = 0; i < 20; i++) {
-                vs.push_back(string("这个是一条内容") + to_string(i) + "❀❀❀❀");
+                vs.push_back(string("这个是一条内容") + to_string(i) + string("❀❀❀❀"));
             }
             for (size_t i = 0; i < 20; i++) {
                 vvs.push_back(vs);
@@ -97,13 +97,13 @@ TEST_F(VectorData, vectorTest)
         Data data2 = JsonMapper::toObject<Data>(text);
 
         for (size_t i = 0; i < data.vs.size(); i++) {
-            ASSERT_TRUE(data.vs[i] == data2.vs[i]);
+            ASSERT_EQ(data.vs[i], data2.vs[i]);
         }
         for (size_t i = 0; i < data.vvs.size(); i++) {
-            ASSERT_TRUE(data.vvs[i] == data2.vvs[i]);
+            ASSERT_EQ(data.vvs[i], data2.vvs[i]);
         }
         for (size_t i = 0; i < data.vvvs.size(); i++) {
-            ASSERT_TRUE(data.vvvs[i] == data2.vvvs[i]);
+            ASSERT_EQ(data.vvvs[i], data2.vvvs[i]);
         }
     }
 }
@@ -112,21 +112,15 @@ TEST(STL, EmptyTest)
 {
     vector<string> vs;
     string texe = JsonMapper::toJson(vs, false);
-    ASSERT_TRUE(texe == "[]");
+    ASSERT_EQ(texe, "[]");
     vector<string> vs2 = JsonMapper::toObject<vector<string>>(texe);
-    ASSERT_TRUE(vs2.size() == 0);
+    ASSERT_EQ(vs2.size(), 0);
 
     map<int, string> mis;
     texe = JsonMapper::toJson(mis, true);
-    ASSERT_TRUE(texe == "{}");
+    ASSERT_EQ(texe, "{}");
     map<int, string> mis2 = JsonMapper::toObject<map<int, string>>(texe);
-    ASSERT_TRUE(mis2.size() == 0);
-
-    map<int, string> mis3 = JsonMapper::toObject<map<int, string>>("");
-    ASSERT_TRUE(mis3.size() == 0);
-
-    map<int, string> mis4 = JsonMapper::toObject<map<int, string>>("21312");
-    ASSERT_TRUE(mis4.size() == 0);
+    ASSERT_EQ(mis2.size(), 0);
 
     //这是一个类型不匹配的错误
     string str;

@@ -1,4 +1,4 @@
-#include "gtest/gtest.h"
+﻿#include "gtest/gtest.h"
 #include "xuexuejson/Serialize.hpp"
 
 #pragma execution_character_set("utf-8")
@@ -6,6 +6,30 @@
 using namespace xuexue::json;
 using namespace std;
 using namespace rapidjson;
+
+TEST(String, UTF8ToUTF16)
+{
+    string utf8 = "这是一条UTF8的内容!--❀❀❀";
+    wstring utf16 = L"这是一条UTF8的内容!--❀❀❀";
+
+    ASSERT_EQ(utf8.size(), 37);
+    ASSERT_EQ(utf16.size(), 17);
+
+    wstring utf16_2 = JsonHelper::utf8To16(utf8);
+    ASSERT_EQ(utf16, utf16_2);
+}
+
+TEST(String, UTF16ToUTF8)
+{
+    string utf8 = "这是一条UTF8的内容!--❀❀❀";
+    wstring utf16 = L"这是一条UTF8的内容!--❀❀❀";
+
+    ASSERT_EQ(utf8.size(), 37);
+    ASSERT_EQ(utf16.size(), 17);
+
+    string utf8_2 = JsonHelper::utf16To8(utf16);
+    ASSERT_EQ(utf8, utf8_2);
+}
 
 class StringClass : XUEXUE_JSON_OBJECT
 {
@@ -33,7 +57,7 @@ TEST(String, readStream)
     void* p1 = &(sc.s1);
     void* p2 = &(sc.s2);
 
-    //ASSERT_TRUE(std::memcmp(p1, p2, sizeof(size)) == 0);
+    //ASSERT_EQ(std::memcmp(p1, p2, sizeof(size)) , 0);
 
     std::string str = "Example string";
     for (size_t i = 0; i < 20; i++) {
@@ -44,7 +68,7 @@ TEST(String, readStream)
     pbuf->str(str);
     auto in_avail = pbuf->in_avail();
     std::string text = JsonHelper::readStream(iss);
-    ASSERT_TRUE(text == str);
+    ASSERT_EQ(text, str);
 }
 
 TEST(String, istreamToJson)
@@ -56,7 +80,7 @@ TEST(String, istreamToJson)
     int size1 = sizeof(sc.s1);
     int size2 = sizeof(sc.s2);
 
-    //ASSERT_TRUE(std::memcmp(p1, p2, sizeof(size)) == 0);
+    //ASSERT_EQ(std::memcmp(p1, p2, sizeof(size)) , 0);
 
     std::string str = JsonMapper::toJson(sc);
     std::istringstream iss;
@@ -64,8 +88,8 @@ TEST(String, istreamToJson)
     pbuf->str(str);
     int in_avail = pbuf->in_avail();
     StringClass sc2 = JsonMapper::toObject<StringClass>(iss);
-    ASSERT_TRUE(sc.s1 == sc2.s1);
-    ASSERT_TRUE(sc.s2 == sc2.s2);
+    ASSERT_EQ(sc.s1, sc2.s1);
+    ASSERT_EQ(sc.s2, sc2.s2);
 }
 
 TEST(String, loadFile)
@@ -77,7 +101,7 @@ TEST(String, loadFile)
     JsonHelper::save("file.json", text);
     vector<string> vStr2 = JsonMapper::loadFile<vector<string>>("file.json");
     for (size_t i = 0; i < vStr.size(); i++) {
-        ASSERT_TRUE(vStr[i] == vStr2[i]);
+        ASSERT_EQ(vStr[i], vStr2[i]);
     }
 }
 
@@ -97,7 +121,7 @@ TEST(WString, toJsonW)
 
     vector<wstring> vStr3 = JsonMapper::toObjectW<vector<wstring>>(json);
     for (size_t i = 0; i < vStr.size(); i++) {
-        ASSERT_TRUE(vStr[i] == vStr3[i]);
+        ASSERT_EQ(vStr[i], vStr3[i]);
     }
 }
 
@@ -111,7 +135,7 @@ TEST(String, toJsonW)
 
     vector<string> vStr3 = JsonMapper::toObjectW<vector<string>>(json);
     for (size_t i = 0; i < vStr.size(); i++) {
-        ASSERT_TRUE(vStr[i] == vStr3[i]);
+        ASSERT_EQ(vStr[i], vStr3[i]);
     }
 }
 
@@ -125,7 +149,7 @@ TEST(String, toJson_ofstream)
     ofs.close();
     vector<string> vStr2 = JsonMapper::loadFile<vector<string>>("output.json");
     for (size_t i = 0; i < vStr.size(); i++) {
-        ASSERT_TRUE(vStr[i] == vStr2[i]);
+        ASSERT_EQ(vStr[i], vStr2[i]);
     }
 }
 
@@ -140,7 +164,7 @@ TEST(WString, toJson_ofstream)
 
     vector<wstring> vStr2 = JsonMapper::loadFile<vector<wstring>>("output2.json");
     for (size_t i = 0; i < vStr.size(); i++) {
-        ASSERT_TRUE(vStr[i] == vStr2[i]);
+        ASSERT_EQ(vStr[i], vStr2[i]);
     }
 }
 
@@ -164,7 +188,7 @@ TEST(WString, toJsonW_wofstream)
 
     vector<wstring> vStr2 = JsonMapper::toObjectW<vector<wstring>>(ifs);
     for (size_t i = 0; i < vStr.size(); i++) {
-        ASSERT_TRUE(vStr[i] == vStr2[i]);
+        ASSERT_EQ(vStr[i] , vStr2[i]);
     }
     //std::locale::global(oPreviousLocale);
 }

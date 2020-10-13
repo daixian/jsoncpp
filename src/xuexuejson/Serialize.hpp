@@ -57,11 +57,12 @@ typedef rapidjson::GenericStringBuffer<rapidjson::UTF16<>> StringBufferW;
 
 //注.如果定义了#pragma execution_character_set("utf-8"),那么文件内容是UTF-8
 
-///-------------------------------------------------------------------------------------------------
-/// <summary> json可序列化接口定义.</summary>
-///
-/// <remarks> Dx, 2019/1/23. </remarks>
-///-------------------------------------------------------------------------------------------------
+/**
+ * json可序列化接口定义.
+ *
+ * @author daixian
+ * @date 2019/1/23
+ */
 class JsonSerializable
 {
   public:
@@ -99,32 +100,31 @@ class JsonSerializeSuper
 //一些方便实现接口的宏
 #include "JsonSerializableImpl.h"
 
-///-------------------------------------------------------------------------------------------------
-/// <summary> 一些到Json相关的辅助方法. </summary>
-///
-/// <remarks> Dx, 2019/1/23. </remarks>
-///-------------------------------------------------------------------------------------------------
+/**
+ * 一些到Json相关的辅助方法.
+ *
+ * @author daixian
+ * @date 2019/1/23
+ */
 class JsonHelper
 {
   public:
-    ///-------------------------------------------------------------------------------------------------
-    /// <summary>
-    /// 保存json到文件.这个没有进行转码的处理.如果不定义下面的内容,那么就是GBK编码.
-    /// #pragma execution_character_set("utf-8")
-    /// 如果定义了那么代码中的文本才会是utf-8的文件.因此不应该使用这个函数,程序中统一使用UTF-
-    /// 16进行处理.
-    /// </summary>
-    ///
-    /// <remarks> Dx, 2019/1/23. </remarks>
-    ///
-    /// <param name="filePath"> [in] 文件路径. </param>
-    /// <param name="doc">      The document. </param>
-    /// <param name="isPretty"> (Optional) True if is
-    ///                         pretty, false if not. </param>
-    ///-------------------------------------------------------------------------------------------------
+    /**
+     * 保存json到文件.这个没有进行转码的处理.如果不定义下面的内容,那么就是GBK编码.
+     * #pragma execution_character_set("utf-8")
+     * 如果定义了那么代码中的文本才会是utf-8的文件.因此不应该使用这个函数,程序中统一使用UTF-
+     * 16进行处理.
+     *
+     * @author daixian
+     * @date 2019/1/23
+     *
+     * @param [in] filePath 文件路径.
+     * @param      doc      document对象.
+     * @param      isPretty (Optional)是否美观打印.
+     */
     static void save(const std::string& filePath, const Document& doc, bool isPretty = true)
     {
-        FILE* fp;
+        FILE* fp = nullptr;
 #if defined(_WIN32) || defined(_WIN64)
         fopen_s(&fp, filePath.c_str(), "wb"); // 非 Windows 平台使用 "w"
 #elif defined(__linux__)
@@ -140,14 +140,19 @@ class JsonHelper
             rapidjson::Writer<rapidjson::FileWriteStream> writer(os);
             doc.Accept(writer);
         }
-        fclose(fp);
+        if (fp != nullptr)
+            fclose(fp);
     }
 
-    ///-------------------------------------------------------------------------------------------------
-    /// <summary>保存string到文件.</summary>
-    ///
-    /// <remarks> Dx, 2019/1/23. </remarks>
-    ///-------------------------------------------------------------------------------------------------
+    /**
+     * 保存string到文件.
+     *
+     * @author daixian
+     * @date 2019/1/23
+     *
+     * @param  filePath 文件路径.
+     * @param  text     要保存的文本.
+     */
     static void save(const std::string& filePath, const std::string& text)
     {
         std::ofstream osWrite(filePath);
@@ -156,19 +161,38 @@ class JsonHelper
         osWrite.close();
     }
 
-    ///-------------------------------------------------------------------------------------------------
-    /// <summary> 输入的是utf16的doc,但是保存成utf8的格式. </summary>
-    ///
-    /// <remarks> Dx, 2019/3/11. </remarks>
-    ///
-    /// <param name="filePath"> Full pathname of the file. </param>
-    /// <param name="doc">      The document. </param>
-    /// <param name="putBOM">   (Optional) True to put bom. </param>
-    ///-------------------------------------------------------------------------------------------------
+    /**
+     * 保存一个wstring的文本到文件
+     *
+     * @author daixian
+     * @date 2019/1/23
+     *
+     * @param  filePath 文件路径.
+     * @param  text     要保存的文本.
+     */
+    static void save(const std::string& filePath, const std::wstring& text)
+    {
+        std::wofstream osWrite(filePath);
+        osWrite << text;
+        osWrite.flush();
+        osWrite.close();
+    }
+
+    /**
+     * 输入的是utf16的doc,但是保存成utf8的格式.
+     *
+     * @author daixian
+     * @date 2019/3/11
+     *
+     * @param  filePath 文件路径.
+     * @param  doc      document对象.
+     * @param  putBOM   (Optional) 是否输出BOM头.
+     * @param  isPretty (Optional) 是否美观打印.
+     */
     static void save(const std::string& filePath, const DocumentW& doc, bool putBOM = false, bool isPretty = true)
     {
         using namespace rapidjson;
-        FILE* fp;
+        FILE* fp = nullptr;
 
 #if defined(_WIN32) || defined(_WIN64)
         fopen_s(&fp, filePath.c_str(), "wb"); // 非 Windows 平台使用 "w"
@@ -195,31 +219,23 @@ class JsonHelper
         //OutputStream eos(bos, type, putBOM);
         //Writer<OutputStream, UTF8<>, AutoUTF<unsigned>> writer;
         //doc.Accept(writer);
-
-        fclose(fp);
+        if (fp != nullptr)
+            fclose(fp);
     }
 
-    //保存一个wstring的文本到文件
-    static void save(const std::string& filePath, const std::wstring& text)
-    {
-        std::wofstream osWrite(filePath);
-        osWrite << text;
-        osWrite.flush();
-        osWrite.close();
-    }
-
-    ///-------------------------------------------------------------------------------------------------
-    /// <summary> 从文件(不考虑编码转化的)读取json. </summary>
-    ///
-    /// <remarks> Dx, 2019/3/11. </remarks>
-    ///
-    /// <param name="filePath"> 文件路径. </param>
-    /// <param name="doc">      [out] The document. </param>
-    ///-------------------------------------------------------------------------------------------------
+    /**
+     * 从文件(不考虑编码转化的)读取json，注意检查HasParseError.
+     *
+     * @author daixian
+     * @date 2019/3/11
+     *
+     * @param       filePath 文件路径.
+     * @param [out] doc      document对象.
+     */
     static void readFile(const std::string& filePath, Document& doc)
     {
         using namespace rapidjson;
-        FILE* fp;
+        FILE* fp = nullptr;
 #if defined(_WIN32) || defined(_WIN64)
         fopen_s(&fp, filePath.c_str(), "rb"); // 非 Windows 平台使用 "r"
 #elif defined(__linux__)
@@ -229,21 +245,23 @@ class JsonHelper
         char readBuffer[256];
         FileReadStream is(fp, readBuffer, sizeof(readBuffer));
         doc.ParseStream(is);
-        fclose(fp);
+        if (fp != nullptr)
+            fclose(fp);
     }
 
-    ///-------------------------------------------------------------------------------------------------
-    /// <summary> 从文件UTF读取json. </summary>
-    ///
-    /// <remarks> Dx, 2019/3/11. </remarks>
-    ///
-    /// <param name="filePath"> 文件路径. </param>
-    /// <param name="doc">      [out] The document. </param>
-    ///-------------------------------------------------------------------------------------------------
+    /**
+     * 从文件UTF读取json，注意检查HasParseError.
+     *
+     * @author daixian
+     * @date 2019/3/11
+     *
+     * @param       filePath 文件路径.
+     * @param [out] doc      document对象.
+     */
     static void readFile(const std::string& filePath, DocumentW& doc)
     {
         using namespace rapidjson;
-        FILE* fp;
+        FILE* fp = nullptr;
 #if defined(_WIN32) || defined(_WIN64)
         fopen_s(&fp, filePath.c_str(), "rb"); // 非 Windows 平台使用 "r"
 #elif defined(__linux__)
@@ -253,18 +271,20 @@ class JsonHelper
         FileReadStream bis(fp, readBuffer, sizeof(readBuffer));
         AutoUTFInputStream<unsigned, FileReadStream> eis(bis);
         doc.ParseStream<0, AutoUTF<unsigned>>(eis);
-        fclose(fp);
+        if (fp != nullptr)
+            fclose(fp);
     }
 
-    ///-------------------------------------------------------------------------------------------------
-    /// <summary> 从一个stream里读取string. </summary>
-    ///
-    /// <remarks> Dx, 2020/3/19. </remarks>
-    ///
-    /// <param name="is"> [in,out] The is. </param>
-    ///
-    /// <returns> The stream. </returns>
-    ///-------------------------------------------------------------------------------------------------
+    /**
+     * 从一个stream里读取string.(TODO:这个函数未测试)
+     *
+     * @author daixian
+     * @date 2020/3/19
+     *
+     * @param [in,out] is 流.
+     *
+     * @returns 读取的文本.
+     */
     static std::string readStream(std::istream& is)
     {
         char buff[128];
@@ -279,15 +299,17 @@ class JsonHelper
         return text;
     }
 
-    ///-------------------------------------------------------------------------------------------------
-    /// <summary> 转换doc到string. </summary>
-    ///
-    /// <remarks> Surface, 2019/3/11. </remarks>
-    ///
-    /// <param name="doc"> The document. </param>
-    ///
-    /// <returns> Doc as a std::string. </returns>
-    ///-------------------------------------------------------------------------------------------------
+    /**
+     * 转换doc到string.
+     *
+     * @author daixian
+     * @date 2019/3/11
+     *
+     * @param  doc      document对象.
+     * @param  isPretty (Optional) 是否美观打印.
+     *
+     * @returns json文本.
+     */
     static inline std::string toJson(const Document& doc, bool isPretty = false)
     {
         using namespace rapidjson;
@@ -303,15 +325,17 @@ class JsonHelper
         return std::string(sb.GetString());
     }
 
-    ///-------------------------------------------------------------------------------------------------
-    /// <summary> 转换doc到string. </summary>
-    ///
-    /// <remarks> Dx, 2019/3/11. </remarks>
-    ///
-    /// <param name="doc"> The document. </param>
-    ///
-    /// <returns> Doc as a std::wstring. </returns>
-    ///-------------------------------------------------------------------------------------------------
+    /**
+     * 转换doc到string.
+     *
+     * @author daixian
+     * @date 2019/3/11
+     *
+     * @param  doc      document对象.
+     * @param  isPretty (Optional) 是否美观打印.
+     *
+     * @returns json文本.
+     */
     static inline std::wstring toJsonW(const DocumentW& doc, bool isPretty = false)
     {
         using namespace rapidjson;
@@ -327,16 +351,15 @@ class JsonHelper
         return std::wstring(sb.GetString());
     }
 
-    ///-------------------------------------------------------------------------------------------------
-    /// <summary> 从json读取并创建Doc. </summary>
-    ///
-    /// <remarks> Dx, 2019/3/12. </remarks>
-    ///
-    /// <param name="text">     The text. </param>
-    /// <param name="document"> [in,out] The document. </param>
-    ///
-    /// ### <returns> A DocumentW. </returns>
-    ///-------------------------------------------------------------------------------------------------
+    /**
+     * 从json读取并创建Doc,注意检查HasParseError.
+     *
+     * @author daixian
+     * @date 2019/3/12
+     *
+     * @param          text     json文本.
+     * @param [in,out] document document对象.
+     */
     static inline void toDocument(const std::string& text, Document& document)
     {
         //从string读取
@@ -344,16 +367,15 @@ class JsonHelper
         document.ParseStream(s);
     }
 
-    ///-------------------------------------------------------------------------------------------------
-    /// <summary> 从json读取并创建Doc. </summary>
-    ///
-    /// <remarks> Dx, 2019/3/12. </remarks>
-    ///
-    /// <param name="text">     The text. </param>
-    /// <param name="document"> [in,out] The document. </param>
-    ///
-    /// ### <returns> A DocumentW. </returns>
-    ///-------------------------------------------------------------------------------------------------
+    /**
+     * 从json读取并创建Doc,注意检查HasParseError.
+     *
+     * @author daixian
+     * @date 2019/3/12
+     *
+     * @param          text     json文本.
+     * @param [in,out] document document对象.
+     */
     static inline void toDocumentW(const std::wstring& text, DocumentW& document)
     {
         //从string读取
@@ -361,15 +383,16 @@ class JsonHelper
         document.ParseStream(s);
     }
 
-    ///-------------------------------------------------------------------------------------------------
-    /// <summary> UTF8转换成UTF16. </summary>
-    ///
-    /// <remarks> Dx, 2019/3/11. </remarks>
-    ///
-    /// <param name="str"> The string. </param>
-    ///
-    /// <returns> A std::wstring. </returns>
-    ///-------------------------------------------------------------------------------------------------
+    /**
+     * UTF8转换成UTF16，实际是string和wstring的互转.
+     *
+     * @author daixian
+     * @date 2019/3/11.
+     *
+     * @param  str utf8编码的string.
+     *
+     * @returns utf16编码的wstring.
+     */
     static inline std::wstring utf8To16(const std::string& str)
     {
         using namespace rapidjson;
@@ -387,19 +410,20 @@ class JsonHelper
         return std::wstring();
     }
 
-    ///-------------------------------------------------------------------------------------------------
-    /// <summary> UTF16转换成UTF8. </summary>
-    ///
-    /// <remarks> Dx, 2019/3/11. </remarks>
-    ///
-    /// <param name="str"> The string. </param>
-    ///
-    /// <returns> A std::string. </returns>
-    ///-------------------------------------------------------------------------------------------------
-    static inline std::string utf16To8(const std::wstring& str)
+    /**
+     * UTF16转换成UTF8，实际是string和wstring的互转.
+     *
+     * @author daixian
+     * @date 2019/3/11
+     *
+     * @param  wstr utf16编码的wstring.
+     *
+     * @returns utf16编码的wstring.
+     */
+    static inline std::string utf16To8(const std::wstring& wstr)
     {
         using namespace rapidjson;
-        StringStreamW source(str.c_str());
+        StringStreamW source(wstr.c_str());
         StringBuffer target;
         bool hasError = false;
         while (source.Peek() != L'\0')
@@ -413,13 +437,14 @@ class JsonHelper
         return std::string();
     }
 
-    ///-------------------------------------------------------------------------------------------------
-    /// <summary> 创建一个空的Object的doc. </summary>
-    ///
-    /// <remarks> Surface, 2019/3/11. </remarks>
-    ///
-    /// <returns> A Document. </returns>
-    ///-------------------------------------------------------------------------------------------------
+    /**
+     * 创建一个空的Object的doc.
+     *
+     * @author daixian
+     * @date 2019/3/11
+     *
+     * @returns A Document.
+     */
     static inline Document creatEmptyObjectDoc()
     {
         Document document;
@@ -427,13 +452,14 @@ class JsonHelper
         return document;
     }
 
-    ///-------------------------------------------------------------------------------------------------
-    /// <summary> 创建一个空的Object的doc. </summary>
-    ///
-    /// <remarks> Surface, 2019/3/11. </remarks>
-    ///
-    /// <returns> A Document. </returns>
-    ///-------------------------------------------------------------------------------------------------
+    /**
+     * 创建一个空的Object的doc.
+     *
+     * @author daixian
+     * @date 2019/3/11
+     *
+     * @returns A Document.
+     */
     static inline DocumentW creatEmptyObjectDocW()
     {
         DocumentW document;
@@ -441,13 +467,14 @@ class JsonHelper
         return document;
     }
 
-    ///-------------------------------------------------------------------------------------------------
-    /// <summary> 创建一个空的Array的doc. </summary>
-    ///
-    /// <remarks> Surface, 2019/3/11. </remarks>
-    ///
-    /// <returns> A Document. </returns>
-    ///-------------------------------------------------------------------------------------------------
+    /**
+     * 创建一个空的Array的doc.
+     *
+     * @author daixian
+     * @date 2019/3/11
+     *
+     * @returns A Document.
+     */
     static inline Document creatEmptyArrayDoc()
     {
         Document document;
@@ -455,13 +482,14 @@ class JsonHelper
         return document;
     }
 
-    ///-------------------------------------------------------------------------------------------------
-    /// <summary> 创建一个空的Array的doc. </summary>
-    ///
-    /// <remarks> Surface, 2019/3/11. </remarks>
-    ///
-    /// <returns> A Document. </returns>
-    ///-------------------------------------------------------------------------------------------------
+    /**
+     * 创建一个空的Array的doc.
+     *
+     * @author daixian
+     * @date 2019/3/11
+     *
+     * @returns A Document.
+     */
     static inline DocumentW creatEmptyArrayDocW()
     {
         DocumentW document;
@@ -469,39 +497,43 @@ class JsonHelper
         return document;
     }
 
-    ///-------------------------------------------------------------------------------------------------
-    /// <summary> 创建一个空空的doc. </summary>
-    ///
-    /// <remarks> Surface, 2019/3/11. </remarks>
-    ///
-    /// <returns> A Document. </returns>
-    ///-------------------------------------------------------------------------------------------------
+    /**
+     * 创建一个空空的doc.
+     *
+     * @author daixian
+     * @date 2019/3/11
+     *
+     * @returns A Document.
+     */
     static inline Document creatEmptyDoc()
     {
         Document document;
         return document;
     }
 
-    ///-------------------------------------------------------------------------------------------------
-    /// <summary> 创建一个空空的doc. </summary>
-    ///
-    /// <remarks> Surface, 2019/3/11. </remarks>
-    ///
-    /// <returns> A Document. </returns>
-    ///-------------------------------------------------------------------------------------------------
+    /**
+     * 创建一个空空的doc.
+     *
+     * @author daixian
+     * @date 2019/3/11
+     *
+     * @returns A Document.
+     */
     static inline DocumentW creatEmptyDocW()
     {
         DocumentW document;
         return document;
     }
 
-    ///-------------------------------------------------------------------------------------------------
-    /// <summary> 不一致的类型适当转换. </summary>
-    ///
-    /// <remarks> Surface, 2019/3/11. </remarks>
-    /// <param name="value"> value. </param>
-    /// <param name="obj"> obj. </param>
-    ///-------------------------------------------------------------------------------------------------
+    /**
+     * 不一致的类型适当转换.
+     *
+     * @author daixian
+     * @date 2019/3/11
+     *
+     * @param          value Value.
+     * @param [in,out] obj   obj.
+     */
     static inline void ValueTypeAdapte(const Value& value, std::string& obj)
     {
         if (value.IsString()) {
@@ -2303,26 +2335,23 @@ class Serialize
     }
 };
 
-///-------------------------------------------------------------------------------------------------
-/// <summary> object和josn的相互转换，这是包含主要的使用方法. </summary>
-///
-/// <remarks>
-/// 将这个类放在最下面，不然GCC支持不了. Dx, 2020/3/19.
-/// </remarks>
-///-------------------------------------------------------------------------------------------------
+/**
+ * object和josn的相互转换，这是包含主要的使用方法.将这个类放在代码文件最下面，不然GCC支持不了
+ *
+ * @author daixian
+ * @date 2020/3/19
+ */
 class JsonMapper
 {
   public:
-    ///-------------------------------------------------------------------------------------------------
-    /// <summary>
-    /// 转换整个obj到一个Document.如果之后还要转成string可以调用JsonHelper::toJson()里的方法.
-    /// </summary>
-    ///
-    /// <typeparam name="T"> Generic type parameter. </typeparam>
-    /// <param name="obj"> 要转换的obj对象. </param>
-    ///
-    /// <returns> Obj as a Document. </returns>
-    ///-------------------------------------------------------------------------------------------------
+    /**
+     * 转换整个obj到一个Document.如果之后还要转成string可以调用JsonHelper::toJson()里的方法.
+     *
+     * @tparam T Generic type parameter.
+     * @param  obj 要转换的obj对象.
+     *
+     * @returns Obj as a Document.
+     */
     template <class T>
     static inline Document toDocument(const T& obj)
     {
@@ -2336,15 +2365,13 @@ class JsonMapper
         return doc;
     }
 
-    ///-------------------------------------------------------------------------------------------------
-    /// <summary>
-    /// 转换整个obj到一个Document.如果之后还要转成string可以调用JsonHelper::toJson()里的方法.
-    /// </summary>
-    ///
-    /// <typeparam name="T"> Generic type parameter. </typeparam>
-    /// <param name="obj"> 要转换的obj对象. </param>
-    /// <param name="doc"> [out] The document. </param>
-    ///-------------------------------------------------------------------------------------------------
+    /**
+     * 转换整个obj到一个Document.如果之后还要转成string可以调用JsonHelper::toJson()里的方法.
+     *
+     * @tparam T Generic type parameter.
+     * @param       obj 要转换的obj对象.
+     * @param [out] doc The document.
+     */
     template <class T>
     static inline void toDocument(const T& obj, Document& doc)
     {
@@ -2355,16 +2382,14 @@ class JsonMapper
         Serialize::toValue(obj, std::move(doc), allocator);
     }
 
-    ///-------------------------------------------------------------------------------------------------
-    /// <summary>
-    /// 转换整个obj到一个DocumentW.如果之后还要转成string可以调用JsonHelper::toJson()里的方法.
-    /// </summary>
-    ///
-    /// <typeparam name="T"> Generic type parameter. </typeparam>
-    /// <param name="obj"> 要转换的obj对象. </param>
-    ///
-    /// <returns> DocumentW对象. </returns>
-    ///-------------------------------------------------------------------------------------------------
+    /**
+     * 转换整个obj到一个DocumentW.如果之后还要转成string可以调用JsonHelper::toJson()里的方法.
+     *
+     * @tparam T Generic type parameter.
+     * @param  obj 要转换的obj对象.
+     *
+     * @returns DocumentW对象.
+     */
     template <class T>
     static inline DocumentW toDocumentW(const T& obj)
     {
@@ -2378,15 +2403,13 @@ class JsonMapper
         return doc;
     }
 
-    ///-------------------------------------------------------------------------------------------------
-    /// <summary>
-    /// 转换整个obj到一个DocumentW.如果之后还要转成string可以调用JsonHelper::toJson()里的方法.
-    /// </summary>
-    ///
-    /// <typeparam name="T"> Generic type parameter. </typeparam>
-    /// <param name="obj"> 要转换的obj对象. </param>
-    /// <param name="doc"> [out] The document. </param>
-    ///-------------------------------------------------------------------------------------------------
+    /**
+     * 转换整个obj到一个DocumentW.如果之后还要转成string可以调用JsonHelper::toJson()里的方法.
+     *
+     * @tparam T Generic type parameter.
+     * @param       obj 要转换的obj对象.
+     * @param [out] doc The document.
+     */
     template <class T>
     static inline void toDocumentW(const T& obj, DocumentW& doc)
     {
@@ -2397,17 +2420,15 @@ class JsonMapper
         Serialize::toValue(obj, std::move(doc), allocator);
     }
 
-    ///-------------------------------------------------------------------------------------------------
-    /// <summary> 转换整个obj到string. </summary>
-    ///
-    /// <remarks> Dx, 2019/3/11. </remarks>
-    ///
-    /// <typeparam name="T"> Generic type parameter. </typeparam>
-    /// <param name="obj">      要转换的obj对象. </param>
-    /// <param name="isPretty"> (Optional) 是否启用缩进格式打印. </param>
-    ///
-    /// <returns> josn文本. </returns>
-    ///-------------------------------------------------------------------------------------------------
+    /**
+     * 转换整个obj到string.
+     *
+     * @tparam T Generic type parameter.
+     * @param  obj      要转换的obj对象.
+     * @param  isPretty (Optional) 是否启用缩进格式打印.
+     *
+     * @returns josn文本.
+     */
     template <class T>
     static inline std::string toJson(const T& obj, bool isPretty = false)
     {
@@ -2430,17 +2451,15 @@ class JsonMapper
         return std::string(sb.GetString());
     }
 
-    ///-------------------------------------------------------------------------------------------------
-    /// <summary> 转换整个obj到string. </summary>
-    ///
-    /// <remarks> Dx, 2019/3/11. </remarks>
-    ///
-    /// <typeparam name="T"> Generic type parameter. </typeparam>
-    /// <param name="obj">      要转换的obj对象. </param>
-    /// <param name="isPretty"> (Optional) 是否启用缩进格式打印. </param>
-    ///
-    /// <returns> josn文本. </returns>
-    ///-------------------------------------------------------------------------------------------------
+    /**
+     * 转换整个obj到string.
+     *
+     * @tparam T Generic type parameter.
+     * @param  obj      要转换的obj对象.
+     * @param  isPretty (Optional) 是否启用缩进格式打印.
+     *
+     * @returns josn文本.
+     */
     template <class T>
     static inline std::wstring toJsonW(const T& obj, bool isPretty = false)
     {
@@ -2522,176 +2541,225 @@ class JsonMapper
         }
     }
 
-    ///-------------------------------------------------------------------------------------------------
-    /// <summary> 从json读取并给对象赋值. </summary>
-    ///
-    /// <remarks> Dx, 2019/3/12. </remarks>
-    ///
-    /// <typeparam name="T"> Generic type parameter. </typeparam>
-    /// <param name="text"> The text. </param>
-    /// <param name="obj">  [in,out] 支持json序列化的对象. </param>
-    ///-------------------------------------------------------------------------------------------------
+    /**
+     * 从json读取并给对象赋值.
+     *
+     * @exception exception 解析json失败时抛出.
+     *
+     * @tparam T Generic type parameter.
+     * @param          text The text.
+     * @param [in,out] obj  支持json序列化的对象.
+     */
     template <class T>
     static inline void toObject(const std::string& text, T& obj)
     {
         Document document;
         //从string读取
         StringStream s(text.c_str());
-        document.ParseStream(s);
-        Serialize::getObj(document, obj);
+        bool HasParseError = document.ParseStream(s).HasParseError();
+        if (!HasParseError) {
+            Serialize::getObj(document, obj);
+        }
+        else {
+            throw exception("json has parse error!");
+        }
     }
 
-    ///-------------------------------------------------------------------------------------------------
-    /// <summary> 从json读取并给对象赋值. </summary>
-    ///
-    /// <remarks> Dx, 2019/3/12. </remarks>
-    ///
-    /// <typeparam name="T"> Generic type parameter. </typeparam>
-    /// <param name="text"> The text. </param>
-    ///
-    /// <returns> json反序列化的对象. </returns>
-    ///-------------------------------------------------------------------------------------------------
+    /**
+     * 从json读取并给对象赋值.
+     *
+     * @exception exception 解析json失败时抛出.
+     *
+     * @tparam T Generic type parameter.
+     * @param  text The text.
+     *
+     * @returns json反序列化的对象.
+     *
+     * ### remarks Dx, 2019/3/12.
+     */
     template <class T>
     static inline T toObject(const std::string& text)
     {
         Document document;
         //从string读取
         StringStream s(text.c_str());
-        document.ParseStream(s);
+        bool HasParseError = document.ParseStream(s).HasParseError();
+
         T obj;
-        Serialize::getObj(document, obj);
+        if (!HasParseError) {
+            Serialize::getObj(document, obj);
+        }
+        else {
+            throw exception("json has parse error!");
+        }
         return obj;
     }
 
-    ///-------------------------------------------------------------------------------------------------
-    /// <summary> 从json读取并给对象赋值. </summary>
-    ///
-    /// <remarks> Dx, 2019/3/12. </remarks>
-    ///
-    /// <param name="is"> 数据流. </param>
-    /// <param name="obj"> 支持json序列化的对象. </param>
-    ///-------------------------------------------------------------------------------------------------
+    /**
+     * 从json读取并给对象赋值.
+     *
+     * @exception exception 解析json失败时抛出.
+     *
+     * @tparam T Generic type parameter.
+     * @param [in,out] is  数据流.
+     * @param [in,out] obj 支持json序列化的对象.
+     */
     template <class T>
     static inline void toObject(std::istream& is, T& obj)
     {
         using namespace rapidjson;
         Document document;
         IStreamWrapper isw(is);
-        document.ParseStream(isw);
-        Serialize::getObj(document, obj);
+        bool HasParseError = document.ParseStream(isw).HasParseError();
+        if (!HasParseError) {
+            Serialize::getObj(document, obj);
+        }
+        else {
+            throw exception("json has parse error!");
+        }
     }
 
-    ///-------------------------------------------------------------------------------------------------
-    /// <summary> 从json读取并给对象赋值. </summary>
-    ///
-    /// <remarks> Dx, 2019/3/12. </remarks>
-    ///
-    /// <typeparam name="T"> Generic type parameter. </typeparam>
-    /// <param name="is"> [in] 数据流. </param>
-    ///
-    /// <returns> json反序列化的对象. </returns>
-    ///-------------------------------------------------------------------------------------------------
+    /**
+     * 从json读取并给对象赋值.
+     *
+     * @exception exception 解析json失败时抛出.
+     *
+     * @tparam T Generic type parameter.
+     * @param [in] is 数据流.
+     *
+     * @returns json反序列化的对象.
+     */
     template <class T>
     static inline T toObject(std::istream& is)
     {
         using namespace rapidjson;
         Document document;
         IStreamWrapper isw(is);
-        document.ParseStream(isw);
+        bool HasParseError = document.ParseStream(isw).HasParseError();
         T obj;
-        Serialize::getObj(document, obj);
+        if (!HasParseError) {
+            Serialize::getObj(document, obj);
+        }
+        else {
+            throw exception("json has parse error!");
+        }
         return obj;
     }
 
-    ///-------------------------------------------------------------------------------------------------
-    /// <summary> 从json读取并给对象赋值. </summary>
-    ///
-    /// <remarks> Dx, 2019/3/12. </remarks>
-    ///
-    /// <param name="text"> The text. </param>
-    /// <param name="obj"> 支持json序列化的对象. </param>
-    ///-------------------------------------------------------------------------------------------------
+    /**
+     * 从json读取并给对象赋值.
+     *
+     * @exception exception 解析json失败时抛出.
+     *
+     * @tparam T Generic type parameter.
+     * @param          text The text.
+     * @param [in,out] obj  支持json序列化的对象.
+     */
     template <class T>
     static inline void toObjectW(const std::wstring& text, T& obj)
     {
         DocumentW document;
         //从string读取
         StringStreamW s(text.c_str());
-        document.ParseStream(s);
-        Serialize::getObj(document, obj);
+        bool HasParseError = document.ParseStream(s).HasParseError();
+
+        if (!HasParseError) {
+            Serialize::getObj(document, obj);
+        }
+        else {
+            throw exception("json has parse error!");
+        }
     }
 
-    ///-------------------------------------------------------------------------------------------------
-    /// <summary> 从json读取并给对象赋值. </summary>
-    ///
-    /// <remarks> Dx, 2019/3/12. </remarks>
-    ///
-    /// <typeparam name="T"> Generic type parameter. </typeparam>
-    /// <param name="text"> The text. </param>
-    ///
-    /// <returns> json反序列化的对象. </returns>
-    ///-------------------------------------------------------------------------------------------------
+    /**
+     * 从json读取并给对象赋值.
+     *
+     * @exception exception 解析json失败时抛出.
+     *
+     * @tparam T Generic type parameter.
+     * @param  text The text.
+     *
+     * @returns json反序列化的对象.
+     */
     template <class T>
     static inline T toObjectW(const std::wstring& text)
     {
         DocumentW document;
         //从string读取
         StringStreamW s(text.c_str());
-        document.ParseStream(s);
+        bool HasParseError = document.ParseStream(s).HasParseError();
         T obj;
-        Serialize::getObj(document, obj);
+        if (!HasParseError) {
+            Serialize::getObj(document, obj);
+        }
+        else {
+            throw exception("json has parse error!");
+        }
         return obj;
     }
 
-    ///-------------------------------------------------------------------------------------------------
-    /// <summary> 从json读取并给对象赋值. </summary>
-    ///
-    /// <remarks> Dx, 2019/3/12. </remarks>
-    ///
-    /// <typeparam name="T"> Generic type parameter. </typeparam>
-    /// <param name="is">  The text. </param>
-    /// <param name="obj"> [in,out] 支持json序列化的对象. </param>
-    ///-------------------------------------------------------------------------------------------------
+    /**
+     * 从json读取并给对象赋值.
+     *
+     * @exception exception 解析json失败时抛出.
+     *
+     * @tparam T Generic type parameter.
+     * @param [in,out] is  The text.
+     * @param [in,out] obj 支持json序列化的对象.
+     */
     template <class T>
     static inline void toObjectW(std::wistream& is, T& obj)
     {
         using namespace rapidjson;
         DocumentW document;
         WIStreamWrapper isw(is);
-        document.ParseStream(isw);
-        Serialize::getObj(document, obj);
+        bool HasParseError = document.ParseStream(isw).HasParseError();
+        if (!HasParseError) {
+            Serialize::getObj(document, obj);
+        }
+        else {
+            throw exception("json has parse error!");
+        }
     }
 
-    ///-------------------------------------------------------------------------------------------------
-    /// <summary> 从json读取并给对象赋值. </summary>
-    ///
-    /// <remarks> Dx, 2019/3/12. </remarks>
-    ///
-    /// <typeparam name="T"> Generic type parameter. </typeparam>
-    /// <param name="is"> 数据流. </param>
-    ///
-    /// <returns> json反序列化的对象. </returns>
-    ///-------------------------------------------------------------------------------------------------
+    /**
+     * 从json读取并给对象赋值.
+     *
+     * @exception exception 解析json失败时抛出.
+     *
+     * @tparam T Generic type parameter.
+     * @param [in,out] is 数据流.
+     *
+     * @returns json反序列化的对象.
+     */
     template <class T>
     static inline T toObjectW(std::wistream& is)
     {
         using namespace rapidjson;
         DocumentW document;
         WIStreamWrapper isw(is);
-        document.ParseStream(isw);
+        bool HasParseError = document.ParseStream(isw).HasParseError();
         T obj;
-        Serialize::getObj(document, obj);
+        if (!HasParseError) {
+            Serialize::getObj(document, obj);
+        }
+        else {
+            throw exception("json has parse error!");
+        }
         return obj;
     }
 
-    ///-------------------------------------------------------------------------------------------------
-    /// <summary> 载入一个本地的json文件. </summary>
-    ///
-    /// <typeparam name="T"> Generic type parameter. </typeparam>
-    /// <param name="jsonFilePath"> json文件路径. </param>
-    ///
-    /// <returns> json反序列化的对象. </returns>
-    ///-------------------------------------------------------------------------------------------------
+    /**
+     * 载入一个本地的json文件.
+     *
+     * @exception e                     解析json失败时抛出.
+     * @exception std::invalid_argument 无法打开文件时抛出.
+     *
+     * @tparam T Generic type parameter.
+     * @param  jsonFilePath json文件路径.
+     *
+     * @returns json反序列化的对象.
+     */
     template <class T>
     static inline T loadFile(const std::string& jsonFilePath)
     {
@@ -2700,7 +2768,13 @@ class JsonMapper
 
         T obj;
         if (ifs.is_open()) {
-            JsonMapper::toObject<T>(ifs, obj);
+            try {
+                JsonMapper::toObject<T>(ifs, obj);
+            }
+            catch (const std::exception& e) {
+                ifs.close();
+                throw e;
+            }
         }
         else {
             throw std::invalid_argument("can not open json file!");

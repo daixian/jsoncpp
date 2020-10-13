@@ -1,7 +1,7 @@
-#include "gtest/gtest.h"
+﻿#include "gtest/gtest.h"
 
 // 目前别的平台没有编译opencv
-#if defined(_WIN32)
+#if defined(_WIN32_FALSE)
 
 #    include "xuexuejson/Serialize.hpp"
 
@@ -34,14 +34,14 @@ TEST(OpenCV, cvMat_double)
     Serialize::getObj(doc2[L"m1"], m2);
 
     //比较两个Mat
-    ASSERT_TRUE(m2.cols == m.cols);
-    ASSERT_TRUE(m2.rows == m.rows);
-    ASSERT_TRUE(m2.type() == m.type());
+    ASSERT_EQ(m2.cols, m.cols);
+    ASSERT_EQ(m2.rows, m.rows);
+    ASSERT_EQ(m2.type(), m.type());
     double* m_p = m.ptr<double>();
     double* m2_p = m2.ptr<double>();
 
     for (size_t i = 0; i < m.cols * m.rows; i++) {
-        ASSERT_TRUE(m_p[i] == m2_p[i]);
+        ASSERT_EQ(m_p[i], m2_p[i]);
     }
 }
 
@@ -68,14 +68,14 @@ TEST(OpenCV, cvMat_short)
     Serialize::getObj(doc2[L"m1"], m2);
 
     //比较两个Mat
-    ASSERT_TRUE(m2.cols == m.cols);
-    ASSERT_TRUE(m2.rows == m.rows);
-    ASSERT_TRUE(m2.type() == m.type());
+    ASSERT_EQ(m2.cols, m.cols);
+    ASSERT_EQ(m2.rows, m.rows);
+    ASSERT_EQ(m2.type(), m.type());
     short* m_p = m.ptr<short>();
     short* m2_p = m2.ptr<short>();
 
     for (size_t i = 0; i < m.cols * m.rows; i++) {
-        ASSERT_TRUE(m_p[i] == m2_p[i]);
+        ASSERT_EQ(m_p[i], m2_p[i]);
     }
 }
 
@@ -103,14 +103,14 @@ TEST(OpenCV, cvMat_float)
     Serialize::getObj(doc2[L"m1"], m2);
 
     //比较两个Mat
-    ASSERT_TRUE(m2.cols == m.cols);
-    ASSERT_TRUE(m2.rows == m.rows);
-    ASSERT_TRUE(m2.type() == m.type());
+    ASSERT_EQ(m2.cols, m.cols);
+    ASSERT_EQ(m2.rows, m.rows);
+    ASSERT_EQ(m2.type(), m.type());
     float* m_p = m.ptr<float>();
     float* m2_p = m2.ptr<float>();
 
     for (size_t i = 0; i < m.cols * m.rows; i++) {
-        ASSERT_TRUE(m_p[i] == m2_p[i]);
+        ASSERT_EQ(m_p[i], m2_p[i]);
     }
 }
 
@@ -141,7 +141,7 @@ TEST(OpenCV, vector_cvMat)
     Serialize::getObj(doc2[L"vm"], vm2);
 
     //比较两个Mat
-    ASSERT_TRUE(vm.size() == vm2.size());
+    ASSERT_EQ(vm.size(), vm2.size());
 }
 
 TEST(Json, rpTest)
@@ -173,8 +173,8 @@ TEST(Json, ListTest)
         auto it2 = ls2.begin();
         auto it3 = ls3.begin();
         for (auto& item : ls) {
-            ASSERT_TRUE(item == *it2);
-            ASSERT_TRUE(item == *it3);
+            ASSERT_EQ(item, *it2);
+            ASSERT_EQ(item, *it3);
             ++it2;
             ++it3;
         }
@@ -196,8 +196,8 @@ TEST(Json, ArrayTest)
         array<string, 100> arr3 = JsonMapper::toObject<array<string, 100>>(texe);
 
         for (size_t i = 0; i < arr.size(); i++) {
-            ASSERT_TRUE(arr[i] == arr2[i]);
-            ASSERT_TRUE(arr[i] == arr3[i]);
+            ASSERT_EQ(arr[i], arr2[i]);
+            ASSERT_EQ(arr[i], arr3[i]);
         }
     }
 }
@@ -247,13 +247,13 @@ TEST_F(VectorData, vectorTest)
         Data data2 = JsonMapper::toObject<Data>(text);
 
         for (size_t i = 0; i < data.vs.size(); i++) {
-            ASSERT_TRUE(data.vs[i] == data2.vs[i]);
+            ASSERT_EQ(data.vs[i], data2.vs[i]);
         }
         for (size_t i = 0; i < data.vvs.size(); i++) {
-            ASSERT_TRUE(data.vvs[i] == data2.vvs[i]);
+            ASSERT_EQ(data.vvs[i], data2.vvs[i]);
         }
         for (size_t i = 0; i < data.vvvs.size(); i++) {
-            ASSERT_TRUE(data.vvvs[i] == data2.vvvs[i]);
+            ASSERT_EQ(data.vvvs[i], data2.vvvs[i]);
         }
     }
 }
@@ -262,21 +262,21 @@ TEST(Json, EmptyTest)
 {
     vector<string> vs;
     string texe = JsonMapper::toJson(vs, false);
-    ASSERT_TRUE(texe == "[]");
+    ASSERT_EQ(texe, "[]");
     vector<string> vs2 = JsonMapper::toObject<vector<string>>(texe);
-    ASSERT_TRUE(vs2.size() == 0);
+    ASSERT_EQ(vs2.size(), 0);
 
     map<int, string> mis;
     texe = JsonMapper::toJson(mis, true);
-    ASSERT_TRUE(texe == "{}");
+    ASSERT_EQ(texe, "{}");
     map<int, string> mis2 = JsonMapper::toObject<map<int, string>>(texe);
-    ASSERT_TRUE(mis2.size() == 0);
+    ASSERT_EQ(mis2.size(), 0);
 
     map<int, string> mis3 = JsonMapper::toObject<map<int, string>>("");
-    ASSERT_TRUE(mis3.size() == 0);
+    ASSERT_EQ(mis3.size(), 0);
 
     map<int, string> mis4 = JsonMapper::toObject<map<int, string>>("21312");
-    ASSERT_TRUE(mis4.size() == 0);
+    ASSERT_EQ(mis4.size(), 0);
 
     //这是一个类型不匹配的错误
     string str;
@@ -296,17 +296,17 @@ TEST(Json, typeAdapte)
     vector<int> vs2 = JsonMapper::toObject<vector<int>>(texe);
 
     for (size_t i = 0; i < vs.size(); i++) {
-        ASSERT_TRUE((std::to_string(vs2[i]) == vs[i]));
+        ASSERT_EQ((std::to_string(vs2[i]), vs[i]));
     }
 
     texe = JsonMapper::toJson("true", false);
     bool b = false;
     b = JsonMapper::toObject<bool>(texe);
-    ASSERT_TRUE(b == true);
+    ASSERT_EQ(b, true);
 
     texe = JsonMapper::toJson("false", false);
     b = JsonMapper::toObject<bool>(texe);
-    ASSERT_TRUE(b == false);
+    ASSERT_EQ(b, false);
 }
 
 TEST(Json, cvPoint)
@@ -314,7 +314,7 @@ TEST(Json, cvPoint)
     cv::Point o(123, 321);
     string text = JsonMapper::toJson(o);
     cv::Point o2 = JsonMapper::toObject<cv::Point>(text);
-    ASSERT_TRUE(o == o2);
+    ASSERT_EQ(o, o2);
 }
 
 TEST(Json, cvPoint3)
@@ -322,7 +322,7 @@ TEST(Json, cvPoint3)
     cv::Point3i o(123, 321, 312413);
     string text = JsonMapper::toJson(o);
     cv::Point3i o2 = JsonMapper::toObject<cv::Point3i>(text);
-    ASSERT_TRUE(o == o2);
+    ASSERT_EQ(o, o2);
 }
 
 TEST(Json, cvRect)
@@ -330,7 +330,7 @@ TEST(Json, cvRect)
     cv::Rect o(123, 321, 252, 54353);
     string text = JsonMapper::toJson(o);
     cv::Rect o2 = JsonMapper::toObject<cv::Rect>(text);
-    ASSERT_TRUE(o == o2);
+    ASSERT_EQ(o, o2);
 }
 
 TEST(Json, unity3dColor32)
@@ -338,7 +338,7 @@ TEST(Json, unity3dColor32)
     unity3d::Color32 color(255, 123, 32);
     string text = JsonMapper::toJson(color);
     unity3d::Color32 o2 = JsonMapper::toObject<unity3d::Color32>(text);
-    ASSERT_TRUE(color == o2);
+    ASSERT_EQ(color, o2);
 }
 
 class cvComponent : XUEXUE_JSON_SUPER_OBJECT
@@ -426,13 +426,13 @@ TEST(Json, cvObject)
 
     text = JsonMapper::toJson(obj);
     cvObject o2 = JsonMapper::toObject<cvObject>(text);
-    ASSERT_TRUE(o2.components.size() == obj.components.size());
+    ASSERT_EQ(o2.components.size(), obj.components.size());
 
     cvLine* line2 = static_cast<cvLine*>((o2.components[0]).get());
-    ASSERT_TRUE(line->color == line2->color);
-    ASSERT_TRUE(line->pos0 == line2->pos0);
-    ASSERT_TRUE(line->pos1 == line2->pos1);
-    ASSERT_TRUE(line->type == line2->type);
+    ASSERT_EQ(line->color, line2->color);
+    ASSERT_EQ(line->pos0, line2->pos0);
+    ASSERT_EQ(line->pos1, line2->pos1);
+    ASSERT_EQ(line->type, line2->type);
 }
 
 class StringClass : XUEXUE_JSON_OBJECT
@@ -461,7 +461,7 @@ TEST(String, readStream)
     void* p1 = &(sc.s1);
     void* p2 = &(sc.s2);
 
-    //ASSERT_TRUE(std::memcmp(p1, p2, sizeof(size)) == 0);
+    //ASSERT_EQ(std::memcmp(p1, p2, sizeof(size)) , 0);
 
     std::string str = "Example string";
     for (size_t i = 0; i < 20; i++) {
@@ -472,7 +472,7 @@ TEST(String, readStream)
     pbuf->str(str);
     auto in_avail = pbuf->in_avail();
     std::string text = JsonHelper::readStream(iss);
-    ASSERT_TRUE(text == str);
+    ASSERT_EQ(text, str);
 }
 
 TEST(String, istreamToJson)
@@ -484,7 +484,7 @@ TEST(String, istreamToJson)
     int size1 = sizeof(sc.s1);
     int size2 = sizeof(sc.s2);
 
-    //ASSERT_TRUE(std::memcmp(p1, p2, sizeof(size)) == 0);
+    //ASSERT_EQ(std::memcmp(p1, p2, sizeof(size)) , 0);
 
     std::string str = JsonMapper::toJson(sc);
     std::istringstream iss;
@@ -492,8 +492,8 @@ TEST(String, istreamToJson)
     pbuf->str(str);
     int in_avail = pbuf->in_avail();
     StringClass sc2 = JsonMapper::toObject<StringClass>(iss);
-    ASSERT_TRUE(sc.s1 == sc2.s1);
-    ASSERT_TRUE(sc.s2 == sc2.s2);
+    ASSERT_EQ(sc.s1, sc2.s1);
+    ASSERT_EQ(sc.s2, sc2.s2);
 }
 
 TEST(String, loadFile)
@@ -505,7 +505,7 @@ TEST(String, loadFile)
     JsonHelper::save("file.json", text);
     vector<string> vStr2 = JsonMapper::loadFile<vector<string>>("file.json");
     for (size_t i = 0; i < vStr.size(); i++) {
-        ASSERT_TRUE(vStr[i] == vStr2[i]);
+        ASSERT_EQ(vStr[i], vStr2[i]);
     }
 }
 
@@ -525,7 +525,7 @@ TEST(wstring, toJsonW)
 
     vector<wstring> vStr3 = JsonMapper::toObjectW<vector<wstring>>(json);
     for (size_t i = 0; i < vStr.size(); i++) {
-        ASSERT_TRUE(vStr[i] == vStr3[i]);
+        ASSERT_EQ(vStr[i], vStr3[i]);
     }
 }
 
@@ -539,7 +539,7 @@ TEST(string, toJsonW)
 
     vector<string> vStr3 = JsonMapper::toObjectW<vector<string>>(json);
     for (size_t i = 0; i < vStr.size(); i++) {
-        ASSERT_TRUE(vStr[i] == vStr3[i]);
+        ASSERT_EQ(vStr[i], vStr3[i]);
     }
 }
 
@@ -553,7 +553,7 @@ TEST(string, toJson_ofstream)
     ofs.close();
     vector<string> vStr2 = JsonMapper::loadFile<vector<string>>("output.json");
     for (size_t i = 0; i < vStr.size(); i++) {
-        ASSERT_TRUE(vStr[i] == vStr2[i]);
+        ASSERT_EQ(vStr[i], vStr2[i]);
     }
 }
 
@@ -568,7 +568,7 @@ TEST(wstring, toJson_ofstream)
 
     vector<wstring> vStr2 = JsonMapper::loadFile<vector<wstring>>("output2.json");
     for (size_t i = 0; i < vStr.size(); i++) {
-        ASSERT_TRUE(vStr[i] == vStr2[i]);
+        ASSERT_EQ(vStr[i], vStr2[i]);
     }
 }
 
@@ -592,7 +592,7 @@ TEST(wstring, toJsonW_wofstream)
 
     vector<wstring> vStr2 = JsonMapper::toObjectW<vector<wstring>>(ifs);
     for (size_t i = 0; i < vStr.size(); i++) {
-        ASSERT_TRUE(vStr[i] == vStr2[i]);
+        ASSERT_EQ(vStr[i] , vStr2[i]);
     }
     //std::locale::global(oPreviousLocale);
 }

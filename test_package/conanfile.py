@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 # coding=utf-8
 import os
 
@@ -11,7 +11,8 @@ class xuexuejsonTestConan(ConanFile):
 
     def requirements(self):
         self.requires("eigen/[>=3.3.7]")
-        # self.requires("opencv/[>=4.2.0]@daixian/stable")
+        # if self.settings.os == 'Windows':
+        #     self.requires("opencv/[>=4.2.0]@daixian/stable")
         self.requires("rapidjson/[>=1.1.0]")
 
     def build_requirements(self):
