@@ -811,6 +811,11 @@ class JsonHelper
                 obj = std::stoi(value.GetString());
             }
             catch (const std::exception&) {
+                //懒得做处理了
+                obj = 0;
+                std::string str = value.GetString();
+                int copyLen = str.size() < sizeof(int) ? str.size() : sizeof(int);
+                memcpy(&obj, str.c_str(), copyLen);
             }
         }
 #endif
@@ -830,6 +835,8 @@ class JsonHelper
                 obj = std::stoi(value.GetString());
             }
             catch (const std::exception&) {
+                //懒得做处理了
+                obj = 0;
             }
         }
 #endif
@@ -849,6 +856,8 @@ class JsonHelper
                 obj = std::stoll(value.GetString());
             }
             catch (const std::exception&) {
+                //懒得做处理了
+                obj = 0;
             }
         }
 #endif
@@ -868,6 +877,7 @@ class JsonHelper
                 obj = std::stoll(value.GetString());
             }
             catch (const std::exception&) {
+                obj = 0;
             }
         }
 #endif
@@ -916,6 +926,8 @@ class JsonHelper
                 obj = static_cast<uint16_t>(std::stoi(value.GetString()));
             }
             catch (const std::exception&) {
+                //懒得做处理了
+                obj = 0;
             }
         }
 #endif
@@ -954,6 +966,8 @@ class JsonHelper
                 obj = static_cast<uint32_t>(std::stoul(value.GetString()));
             }
             catch (const std::exception&) {
+                //懒得做处理了
+                obj = 0;
             }
         }
 #endif
@@ -976,6 +990,8 @@ class JsonHelper
                 obj = static_cast<uint32_t>(std::stoul(value.GetString()));
             }
             catch (const std::exception&) {
+                //懒得做处理了
+                obj = 0;
             }
         }
 #endif
@@ -1020,6 +1036,8 @@ class JsonHelper
                 obj = std::stoull(value.GetString());
             }
             catch (const std::exception&) {
+                //懒得做处理了
+                obj = 0;
             }
         }
 #endif

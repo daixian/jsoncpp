@@ -5,7 +5,7 @@
 ## 简介
 
 使用rapidjson的高性能封装，纯头文件，支持msvc，gcc，clang。
-使用两个宏定义即可以实现对象转到json的支持，同时支持对象的嵌套，可以很方便的实现一些dto对象的序列化反序列化，十分有爱。
+在dto对象声明时使用简单的 **两个宏定义** 即可以实现dto对象转到json的支持，同时支持对象的嵌套，可以很方便的实现一些dto对象的序列化反序列化，十分有爱。
 
 ## 使用
 
@@ -23,8 +23,9 @@
 //上面这两个定义，支持opencv和eigen中的一些类型，不用可以去掉
 #include "xuexuejson/Serialize.hpp"
 
-//下面这个类使用两个宏定义XUEXUE_JSON_OBJECT和XUEXUE_JSON_OBJECT_M4即可自动实现支持对象和json相互转换。
-//其中XUEXUE_JSON_OBJECT_M4的数字4代表后面的成员个数是4个。这个宏定义实际上是自动完成了几个接口函数。
+// 下面这个类使用两个宏定义: XUEXUE_JSON_OBJECT和XUEXUE_JSON_OBJECT_M4
+// 即可自动实现支持对象和json相互转换。
+// 其中XUEXUE_JSON_OBJECT_M4的数字4代表后面的成员个数是4个。这个宏定义实际上是自动完成了几个接口函数。
 
 //传递相机标定参数的dto
 class CalibParamDto : XUEXUE_JSON_OBJECT
