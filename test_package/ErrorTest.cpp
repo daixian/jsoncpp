@@ -1,4 +1,4 @@
-#include "gtest/gtest.h"
+﻿#include "gtest/gtest.h"
 
 #include "xuexuejson/Serialize.hpp"
 
@@ -37,11 +37,11 @@ TEST(Error, emptystr)
     ASSERT_THROW((JsonMapper::toObject<map<int, string>>("")), std::exception);
 }
 
-// 如果是一段数字那么是没有错误的
-TEST(Error, text_21312)
+TEST(Error, textNum)
 {
     bool isThrow = false;
     try {
+        //这个不会被算作是错误
         int mis3 = JsonMapper::toObject<int>("21312");
         ASSERT_EQ(mis3, 21312);
     }

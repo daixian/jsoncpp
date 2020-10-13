@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "rapidjson/document.h"
 #include "rapidjson/istreamwrapper.h"
 #include "rapidjson/ostreamwrapper.h"
@@ -814,7 +814,8 @@ class JsonHelper
                 //懒得做处理了
                 obj = 0;
                 std::string str = value.GetString();
-                int copyLen = str.size() < sizeof(int) ? str.size() : sizeof(int);
+                int size = (int)str.size();
+                int copyLen = size < sizeof(int) ? size : sizeof(int);
                 memcpy(&obj, str.c_str(), copyLen);
             }
         }
