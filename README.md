@@ -5,7 +5,7 @@
 ## 简介
 
 使用rapidjson的高性能封装，纯头文件，支持msvc，gcc，clang。
-在dto对象声明时使用简单的 **两个宏定义** 即可以实现dto对象转到json的支持，同时支持对象的嵌套，可以很方便的实现一些dto对象的序列化反序列化，十分有爱。
+在dto对象声明时使用简单的**两个宏定义**即可以实现dto对象转到json的支持，同时支持对象的嵌套，可以很方便的实现一些dto对象的序列化反序列化，十分有爱。
 
 ## 使用
 
@@ -60,6 +60,15 @@ Test(){
     CalibParamDto obj2;
     JsonMapper::toObject(text, obj2);
 }
+```
+
+另外由于rapidjson中使用的max和windows定义中的冲突警告，在使用windows.h头文件之前可以试试加一个宏定义去掉windows头文件里的定义。
+
+``` cpp
+#ifndef NOMINMAX
+#    define NOMINMAX
+#endif
+#include <windows.h>
 ```
 
 ## 构建
