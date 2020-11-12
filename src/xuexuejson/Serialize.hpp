@@ -2025,7 +2025,7 @@ class Serialize
 #endif // XUEXUE_JSON_SUPPORT_EIGEN
 
     // =================================  JsonSerializable接口模板 =====================================
-    //支持智能指针类型
+    //支持智能指针shared_ptr类型
     template <class T>
     static inline Value&& toValue(const std::shared_ptr<T>& obj, Value&& jv,
                                   rapidjson::MemoryPoolAllocator<>& allocator)
@@ -2065,7 +2065,7 @@ class Serialize
         }
     }
 
-    //智能指针类型支持
+    //智能指针类型shared_ptr支持
     template <class T>
     static inline ValueW&& toValue(const std::shared_ptr<T>& obj, ValueW&& jv,
                                    rapidjson::MemoryPoolAllocator<>& allocator)
@@ -2105,7 +2105,87 @@ class Serialize
         }
     }
 
-    //自定义接口模板里面必须要含有这两个函数
+    //支持智能指针unique_ptr类型
+    template <class T>
+    static inline Value&& toValue(const std::unique_ptr<T>& obj, Value&& jv,
+                                  rapidjson::MemoryPoolAllocator<>& allocator)
+    {
+        //检察类型,如果不是JsonSerializable接口那么就返回
+        if (!std::is_base_of<JsonSerializable, T>::value) {
+            jv.SetNull();
+            return std::move(jv);
+        }
+        JsonSerializable* ptr = (JsonSerializable*)(obj.get());
+        return ptr->toValue(std::move(jv), allocator);
+    }
+
+    template <class T>
+    static inline void getObj(const Value& value, std::unique_ptr<T>& obj)
+    {
+        //检察类型,如果不是JsonSerializable接口那么就返回
+        if (!std::is_base_of<JsonSerializable, T>::value) {
+            return;
+        }
+        if (obj == nullptr)
+            obj = std::unique_ptr<T>(new T());
+        JsonSerializable* ptr = (JsonSerializable*)(obj.get());
+        ptr->getObj(value);
+
+        //如果这个类不是一个基类
+        if (!std::is_base_of<JsonSerializeSuper, T>::value) {
+            return;
+        }
+        //如果是基类那么就再次提取数据
+        JsonSerializeSuper* superPtr = (JsonSerializeSuper*)(obj.get());
+        void* newObj = superPtr->instance();
+        if (newObj != nullptr) {
+            obj = std::unique_ptr<T>((T*)newObj);
+            ptr = (JsonSerializable*)(obj.get());
+            ptr->getObj(value); //调用这个子类的方法
+        }
+    }
+
+    //智能指针类型unique_ptr支持
+    template <class T>
+    static inline ValueW&& toValue(const std::unique_ptr<T>& obj, ValueW&& jv,
+                                   rapidjson::MemoryPoolAllocator<>& allocator)
+    {
+        //检察类型,如果不是JsonSerializable接口那么就返回
+        if (!std::is_base_of<JsonSerializableW, T>::value) {
+            jv.SetNull();
+            return std::move(jv);
+        }
+        JsonSerializableW* ptr = (JsonSerializableW*)(obj.get());
+        return ptr->toValue(std::move(jv), allocator);
+    }
+
+    template <class T>
+    static inline void getObj(const ValueW& value, std::unique_ptr<T>& obj)
+    {
+        //检察类型,如果不是JsonSerializable接口那么就返回
+        if (!std::is_base_of<JsonSerializableW, T>::value) {
+            return;
+        }
+        if (obj == nullptr)
+            obj = std::unique_ptr<T>(new T());
+        JsonSerializableW* ptr = (JsonSerializableW*)(obj.get());
+        ptr->getObj(value);
+
+        //如果这个类不是一个基类
+        if (!std::is_base_of<JsonSerializeSuper, T>::value) {
+            return;
+        }
+        //如果是基类那么就再次提取数据
+        JsonSerializeSuper* superPtr = (JsonSerializeSuper*)(obj.get());
+        void* newObj = superPtr->instance();
+        if (newObj != nullptr) {
+            obj = std::unique_ptr<T>((T*)newObj);
+            ptr = (JsonSerializableW*)(obj.get());
+            ptr->getObj(value); //调用这个子类的方法
+        }
+    }
+
+    //=============================  自定义接口模板里面必须要含有这两个函数 =============================
     template <class T>
     static inline Value&& toValue(const T& obj, Value&& jv,
                                   rapidjson::MemoryPoolAllocator<>& allocator)
