@@ -2202,6 +2202,8 @@ class Serialize
     template <class T>
     static inline void getObj(const Value& value, T& obj)
     {
+        if (!value.IsObject()) //它应该是一个Object
+            return;
         //检察类型,如果不是JsonSerializable接口那么就返回
         if (!std::is_base_of<JsonSerializable, T>::value) {
             return;
