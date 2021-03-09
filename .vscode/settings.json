@@ -82,7 +82,8 @@
         "concepts": "cpp",
         "eulerangles": "cpp",
         "geometry": "cpp",
-        "strstream": "cpp"
+        "strstream": "cpp",
+        "core": "cpp"
     },
     "C_Cpp.default.configurationProvider": "vector-of-bool.cmake-tools",
     "cmake.configureOnOpen": false,

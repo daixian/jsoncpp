@@ -1406,8 +1406,9 @@ class Serialize
         JsonHelper::ValueTypeAdapte(value, obj);
     }
 
-#ifdef XUEXUE_JSON_SUPPORT_OPENCV
+    // =================================      扩展的基础序列化方法      =====================================
 
+#ifdef XUEXUE_JSON_SUPPORT_OPENCV
     //------------------------------ cv::Vec3 ------------------------------
     template <typename T>
     static inline Value&& toValue(const cv::Vec<T, 3>& obj, Value&& jv,
@@ -2024,7 +2025,7 @@ class Serialize
 
 #endif // XUEXUE_JSON_SUPPORT_EIGEN
 
-    // =================================  JsonSerializable接口模板 =====================================
+    // =================================  JsonSerializable对象T接口模板 =====================================
     //支持智能指针shared_ptr类型
     template <class T>
     static inline Value&& toValue(const std::shared_ptr<T>& obj, Value&& jv,
