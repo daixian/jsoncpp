@@ -2190,8 +2190,16 @@ class Serialize
     static inline Value&& toValue(const T& obj, Value&& jv,
                                   rapidjson::MemoryPoolAllocator<>& allocator)
     {
-        //检察类型,如果不是JsonSerializable接口那么就返回
+        //检察类型,如果不是JsonSerializable接口
         if (!std::is_base_of<JsonSerializable, T>::value) {
+
+            //如果是枚举int,判断放进来算了
+            if (std::is_enum<T>::value) {
+                const int* ptr = (const int*)&obj;
+                jv.SetInt(*ptr);
+                return std::move(jv);
+            }
+
             jv.SetNull();
             return std::move(jv);
         }
@@ -2202,8 +2210,17 @@ class Serialize
     template <class T>
     static inline void getObj(const Value& value, T& obj)
     {
-        if (!value.IsObject()) //它应该是一个Object
+        //如果是枚举int
+        if (std::is_enum<T>::value &&
+            value.IsInt()) {
+            int* ptr = (int*)&obj;
+            *ptr = value.GetInt();
             return;
+        }
+
+        if (!value.IsObject()) //它应该是一个Object?
+            return;
+
         //检察类型,如果不是JsonSerializable接口那么就返回
         if (!std::is_base_of<JsonSerializable, T>::value) {
             return;
@@ -2219,6 +2236,14 @@ class Serialize
     {
         //检察类型,如果不是JsonSerializable接口那么就返回
         if (!std::is_base_of<JsonSerializableW, T>::value) {
+
+            //如果是枚举int,判断放进来算了
+            if (std::is_enum<T>::value) {
+                const int* ptr = (const int*)&obj;
+                jv.SetInt(*ptr);
+                return std::move(jv);
+            }
+
             jv.SetNull();
             return std::move(jv);
         }
@@ -2229,6 +2254,17 @@ class Serialize
     template <class T>
     static inline void getObj(const ValueW& value, T& obj)
     {
+        //如果是枚举int
+        if (std::is_enum<T>::value &&
+            value.IsInt()) {
+            int* ptr = (int*)&obj;
+            *ptr = value.GetInt();
+            return;
+        }
+
+        if (!value.IsObject()) //它应该是一个Object?
+            return;
+
         //检察类型,如果不是JsonSerializable接口那么就返回
         if (!std::is_base_of<JsonSerializableW, T>::value) {
             return;
