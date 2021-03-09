@@ -4,7 +4,7 @@
 #if defined(_WIN32__FALSE)
 
 #    define XUEXUE_JSON_SUPPORT_OPENCV
-#    include "xuexuejson/Serialize.hpp"
+#    include "xuexuejson/JsonMapper.hpp"
 
 #    pragma execution_character_set("utf-8")
 

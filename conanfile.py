@@ -12,7 +12,7 @@ from conans import ConanFile, CMake, tools
 
 class xuexuejsonConan(ConanFile):
     name = "xuexuejson"
-    version = "1.2.5"
+    version = "1.3.0"
     license = "GLWTPL (Good Luck With That Public License)"
     author = "daixian<amano_tooko@qq.com>"
     url = "https://github.com/daixian/jsoncpp"

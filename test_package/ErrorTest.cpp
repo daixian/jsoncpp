@@ -1,6 +1,6 @@
 ﻿#include "gtest/gtest.h"
 
-#include "xuexuejson/Serialize.hpp"
+#include "xuexuejson/JsonMapper.hpp"
 
 #pragma execution_character_set("utf-8")
 

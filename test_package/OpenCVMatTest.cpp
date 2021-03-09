@@ -3,7 +3,7 @@
 // 目前别的平台没有编译opencv
 #if defined(_WIN32_FALSE)
 
-#    include "xuexuejson/Serialize.hpp"
+#    include "xuexuejson/JsonMapper.hpp"
 
 #    pragma execution_character_set("utf-8")
 
