@@ -18,7 +18,7 @@ class xuexuejsonConan(ConanFile):
     url = "https://github.com/daixian/jsoncpp"
     description = "c++，基于rapidjson的json封装，纯头文件，高性能。"
     topics = ("json", "rapidjson", "daixian")
-    settings = None
+    settings = "os"
     options = None
     default_options = None
     generators = "cmake"
