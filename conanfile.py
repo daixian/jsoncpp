@@ -12,7 +12,7 @@ from conans import ConanFile, CMake, tools
 
 class xuexuejsonConan(ConanFile):
     name = "xuexuejson"
-    version = "1.3.0"
+    version = "1.3.1"
     license = "GLWTPL (Good Luck With That Public License)"
     author = "daixian<amano_tooko@qq.com>"
     url = "https://github.com/daixian/jsoncpp"
@@ -68,6 +68,9 @@ class xuexuejsonConan(ConanFile):
     def package_info(self):
         self.info.header_only()
         # self.cpp_info.libs = ["jsoncpp"]
+        if self.settings.os == "Windows":
+            # 防止宏定义冲突
+            self.cpp_info.defines.append("NOMINMAX")
 
     def imports(self):
         """这个函数的相关文档:
