@@ -59,10 +59,10 @@ class xuexuejsonConan(ConanFile):
         """把安装文件拷贝到当前源文件目录来,方便在CI中上传"""
         dest = os.environ.get("CONAN_ARCHIVE_PATH")
         print("copy_archive():environ CONAN_ARCHIVE_PATH=" + dest)
-        dest = dest + os.sep + str(self.name)
-        if os.path.exists(dest):
-            shutil.rmtree(dest)
         if not dest is None:
+            dest = dest + os.sep + str(self.name)
+            if os.path.exists(dest):
+                shutil.rmtree(dest)
             self.copy("*.h", dst=dest + os.sep + "include", src="src")
             self.copy("*.hpp", dst=dest + os.sep + "include", src="src")
         else:
