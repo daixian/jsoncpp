@@ -3,6 +3,7 @@
 import os
 import sys
 import io
+import shutil
 from conans import ConanFile, CMake, tools
 
 
@@ -12,7 +13,7 @@ from conans import ConanFile, CMake, tools
 
 class xuexuejsonConan(ConanFile):
     name = "xuexuejson"
-    version = "1.3.1"
+    version = "1.3.2"
     license = "GLWTPL (Good Luck With That Public License)"
     author = "daixian<amano_tooko@qq.com>"
     url = "https://github.com/daixian/jsoncpp"
@@ -57,13 +58,13 @@ class xuexuejsonConan(ConanFile):
 
     def copy_archive(self):
         """把安装文件拷贝到当前源文件目录来,方便在CI中上传"""
-        dest = os.environ["CONAN_ARCHIVE_PATH"]
+        dest = os.environ.get("CONAN_ARCHIVE_PATH")
         print("copy_archive():执行目录CONAN_ARCHIVE_PATH="+dest)
         if not dest is None:
             self.copy("*.h", dst=dest+os.sep+"include", src="src")
             self.copy("*.hpp", dst=dest+os.sep+"include", src="src")
         else:
-            print("copy_archive():执行目录CONAN_ARCHIVE_PATH为空，不执行archive拷贝")
+            print("copy_archive():environ CONAN_ARCHIVE_PATH=None，can not archive copy!")
 
     def package_info(self):
         self.info.header_only()
