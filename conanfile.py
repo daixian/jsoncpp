@@ -9,11 +9,11 @@ from conans import ConanFile, CMake, tools
 
 # os.system("chcp 65001")
 # 注意这里不能用下面那一句去设置,否则conan库会报错的
-#sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf8')
+# sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf8')
 
 class xuexuejsonConan(ConanFile):
     name = "xuexuejson"
-    version = "1.3.2"
+    version = "1.3.3"
     license = "GLWTPL (Good Luck With That Public License)"
     author = "daixian<amano_tooko@qq.com>"
     url = "https://github.com/daixian/jsoncpp"
@@ -37,7 +37,6 @@ class xuexuejsonConan(ConanFile):
         return cmake
 
     def build(self):
-        print("进入了build...")
         cmake = self._configure_cmake()
         cmake.configure(source_folder="src")
         cmake.build()
@@ -59,10 +58,13 @@ class xuexuejsonConan(ConanFile):
     def copy_archive(self):
         """把安装文件拷贝到当前源文件目录来,方便在CI中上传"""
         dest = os.environ.get("CONAN_ARCHIVE_PATH")
-        print("copy_archive():执行目录CONAN_ARCHIVE_PATH="+dest)
+        print("copy_archive():environ CONAN_ARCHIVE_PATH=" + dest)
+        dest = dest + os.sep + str(self.name)
+        if os.path.exists(dest):
+            shutil.rmtree(dest)
         if not dest is None:
-            self.copy("*.h", dst=dest+os.sep+"include", src="src")
-            self.copy("*.hpp", dst=dest+os.sep+"include", src="src")
+            self.copy("*.h", dst=dest + os.sep + "include", src="src")
+            self.copy("*.hpp", dst=dest + os.sep + "include", src="src")
         else:
             print("copy_archive():environ CONAN_ARCHIVE_PATH=None，can not archive copy!")
 
