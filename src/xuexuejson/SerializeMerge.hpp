@@ -38,7 +38,7 @@ static inline Value&& toValue(const std::shared_ptr<T>& obj, Value&& jv,
                               rapidjson::MemoryPoolAllocator<>& allocator)
 {
     //检察类型,如果不是JsonSerializable接口那么就返回
-    if (!std::is_base_of<JsonSerializable, T>::value) {
+    if (obj == nullptr || !std::is_base_of<JsonSerializable, T>::value) {
         jv.SetNull();
         return std::move(jv);
     }
@@ -78,7 +78,7 @@ static inline ValueW&& toValue(const std::shared_ptr<T>& obj, ValueW&& jv,
                                rapidjson::MemoryPoolAllocator<>& allocator)
 {
     //检察类型,如果不是JsonSerializable接口那么就返回
-    if (!std::is_base_of<JsonSerializableW, T>::value) {
+    if (obj == nullptr || !std::is_base_of<JsonSerializableW, T>::value) {
         jv.SetNull();
         return std::move(jv);
     }
@@ -118,7 +118,7 @@ static inline Value&& toValue(const std::unique_ptr<T>& obj, Value&& jv,
                               rapidjson::MemoryPoolAllocator<>& allocator)
 {
     //检察类型,如果不是JsonSerializable接口那么就返回
-    if (!std::is_base_of<JsonSerializable, T>::value) {
+    if (obj == nullptr || !std::is_base_of<JsonSerializable, T>::value) {
         jv.SetNull();
         return std::move(jv);
     }
@@ -158,7 +158,7 @@ static inline ValueW&& toValue(const std::unique_ptr<T>& obj, ValueW&& jv,
                                rapidjson::MemoryPoolAllocator<>& allocator)
 {
     //检察类型,如果不是JsonSerializable接口那么就返回
-    if (!std::is_base_of<JsonSerializableW, T>::value) {
+    if (obj == nullptr || !std::is_base_of<JsonSerializableW, T>::value) {
         jv.SetNull();
         return std::move(jv);
     }
