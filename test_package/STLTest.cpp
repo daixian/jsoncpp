@@ -31,6 +31,22 @@ TEST(STL, ListTest)
     }
 }
 
+TEST(STL, dequeTest)
+{
+    deque<string> de;
+    for (size_t i = 0; i < 100; i++) {
+        de.push_back("这个是一条内容" + std::to_string(i));
+    }
+
+    string json = JsonMapper::toJson(de, true);
+    deque<string> de2;
+    JsonMapper::toObject(json, de2);
+
+    for (size_t i = 0; i < de.size(); i++) {
+        ASSERT_EQ(de[i], de2[i]);
+    }
+}
+
 TEST(STL, ArrayTest)
 {
     array<string, 100> arr;

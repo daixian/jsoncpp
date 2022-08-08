@@ -18,8 +18,11 @@ if(WIN32)
 endif()
 
 #这里会搜索到build文件夹下面的一个cpp文件,所以增加一个*Test.cpp的约束
-FILE(GLOB_RECURSE SOURCE_LIST "${CMAKE_SOURCE_DIR}/*Test.cpp")
+FILE(GLOB_RECURSE SOURCE_LIST "${CMAKE_SOURCE_DIR}/*Test.cpp" "${CMAKE_SOURCE_DIR}/src/*.hpp" "${CMAKE_SOURCE_DIR}/src/*.h")
 message(STATUS "SOURCE_LIST = ${SOURCE_LIST}")
+
+# FILE(GLOB_RECURSE SRCDIR_SOURCE_LIST "${CMAKE_SOURCE_DIR}/src/*.hpp" "${CMAKE_SOURCE_DIR}/src/*.h")
+# list(APPEND SOURCE_LIST ${SRCDIR_SOURCE_LIST})
 add_executable(${SUB_NAME}
                 ${SOURCE_LIST})
  

@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <string>
 #include <vector>
+#include <deque>
 #include <list>
 #include <map>
 #include <array>

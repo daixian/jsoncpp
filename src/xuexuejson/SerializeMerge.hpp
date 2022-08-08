@@ -329,6 +329,53 @@ static inline void getObj(const ValueW& value, std::vector<T>& obj)
         getObj(value[i], o);
         obj.push_back(o);
     }
+} // std::deque的模板 (kArrayType)
+template <typename T>
+static inline Value&& toValue(const std::deque<T>& obj, Value&& value,
+                              rapidjson::MemoryPoolAllocator<>& allocator)
+{
+    value.SetArray();
+    for (rapidjson::SizeType i = 0; i < obj.size(); i++) {
+        value.PushBack(toValue(obj[i], Value(), allocator), allocator);
+    }
+    return std::move(value);
+}
+
+template <typename T>
+static inline void getObj(const Value& value, std::deque<T>& obj)
+{
+    if (!value.IsArray()) //它应该是一个array
+        return;
+    obj.clear();
+    for (rapidjson::SizeType i = 0; i < value.Size(); i++) {
+        T o;
+        getObj(value[i], o);
+        obj.push_back(o);
+    }
+}
+
+template <typename T>
+static inline ValueW&& toValue(const std::deque<T>& obj, ValueW&& value,
+                               rapidjson::MemoryPoolAllocator<>& allocator)
+{
+    value.SetArray();
+    for (rapidjson::SizeType i = 0; i < obj.size(); i++) {
+        value.PushBack(toValue(obj[i], ValueW(), allocator), allocator);
+    }
+    return std::move(value);
+}
+
+template <typename T>
+static inline void getObj(const ValueW& value, std::deque<T>& obj)
+{
+    if (!value.IsArray()) //它应该是一个array
+        return;
+    obj.clear();
+    for (rapidjson::SizeType i = 0; i < value.Size(); i++) {
+        T o;
+        getObj(value[i], o);
+        obj.push_back(o);
+    }
 }
 
 // std::list的模板 (kArrayType)
