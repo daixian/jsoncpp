@@ -16,7 +16,7 @@ class xuexuejsonTestConan(ConanFile):
         self.requires("rapidjson/[>=1.1.0]")
 
     def build_requirements(self):
-        self.build_requires("gtest/[>=1.8.1]@bincrafters/stable")
+        self.build_requires("gtest/[>=1.8.1]")
         # self.build_requires("boost/[>=1.71.0]")
         # self.build_requires("poco/[>=1.9.4]")
 
