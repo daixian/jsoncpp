@@ -2,6 +2,10 @@
 
 [![Build status](https://daixian.visualstudio.com/Pipeline/_apis/build/status/Pipeline-xuexuejson)](https://daixian.visualstudio.com/Pipeline/_build/latest?definitionId=12)
 
+## 必看
+如果你才看到，我建议使用nlohmann_json，在dto上的用法和我的这个封装差不多。大致测试了一下nlohmann_json序列化10W条的速度，相同结构的dto，耗时基本比我这个用rapidjson封装的要慢一两倍。如果对速度没有极高要求，那么建议就用nlohmann_json。
+ [nlohmann/json](https://github.com/nlohmann/json)
+
 ## 简介
 
 使用rapidjson的高性能封装，纯头文件，支持msvc，gcc，clang。这个库是纯头文件库，全部一起丢到自己的工程里即可。
